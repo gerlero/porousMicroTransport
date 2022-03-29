@@ -1,0 +1,5 @@
+#!/bin/sh
+cd "${0%/*}" || exit
+
+rm -f log.* 100/theta 100/Utheta 100/phi
+rm -rf 100/uniform constant/polyMesh

@@ -1,0 +1,3 @@
+PicardControl.C
+
+LIB = $(FOAM_USER_LIBBIN)/libPMTPicardControl

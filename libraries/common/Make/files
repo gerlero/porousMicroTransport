@@ -1,0 +1,5 @@
+porousMedium/porousMedium.C
+
+fluidPhase/fluidPhase.C
+
+LIB = $(FOAM_USER_LIBBIN)/libPMTcommon

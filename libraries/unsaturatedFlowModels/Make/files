@@ -1,0 +1,21 @@
+capillarityModel/capillarityModel.C
+
+relativePermeabilityModel/relativePermeabilityModel.C
+
+moistureDiffusivityModel/moistureDiffusivityModel.C
+moistureDiffusivityModel/moistureDiffusivityModelNew.C
+
+RichardsModel/RichardsModel.C
+RichardsModel/RichardsModelNew.C
+
+mixedRichardsModel/mixedRichardsModel.C
+
+BrooksAndCorey/BrooksAndCorey.C
+
+VanGenuchten/VanGenuchten.C
+
+LETxs/LETxs.C
+
+LETd/LETd.C
+
+LIB = $(FOAM_USER_LIBBIN)/libPMTunsaturatedFlowModels

@@ -1,0 +1,6 @@
+dispersionModel/dispersionModel.C
+dispersionModel/dispersionModelNew.C
+
+alphaDispersion/alphaDispersion.C
+
+LIB = $(FOAM_USER_LIBBIN)/libPMTdispersionModels

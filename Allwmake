@@ -1,0 +1,10 @@
+#!/bin/sh
+cd "${0%/*}" || exit 1
+
+if [ -f $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments ]
+then
+    . $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments
+fi
+
+wmake -all $targetType libraries
+wmake -all $targetType solvers

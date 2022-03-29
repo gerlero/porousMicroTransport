@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    name: OpenFOAM v${{ matrix.openfoam-version }}
+    runs-on: ubuntu-latest
+    container: opencfd/openfoam-dev:${{ matrix.openfoam-version }}
+    strategy:
+      matrix:
+        openfoam-version: ['2012', '2106', '2112']
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: |
+        openfoam${{ matrix.openfoam-version }} ./Allwmake -j
+    - uses: actions/setup-python@v3
+    - name: Test
+      run: |
+        openfoam${{ matrix.openfoam-version }} tests/runtests.sh

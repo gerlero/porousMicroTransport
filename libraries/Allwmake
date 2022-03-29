@@ -1,0 +1,16 @@
+#!/bin/sh
+cd "${0%/*}" || exit 1
+
+if [ -f $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments ]
+then
+    . $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments
+fi
+
+wmake $targetType util
+wmake $targetType common
+wmake $targetType unsaturatedFlowModels
+wmake $targetType PicardControl
+wmake $targetType dispersionModels
+wmake $targetType transport
+wmake $targetType reactions
+wmake $targetType boundaryConditions

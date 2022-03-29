@@ -1,0 +1,28 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  location    "constant";
+  object      transportProperties;
+}
+
+thetamin thetamax [0 0 0 0 0 0 0] 2.378e-5;
+thetamax thetamax [0 0 0 0 0 0 0] 0.7;
+
+phase.theta
+{
+  mu mu [1 -1 -1 0 0 0 0] 1e-3;
+}
+
+unsaturatedFlowModel BrooksAndCorey;
+
+K K [0 2 0 0 0 0 0] 1e-13;
+
+BrooksAndCoreyCoeffs
+{
+  pc0 pc0 [1 -1 -2 0 0 0 0] 3983e1; // = mu*3.983e-6/K
+  alpha alpha [0 0 0 0 0 0 0] 3.5248501939; // = 1/0.2837
+  n n [0 0 0 0 0 0 0] 10.0497003877; // = 2/0.2837 + 3
+  l	l [0 0 0 0 0 0 0] 4.795;
+}

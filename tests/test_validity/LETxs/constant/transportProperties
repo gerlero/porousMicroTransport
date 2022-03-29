@@ -1,0 +1,32 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  location    "constant";
+  object      transportProperties;
+}
+
+thetamin	thetamin [0 0 0 0 0 0 0]	0.01176; // = thetamax*0.01680
+thetamax  thetamax [0 0 0 0 0 0 0]	0.7;
+
+phase.theta
+{
+  rho rho [1 -3 0 0 0 0 0] 1e3;
+  mu mu [1 -1 -1 0 0 0 0] 1e-3;
+}
+
+K K [0 2 0 0 0 0 0] 1e-13;
+
+unsaturatedFlowModel LETxs;
+
+LETxsCoeffs
+{
+  pc0 pc0 [1 -1 -2 0 0 0 0] 8.900e7; // = mu*8.900e-3/K
+	Lw Lw [0 0 0 0 0 0 0] 1.651;
+  Ew Ew [0 0 0 0 0 0 0] 230.5;
+  Tw Tw [0 0 0 0 0 0 0] 0.9115;
+  Ls Ls [0 0 0 0 0 0 0] 0.517;
+  Es Es [0 0 0 0 0 0 0] 493.6;
+  Ts Ts [0 0 0 0 0 0 0] 0.3806;
+}
