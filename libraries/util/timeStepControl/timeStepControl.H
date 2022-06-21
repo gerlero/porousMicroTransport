@@ -3,7 +3,7 @@
 
 #include <Time.H>
 #include <TimeState.H>
-#include <scalarFwd.H>
+#include <scalar.H>
 #include <dictionary.H>
 
 namespace Foam
