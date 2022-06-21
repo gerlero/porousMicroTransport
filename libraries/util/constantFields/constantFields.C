@@ -92,7 +92,7 @@ Foam::tmp<Foam::volScalarField> Foam::Pmt::constantFields::readOrDefault
         return field;
     }
 
-    return volScalarField::New(name, mesh, dimensionedScalar(dims, val));
+    return volScalarField::New(name, mesh, dimensionedScalar{dims, val});
 }
 
 Foam::tmp<Foam::volScalarField> Foam::Pmt::constantFields::readOrDefault
