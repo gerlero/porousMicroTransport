@@ -1,6 +1,5 @@
 #include "timeStepControl.H"
 
-#include <scalar.H>
 #include <messageStream.H>
 #include <error.H>
 
@@ -24,21 +23,6 @@ bool Foam::Pmt::timeStepControl::loop()
     ++*this;
 
     return true;
-}
-
-Foam::scalar Foam::Pmt::timeStepControl::maxDeltaTValue()
-{
-    return controlDict().getCheckOrDefault("maxDeltaT", GREAT, [](scalar v){ return v>0; });
-}
-
-Foam::scalar Foam::Pmt::timeStepControl::deltaTValue() const
-{
-    return runTime_.deltaTValue();
-}
-
-const Foam::dictionary& Foam::Pmt::timeStepControl::controlDict() const
-{
-    return runTime_.controlDict();
 }
 
 bool Foam::Pmt::timeStepControl::restartTimeStepIfAdjustable(scalar newDeltaT)

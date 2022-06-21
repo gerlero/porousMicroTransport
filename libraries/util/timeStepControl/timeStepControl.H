@@ -40,4 +40,6 @@ private:
 }
 }
 
+#include "timeStepControlI.H"
+
 #endif
