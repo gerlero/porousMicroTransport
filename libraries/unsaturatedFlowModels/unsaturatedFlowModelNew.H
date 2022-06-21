@@ -101,11 +101,7 @@ autoPtr<Model> unsaturatedFlowModelNew
     Info<< "Selecting unsaturated flow model => " << modelType << endl;
 
     const auto& coeffs = 
-        dictionaries::subOrNullDict
-        (
-            transportProperties,
-            modelType + "Coeffs"
-        );
+        dictionaries::subOrNullDict(transportProperties, modelType + "Coeffs");
 
     return NewOfSelectedType<Model>(modelType, medium, phase, coeffs);
 }
