@@ -54,7 +54,7 @@ Foam::tmp<Foam::volScalarField> Foam::Pmt::constantFields::readIfPresent
         dims
     );
 
-    dimensionedScalar val(name, dims, 0);
+    dimensionedScalar val{name, dims, Zero};
 
     if (val.readIfPresent(dict))
     {
