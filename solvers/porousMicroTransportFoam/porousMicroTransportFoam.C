@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     #include "createFields.H"
 
-    Pmt::transportControl<> control(composition, runTime);
+    Pmt::transportControl<> control{composition, runTime};
 
     Info<< "\nStarting time loop\n" << endl;
 

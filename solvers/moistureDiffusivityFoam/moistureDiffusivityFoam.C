@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     #include "createFields.H"
 
-    Pmt::PicardControl control(runTime, theta);
+    Pmt::PicardControl control{runTime, theta};
 
     Info<< "\nStarting time loop\n" << endl;
 

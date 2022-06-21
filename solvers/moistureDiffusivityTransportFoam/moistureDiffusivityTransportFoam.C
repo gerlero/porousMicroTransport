@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     #include "createFields.H"
     #include "createTransportFields.H"
 
-    Pmt::transportControl<Pmt::PicardControl> control(composition, runTime, theta);
+    Pmt::transportControl<Pmt::PicardControl> control{composition, runTime, theta};
 
     Info<< "\nStarting time loop\n" << endl;
 
