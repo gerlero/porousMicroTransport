@@ -1,5 +1,4 @@
-Foam::tmp<Foam::volTensorField>
-Foam::Pmt::porousMixture::Deff
+inline Foam::tmp<Foam::volTensorField> Foam::Pmt::porousMixture::Deff
 (
     label speciesi,
     const volVectorField& U,
