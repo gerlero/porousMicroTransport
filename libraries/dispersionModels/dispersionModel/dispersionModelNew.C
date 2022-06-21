@@ -1,5 +1,6 @@
 #include "dispersionModel.H"
 #include "runTimeSelectionHelpers.H"
+#include "dictionaries.H"
 
 #include <word.H>
 
@@ -18,8 +19,6 @@ Foam::autoPtr<Foam::Pmt::dispersionModel> Foam::Pmt::dispersionModel::New
 
     Info<< "Selecting dispersion model => " << modelType << endl;
 
-    const auto* coeffs = speciesTransport.findDict(modelType + "Coeffs");
-
     return
         NewOfSelectedType<dispersionModel>
         (
@@ -28,6 +27,6 @@ Foam::autoPtr<Foam::Pmt::dispersionModel> Foam::Pmt::dispersionModel::New
             phase,
             speciesName,
             std::move(Dm),
-            coeffs ? *coeffs : dictionary::null
+            dictionaries::subOrNullDict(speciesTransport, modelType + "Coeffs")
         );
 }

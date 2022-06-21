@@ -1,5 +1,7 @@
 constantFields/constantFields.C
 
+dictionaries/dictionaries.C
+
 timeStepControl/timeStepControl.C
 
 LIB = $(FOAM_USER_LIBBIN)/libPMTutil

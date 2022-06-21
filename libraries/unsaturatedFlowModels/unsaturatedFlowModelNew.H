@@ -3,6 +3,7 @@
 
 #include "porousMediumFwd.H"
 #include "fluidPhaseFwd.H"
+#include "dictionaries.H"
 #include "runTimeSelectionHelpers.H"
 #include "capillarityModel.H"
 #include "relativePermeabilityModel.H"
@@ -37,8 +38,12 @@ autoPtr<T> unsaturatedFlowModelNew
     {
         Info<< "Selecting capillarity model => " << capillarityType << endl;
 
-        const auto* capillarityCoeffs =
-            transportProperties.findDict(capillarityType + "Coeffs");
+        const auto& capillarityCoeffs =
+            dictionaries::subOrNullDict
+            (
+                transportProperties,
+                capillarityType + "Coeffs"
+            );
 
         auto capillarityInstance =
             NewOfSelectedType<capillarityModel>
@@ -46,7 +51,7 @@ autoPtr<T> unsaturatedFlowModelNew
                 capillarityType,
                 medium,
                 phase,
-                capillarityCoeffs ? *capillarityCoeffs : dictionary::null
+                capillarityCoeffs
             );
 
         auto relativePermeabilityType =
@@ -67,8 +72,12 @@ autoPtr<T> unsaturatedFlowModelNew
             }
         }
 
-        const auto* relativePermeabilityCoeffs =
-            transportProperties.findDict(relativePermeabilityType + "Coeffs");
+        const auto& relativePermeabilityCoeffs =
+            dictionaries::subOrNullDict
+            (
+                transportProperties,
+                relativePermeabilityType + "Coeffs"
+            );
 
         auto relativePermeabilityInstance =
             NewOfSelectedType<relativePermeabilityModel>
@@ -76,7 +85,7 @@ autoPtr<T> unsaturatedFlowModelNew
                 relativePermeabilityType,
                 medium,
                 phase,
-                relativePermeabilityCoeffs ? *relativePermeabilityCoeffs : dictionary::null
+                relativePermeabilityCoeffs
             );
 
         return
@@ -91,16 +100,14 @@ autoPtr<T> unsaturatedFlowModelNew
 
     Info<< "Selecting unsaturated flow model => " << modelType << endl;
 
-    const auto* coeffs = transportProperties.findDict(modelType + "Coeffs");
-
-    return
-        NewOfSelectedType<T>
+    const auto& coeffs = 
+        dictionaries::subOrNullDict
         (
-            modelType,
-            medium,
-            phase,
-            coeffs ? *coeffs : dictionary::null
+            transportProperties,
+            modelType + "Coeffs"
         );
+
+    return NewOfSelectedType<T>(modelType, medium, phase, coeffs);
 }
 
 }
