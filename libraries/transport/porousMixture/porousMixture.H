@@ -49,4 +49,6 @@ private:
 }
 }
 
+#include "porousMixtureI.H"
+
 #endif
