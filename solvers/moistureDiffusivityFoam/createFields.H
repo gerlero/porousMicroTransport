@@ -57,7 +57,7 @@ volVectorField U
         IOobject::AUTO_WRITE
     },
     mesh,
-    dimensionedVector(dimVelocity, Zero)
+    dimensionedVector{dimVelocity, Zero}
 };
 
 #include "createPhi.H"
