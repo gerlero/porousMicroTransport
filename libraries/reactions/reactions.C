@@ -2,6 +2,8 @@
 
 #include <volFields.H>
 #include <DynamicList.H>
+#include <messageStream.H>
+#include <error.H>
 
 #include <cassert>
 
