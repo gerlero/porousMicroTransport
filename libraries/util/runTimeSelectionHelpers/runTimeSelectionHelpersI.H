@@ -29,7 +29,7 @@ auto Foam::Pmt::NewOfSelectedType(const word& modelType, Args&&... args)
 
 
 template<class T, class U>
-T Foam::Pmt::dynamicPtrCast(U&& uniquePtr) // Take (non-const) lvalues and rvalues
+T Foam::Pmt::dynamicPtrCast(U&& uniquePtr)
 {
     static_assert
     (
@@ -37,11 +37,11 @@ T Foam::Pmt::dynamicPtrCast(U&& uniquePtr) // Take (non-const) lvalues and rvalu
         "Cast target type must have a virtual destructor"
     );
 
-    if (auto ptr = dynamic_cast<typename T::pointer>(uniquePtr.get()))
+    if (auto* ptr = dynamic_cast<typename T::pointer>(uniquePtr.get()))
     {
-        uniquePtr.release();
+        std::forward<U>(uniquePtr).release();
         return T{ptr};
     }
-    
+
     return T{nullptr};
 }
