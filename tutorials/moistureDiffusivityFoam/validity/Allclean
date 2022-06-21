@@ -2,5 +2,5 @@
 cd "${0%/*}" || exit 1
 
 for d in */; do
-    (cd "$d" && ./clean)
+    "$d"/clean
 done
