@@ -19,7 +19,10 @@ class LETxs
 {
 
 public:
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Winconsistent-missing-override"
     TypeName("LETxs");
+    #pragma clang diagnostic pop
 
     LETxs
     (

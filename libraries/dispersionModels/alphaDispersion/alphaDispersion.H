@@ -17,7 +17,10 @@ class alphaDispersion
     public dispersionModel
 {
 public:
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Winconsistent-missing-override"
     TypeName("alphaDispersion");
+    #pragma clang diagnostic pop
 
     alphaDispersion
     (

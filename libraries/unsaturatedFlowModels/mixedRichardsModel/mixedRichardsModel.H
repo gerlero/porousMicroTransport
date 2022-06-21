@@ -17,7 +17,10 @@ class mixedRichardsModel final
     public RichardsModel
 {
 public:
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Winconsistent-missing-override"
     TypeName("mixedRichardsModel");
+    #pragma clang diagnostic pop
 
     mixedRichardsModel
     (

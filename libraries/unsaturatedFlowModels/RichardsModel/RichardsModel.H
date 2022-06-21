@@ -19,7 +19,10 @@ class RichardsModel
     public moistureDiffusivityModel
 {
 public:
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Winconsistent-missing-override"
     TypeName("RichardsModel");
+    #pragma clang diagnostic pop
 
     declareRunTimeSelectionTable
     (

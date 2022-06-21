@@ -22,7 +22,10 @@ class VanGenuchten
 {
 
 public:
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Winconsistent-missing-override"
     TypeName("VanGenuchten");
+    #pragma clang diagnostic pop
 
     VanGenuchten
     (

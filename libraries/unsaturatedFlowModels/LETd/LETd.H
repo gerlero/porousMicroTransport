@@ -19,7 +19,10 @@ class LETd
 {
 
 public:
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Winconsistent-missing-override"
     TypeName("LETd");
+    #pragma clang diagnostic pop
 
     LETd
     (

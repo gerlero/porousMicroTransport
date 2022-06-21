@@ -23,7 +23,10 @@ class BrooksAndCorey
 {
 
 public:
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Winconsistent-missing-override"
     TypeName("BrooksAndCorey");
+    #pragma clang diagnostic pop
 
     BrooksAndCorey
     (

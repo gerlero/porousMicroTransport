@@ -23,7 +23,10 @@ class porousMixture
     public basicMultiComponentMixture
 {
 public:
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Winconsistent-missing-override"
     TypeName("porousMixture");
+    #pragma clang diagnostic pop
 
     porousMixture
     (
