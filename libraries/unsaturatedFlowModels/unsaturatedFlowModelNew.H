@@ -25,8 +25,8 @@ namespace Pmt
 namespace Detail
 {
 
-template<class T>
-autoPtr<T> unsaturatedFlowModelNew
+template<class Model>
+autoPtr<Model> unsaturatedFlowModelNew
 (
     const porousMedium& medium,
     const fluidPhase& phase,
@@ -65,7 +65,7 @@ autoPtr<T> unsaturatedFlowModelNew
          && isA<relativePermeabilityModel>(*capillarityInstance)
         )
         {
-            if (auto instance = dynamicPtrCast<autoPtr<T>>(capillarityInstance))
+            if (auto instance = dynamicPtrCast<autoPtr<Model>>(capillarityInstance))
             {
                 assert(!capillarityInstance);
                 return instance;
@@ -89,7 +89,7 @@ autoPtr<T> unsaturatedFlowModelNew
             );
 
         return
-            autoPtr<T>::template NewFrom<mixedRichardsModel>
+            autoPtr<Model>::template NewFrom<mixedRichardsModel>
             (
                 std::move(capillarityInstance),
                 std::move(relativePermeabilityInstance)
@@ -107,7 +107,7 @@ autoPtr<T> unsaturatedFlowModelNew
             modelType + "Coeffs"
         );
 
-    return NewOfSelectedType<T>(modelType, medium, phase, coeffs);
+    return NewOfSelectedType<Model>(modelType, medium, phase, coeffs);
 }
 
 }

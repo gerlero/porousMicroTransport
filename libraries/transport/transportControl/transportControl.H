@@ -17,8 +17,8 @@ class transportControl
     public Base
 {
 public:
-    template<typename... Args>
-    transportControl(basicMultiComponentMixture& composition, Args&&... args);
+    template<typename... Args_>
+    transportControl(basicMultiComponentMixture& composition, Args_&&... args);
 
     bool retry();
 

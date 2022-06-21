@@ -5,14 +5,14 @@
 #include <type_traits>
 
 template<class Base>
-template<typename... Args>
+template<typename... Args_>
 Foam::Pmt::transportControl<Base>::transportControl
 (
     basicMultiComponentMixture& composition,
-    Args&&... args
+    Args_&&... args
 )
 :
-    Base{std::forward<Args>(args)...},
+    Base{std::forward<Args_>(args)...},
     composition_{composition},
     maxDeltaY_(composition.Y().size(), 0.0),
     maxDYdT_(composition.Y().size(), 0.0),

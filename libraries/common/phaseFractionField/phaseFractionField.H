@@ -17,8 +17,8 @@ class phaseFractionField
     public volScalarField
 {
 public:
-    template<typename... Args>
-    phaseFractionField(const dictionary& transportProperties, Args&&... args);
+    template<typename... Args_>
+    phaseFractionField(const dictionary& transportProperties, Args_&&... args);
 
     const volScalarField& min() const noexcept;
 
@@ -30,8 +30,8 @@ public:
 
     void clone() = delete;
 
-    template<typename... Args>
-    static void New(Args&&... args) = delete;
+    template<typename... Args_>
+    static void New(Args_&&... args) = delete;
 
 private:
     volScalarField min_;

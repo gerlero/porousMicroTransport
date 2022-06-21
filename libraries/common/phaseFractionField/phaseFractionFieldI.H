@@ -4,14 +4,14 @@
 
 #include <utility>
 
-template<typename... Args>
+template<typename... Args_>
 Foam::Pmt::phaseFractionField::phaseFractionField
 (
     const dictionary& transportProperties, 
-    Args&&... args
+    Args_&&... args
 )
 :
-    volScalarField{std::forward<Args>(args)...},
+    volScalarField{std::forward<Args_>(args)...},
     min_{constantFields::readOrDefault(name() + "min", mesh(), dimless, Zero, transportProperties)},
     max_{constantFields::readOrDefault(name() + "max", mesh(), dimless, One, transportProperties)}
 {

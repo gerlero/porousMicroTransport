@@ -8,13 +8,13 @@ namespace Foam
 namespace Pmt
 {
 
-template<class T, typename... Args>
-auto NewOfSelectedType(const word& modelType, Args&&... args)
--> decltype(T::dictionaryConstructorTablePtr_->find(modelType)()(std::forward<Args>(args)...));
+template<class Model, typename... Args_>
+auto NewOfSelectedType(const word& modelType, Args_&&... args)
+-> decltype(Model::dictionaryConstructorTablePtr_->find(modelType)()(std::forward<Args_>(args)...));
 
 
-template<class T, class U>
-T dynamicPtrCast(U&& uniquePtr);
+template<class TargetPtr, class SourcePtr_>
+TargetPtr dynamicPtrCast(SourcePtr_&& uniquePtr);
 
 }
 }
