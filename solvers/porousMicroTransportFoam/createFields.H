@@ -66,8 +66,8 @@ Pmt::phaseFractionField theta
 
 Info<< "\nReading species\n" << endl;
 
-Pmt::porousMixture composition(medium, phase, transportProperties);
+Pmt::porousMixture composition{medium, phase, transportProperties};
 
 Info<< "\nReading reactions\n" << endl;
 
-Pmt::reactions reactions(composition, transportProperties);
+Pmt::reactions reactions{composition, transportProperties};
