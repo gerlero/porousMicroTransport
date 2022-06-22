@@ -28,7 +28,7 @@ public:
 
     void correct();
 
-    const volScalarField& reactionTerm(label speciesi) const noexcept;
+    const volScalarField& reactionTerm(label speciesi) const;
 
     reactions(const reactions&) = delete;
     void operator=(const reactions&) = delete;
