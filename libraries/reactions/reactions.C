@@ -25,7 +25,7 @@ Foam::Pmt::reactions::reactions
             {
                 const auto& Y = composition.Y(speciesi);
 
-                terms.emplace
+                terms.set
                 (
                     speciesi,
                     volScalarField::New
