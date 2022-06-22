@@ -1,4 +1,5 @@
 #include "reactions.H"
+#include "dictionaries.H"
 
 #include <volFields.H>
 #include <DynamicList.H>
@@ -45,80 +46,76 @@ Foam::Pmt::reactions::reactions
         {
             DynamicList<reaction> list{};
             
-            if (auto reactionsDict = transportProperties.findDict("reactions"))
+            const auto& reactionsDict =
+                dictionaries::subOrNullDict(transportProperties, "reactions");
+            
+            Info<< reactionsDict.size() << " reactions found" << nl
+                << endl;
+
+            for (const auto& entry : reactionsDict)
             {
-                Info<< reactionsDict->size() << " reactions found" << nl
+                const auto& dict = entry.dict();
+
+                Info<< "Reaction " << dict.dictName() << nl
+                    << "{" << nl
                     << endl;
 
-                for (const auto& entry : *reactionsDict)
-                {
-                    const auto& dict = entry.dict();
-
-                    Info<< "Reaction " << dict.dictName() << nl
-                        << "{" << nl
-                        << endl;
-
-                    auto lrhs =
-                        speciesCoeffs::readReactionEqn
-                        (
-                            composition.species(),
-                            dict.lookup("reaction")
-                        );
-
-                    Info<< "    ";
-                    speciesCoeffs::writeReactionEqn
+                auto lrhs =
+                    speciesCoeffs::readReactionEqn
                     (
-                        Info,
-                        lrhs.first(),
-                        lrhs.second(),
-                        composition.species()
+                        composition.species(),
+                        dict.lookup("reaction")
                     );
-                    Info<< nl
-                        << endl;
 
-                    auto kf = 
-                        dimensionedScalar
-                        {
-                            "kf",
-                            kDimensions(lrhs.first(), lrhs.second(), composition),
-                            dict
-                        }.value();
-                    
-                    Info<< "    kf (->) = " << kf << endl;
+                Info<< "    ";
+                speciesCoeffs::writeReactionEqn
+                (
+                    Info,
+                    lrhs.first(),
+                    lrhs.second(),
+                    composition.species()
+                );
+                Info<< nl
+                    << endl;
 
-                    auto kr =
-                        dimensionedScalar::getOrDefault
-                        (
-                            "kr",
-                            dict,
-                            kDimensions(lrhs.second(), lrhs.first(), composition),
-                            Zero
-                        ).value();
-
-                    if (kr != 0)
+                auto kf = 
+                    dimensionedScalar
                     {
-                        Info<< "    kr (<-) = " << kr << nl;
-                    }
-                    Info<< "}" << nl
-                        << endl;
+                        "kf",
+                        kDimensions(lrhs.first(), lrhs.second(), composition),
+                        dict
+                    }.value();
+                
+                Info<< "    kf (->) = " << kf << endl;
 
-                    list.append
+                auto kr =
+                    dimensionedScalar::getOrDefault
                     (
-                        reaction
-                        {
-                            std::move(lrhs.first()),
-                            std::move(lrhs.second()),
-                            kf,
-                            kr
-                        }
-                    );
+                        "kr",
+                        dict,
+                        kDimensions(lrhs.second(), lrhs.first(), composition),
+                        Zero
+                    ).value();
+
+                if (kr != 0)
+                {
+                    Info<< "    kr (<-) = " << kr << nl;
                 }
-            }
-            else
-            {
-                Info<< "No reactions defined" << nl
+                Info<< "}" << nl
                     << endl;
+
+                list.append
+                (
+                    reaction
+                    {
+                        std::move(lrhs.first()),
+                        std::move(lrhs.second()),
+                        kf,
+                        kr
+                    }
+                );
             }
+
             return list;
         }()
     }
