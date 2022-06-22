@@ -10,8 +10,7 @@ volVectorField U
         IOobject::MUST_READ,
         IOobject::AUTO_WRITE
     },
-    mesh,
-    dimVelocity
+    mesh
 };
 
 #include "createPhi.H"
