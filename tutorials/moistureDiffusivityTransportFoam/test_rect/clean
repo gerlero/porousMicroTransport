@@ -1,0 +1,6 @@
+#!/bin/sh
+rm -f log.* 
+foamListTimes -rm
+rm -rf processor*
+rm -rf constant/polyMesh
+rm -rf dynamicCode

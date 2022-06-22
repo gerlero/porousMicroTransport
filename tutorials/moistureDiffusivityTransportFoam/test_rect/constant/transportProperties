@@ -1,0 +1,56 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  location    "constant";
+  object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+	
+phase.theta
+{
+    rho	rho [1 -3 0 0 0 0 0]	1e3;
+    mu	mu [1 -1 -1 0 0 0 0]	1e-3;
+}
+
+
+thetamin thetamin [0 0 0 0 0 0 0] 0.019852; // = 0.7*0.02836
+thetamax thetamax [0 0 0 0 0 0 0] 0.7;
+
+unsaturatedFlowModel LETd;
+
+LETdCoeffs
+{
+  L L [0 0 0 0 0 0 0] 0.004569;
+  E	E [0 0 0 0 0 0 0] 12930;
+  T	T [0 0 0 0 0 0 0] 1.505;
+  Dwt Dwt [0 2 -1 0 0 0 0] 4.660e-4;
+}
+
+species
+(
+    "ampholyte.TARTRAZINE"
+);
+
+ampholyte.TARTRAZINE
+{
+    Dm diffusivity [0 2 -1 0 0 0 0 ] 1.4476e-9;
+    dispersionModel alphaDispersion;
+    alphaDispersionCoeffs
+    {
+        tau tau [0 0 0 0 0 0 0] 1.96;
+        alphaT alphaT [0 1 0 0 0 0 0] 5e-5;
+        alphaL $alphaT;
+    }
+}
+
+
+// ************************************************************************* //
