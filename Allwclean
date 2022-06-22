@@ -4,7 +4,7 @@ cd "${0%/*}" || exit 1
 wclean all solvers
 wclean all libraries
 
-rm -f "$FOAM_USER_APPBIN/porousMicroTransportFoam"
-rm -f "$FOAM_USER_APPBIN/moistureDiffusivityFoam"
-rm -f "$FOAM_USER_APPBIN/moistureDiffusivityTransportFoam"
-rm -f "$FOAM_USER_LIBBIN/libPMT*"
+rm -f "${FOAM_USER_APPBIN:?}/porousMicroTransportFoam"
+rm -f "${FOAM_USER_APPBIN:?}/moistureDiffusivityFoam"
+rm -f "${FOAM_USER_APPBIN:?}/moistureDiffusivityTransportFoam"
+rm -f "${FOAM_USER_LIBBIN:?}/libPMT*"
