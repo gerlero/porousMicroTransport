@@ -4,7 +4,6 @@
 #include <DynamicList.H>
 #include <error.H>
 
-#include <string>
 #include <cassert>
 
 Foam::List<Foam::Pmt::speciesCoeffs> Foam::Pmt::speciesCoeffs::readReactionSide
@@ -130,7 +129,7 @@ Foam::Pmt::speciesCoeffs::speciesCoeffs
 
         if (i != word::npos)
         {
-            exponent = std::stod(name.substr(i + 1));
+            exponent = readScalar(name.substr(i + 1));
             name.resize(i);
         }
         else
