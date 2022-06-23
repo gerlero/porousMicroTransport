@@ -36,6 +36,11 @@ TargetPtr Foam::Pmt::dynamicPtrCast(SourcePtr_&& uniquePtr)
         std::has_virtual_destructor<typename TargetPtr::element_type>::value,
         "Cast target type must have a virtual destructor"
     );
+    static_assert
+    (
+        noexcept(std::forward<SourcePtr_>(uniquePtr).release()),
+        "uniquePtr.release() must be noexcept"
+    );
 
     if (auto* ptr = dynamic_cast<typename TargetPtr::pointer>(uniquePtr.get()))
     {
