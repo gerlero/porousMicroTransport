@@ -1,0 +1,36 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  location    "constant";
+  object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+eps 1;
+species
+(
+    "ampholyte.TARTRAZINE"
+);
+
+ampholyte.TARTRAZINE
+{
+    Dm diffusivity [0 2 -1 0 0 0 0 ] 1.4476e-9;
+    dispersionModel alphaDispersion;
+    alphaDispersionCoeffs
+    {
+        tau tau [0 0 0 0 0 0 0] 1.96;
+        alphaT alphaT [0 1 0 0 0 0 0] 5e-5;
+        alphaL 0;
+    }
+}
+
+
+// ************************************************************************* //
