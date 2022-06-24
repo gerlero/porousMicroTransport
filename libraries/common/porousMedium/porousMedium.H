@@ -20,7 +20,7 @@ public:
 
     const fvMesh& mesh() const noexcept;
 
-    const volScalarField& eps() const noexcept;
+    const volScalarField& eps() const;
 
     const volScalarField& K() const;
 
@@ -29,7 +29,7 @@ public:
 
 private:
     const fvMesh& mesh_;
-    volScalarField eps_;
+    autoPtr<volScalarField> eps_;
     autoPtr<volScalarField> K_;
 };
 

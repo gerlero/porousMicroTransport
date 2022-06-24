@@ -11,19 +11,17 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     {
         [&]
         {
-            auto thetamax = constantFields::readIfPresent("thetamax", mesh, dimless, transportProperties);
-
-            if (!thetamax)
-            {
-                return constantFields::read("eps", mesh, dimless, transportProperties);
-            }
-
             if (auto eps = constantFields::readIfPresent("eps", mesh, dimless, transportProperties))
             {
-                return eps;
+                return autoPtr<volScalarField>{eps.ptr()};  // ptr() call releases ownership
+            }
+            
+            if (auto thetamax = constantFields::readIfPresent("thetamax", mesh, dimless, transportProperties))
+            {
+                return autoPtr<volScalarField>{thetamax.ptr()};
             }
 
-            return thetamax;
+            return autoPtr<volScalarField>{nullptr};
         }()
     },
     K_
@@ -32,7 +30,7 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
         {
             if (auto K = constantFields::readIfPresent("K", mesh, dimArea, transportProperties))
             {
-                return autoPtr<volScalarField>{K.ptr()}; // ptr() call releases ownership
+                return autoPtr<volScalarField>{K.ptr()};
             }
 
             return autoPtr<volScalarField>{nullptr};
@@ -42,15 +40,23 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     Info<< nl
         << "Porous medium properties" << nl
         << "{" << nl
-        << "    Porosity (eps or thetamax): "; eps_.writeMinMax(Info);
-    Info<< "    Intrinsic permeability K: ";
+        << "    Porosity (eps | thetamax): ";
+    if (eps_)
+    {
+        eps_->writeMinMax(Info);
+    }
+    else
+    {
+        Info<< "not set" << nl;
+    }
+    Info<< "    Intrinsic permeability (K): ";
     if (K_)
     {
         K_->writeMinMax(Info);
     }
     else
     {
-        Info<< "not set" << endl;
+        Info<< "not set" << nl;
     }
     Info<< "}" << nl
         << endl;
