@@ -2,36 +2,155 @@
 
 [![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml)
 
-**porousMicrotransport** is
+**porousMicroTransport** is a set of additional solvers and related libraries for OpenFOAM developed for the purposes of simulating flow and transport in porous media, with an emphasis on paper-based microfluidics
 
 
 ## Installation
 
-OpenFOAM v2012 or newer is required. Versions from the openfoam.org are not supported
+### Requirements
+
+**porousMicroTransport** requires [OpenFOAM](openfoam.com), as distributed by OpenCFD ([openfoam.com](openfoam.com)). Compatible OpenFOAM versions are v2012, v2106, v2112 and v2206.
+
+_Versions produced by the OpenFOAM Foundation ([openfoam.org](openfoam.org)) (e.g. OpenFOAM 9, OpenFOAM 10) are not compatible._
+
+**porousMicroTransport** is provided as source code and must be compiled before use.
+
+### Download
+
+Download the source code of **porousMicroTransport** manually, or clone the repository with Git:
 
 ```sh
-./Allwmake
+git clone https://github.com/gerlero/porousMicroTransport.git
+```
+
+### Compile and install
+
+To build and install **porousMicroTransport**, just invoke the top-level `Allwmake` script:
+
+```sh
+cd porousMicroTransport
+./Allwmake -j
+```
+
+_If necessary, activate/source the correct OpenFOAM environment before running `Allwmake`._
+
+### Test
+
+Optionally, you can verify the installation of **porousMicrotransport** by running the included test suite (requires Python 3).
+
+```sh
+tests/runtests.sh
 ```
 
 ## Solvers
 
-* `moistureDiffusivityFoam`
+### `moistureDiffusivityFoam`
 
-Capillary flow
+**(Unsaturated) capillarity-driven flow in a porous medium**, governed by the moisture diffusivity equation[^Bear]:
 
-* `porousMicroTransportFoam`
+$$\frac{\partial\theta}{\partial t} - \nabla\cdot\left[D\nabla\theta\right] = 0$$
 
-Transport (optionally with reactions)
+where $\theta$ is the moisture content and $D$ is a saturation-dependent diffusivity as defined by an unsaturated flow model.
 
-* `moistureDiffusivityTransportFoam`
+### `porousMicroTransportFoam`
 
-Flow + reactive transport (coupled solver)
+**Transport by steady flow of any number of species in a porous medium, with optional reactions between the species**. For each species (concentration $C$), the governing equation is:
+
+$$\frac{\partial\theta C}{\partial t} + \nabla\cdot\left[UC\right] - \nabla\cdot\left[\theta D_{eff}\nabla C\right] = \theta R$$
+
+where $D_{eff}$ is an effective diffusivity tensor—which models the effects of molecular diffusion and mechanical dispersion—and $R$ is a reaction term (see below).
+
+### `moistureDiffusivityTransportFoam`
+
+**Capillary flow + reactive transport in a porous medium**, coupling the moisture diffusivity equation for flow with the previous transport equation.
+
 
 ## Case layout
 
-### Unsaturated flow
+The layout of **porousMicroTransport** cases follows many conventions of [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam), especially in field names and entries in the `transportProperties` dictionary. This allows for easy conversion of cases from **porousMultiphaseFoam** to **porousMicroTransport** (and to some extent, vice versa).
+
+### Common porous medium properties
+
+Defined as scalar fields in `constant` or as dictionary entries in `transportProperties`:
+
+* `eps` or `thetamax`: porosity
+
+* `K`: intrinsic permeability
+
+These definitions are not always required: an error will be raised at the point of use if a value is needed but is not defined.
+
+### Phase properties
+
+Set these in a `phase.theta` subdictionary in `transportProperties`:
+
+* `rho`: density
+
+* `mu`: dynamic viscosity
+
+### Unsaturated flow models
+
+Supported models of unsaturated flow are:
+
+* `BrooksAndCorey`: Brooks and Corey[^BrooksAndCorey] model
+
+* `VanGenuchten`: Van Genuchten[^VanGenuchten] model
+
+* `LETxs`: LETx + LETs model[^LETxs]
+
+* `LETd`: LETd[^LETd] model
+
+To choose a model for your simulation, set the `unsaturatedFlowModel` entry in `transportProperties`. Then set the model-specific parameters in the corresponding coefficient subdictionary.
 
 ### Transport
 
+A `species` list in `transportProperties` contains the names of all transported species. 
+Each species must also define its own scalar concentration field (named the same as the species).
+
+For each species, the following entries are required in `transportProperties`:
+
+* `Dm`: molecular diffusivity
+
+* `dispersionModel`: dispersion model (see below)
+
+* Coefficient dictionary for the selected dispersion model
+
+Supported dispersion models are:
+
+* `alphaDispersion`: anisotropic mechanical dispersion with transverse and longitudinal coefficients
+
 ### Reactions
 
+Reactions are defined in a `reactions` subdictionary in `transportProperties`. The `reactions` dictionary contains a list of subdictionaries, each of which defines a single reaction. A reaction can have an arbitrary name and should contain the following entries:
+
+* `reaction`: reaction equation. E.g. `"A^2 + B = 2C + D"`, where `A`, `B`, `C` and `D` are names of defined species
+
+* `kf`: forward rate constant
+
+* `kr`: optional reverse rate constant (for reversible reactions)
+
+
+## Tutorials
+
+Sample cases are available in the [`tutorials` directory](tutorials).
+
+
+## Related projects
+
+* [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam)[^porousMultiphaseFoam]: toolbox for OpenFOAM for modeling multiphase flow and transport. As previously stated, **porousMicrotransport** is mostly compatible with **porousMultiphaseFoam** in terms of case definitions, and can be installed alongside it.
+
+* [**electroMicroTransport**](https://gitlab.com/santiagomarquezd/electroMicroTransport)[^electroMicroTransport]: toolbox for OpenFOAM dedicated to electromigrative separations. It includes support for modeling separations in paper-based media, and can also be installed alongside **porousMicrotransport**.
+
+
+[^Bear]: Bear, J., Cheng A.H.D.: Modeling Groundwater Flow and Contaminant Transport. Springer Dordrecht (2010)
+
+[^porousMultiphaseFoam]: Horgue, P., Renard, F., Gerlero, G.S., Guibert, R., Debenest, G.: porousMultiphaseFoam v2107: An open-source tool for modeling saturated/unsaturated water flows and solute transfers at watershed scale. Comput. Phys. Comm., **273**, 108278 (2022)
+
+[^electroMicroTransport]: Gerlero, G.S., Marquez Damián, S., Kler, P.A.: electroMicroTransport v2107: Open-source toolbox for paper-based electromigrative separations. Comput. Phys. Comm., **269**, 108143 (2021)
+
+[^BrooksAndCorey]: Brooks, R., Corey, T. (1964): Hydraulic properties of porous media. Hydrol. Pap. Colo. State Univ., **24**, 37 (1964)
+
+[^VanGenuchten]: Van Genuchten, M. T.: A closed-form equation for predicting the hydraulic conductivity of unsaturated soils. Soil Sci. Soc. Am. J., **44**, 892–898 (1980)
+
+[^LETxs]: Lomeland, F.: Overview of the LET family of versatile correlations for flow functions. In: Proceedings of the International Symposium of Core Analysts, pp. SCA2018-056 (2018)
+
+[^LETd]: Gerlero, G.S., Valdez, A.R., Urteaga, R., Kler, P. A.: Validity of Capillary Imbibition Models in Paper-Based Microfluidic Applications. Transp. Porous Media, **141**, 359-378 (2022)
