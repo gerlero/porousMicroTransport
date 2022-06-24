@@ -13,7 +13,7 @@ inline const Foam::volScalarField& Foam::Pmt::porousMedium::eps() const
             << "Porosity (eps | thetamax) required but not set" << endl
             << exit(FatalError);
     }
-    return eps_;
+    return *eps_;
 }
 
 inline const Foam::volScalarField& Foam::Pmt::porousMedium::K() const
