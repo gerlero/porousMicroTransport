@@ -215,7 +215,7 @@ Foam::dimensionSet Foam::Pmt::reactions::kDimensions
         }
     }
 
-    dims /= Ydims;
+    dims /= Ydims*dimTime;
 
     return dims;
 }
