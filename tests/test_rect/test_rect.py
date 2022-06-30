@@ -1,44 +1,51 @@
-import numpy as np
+import pytest
+
+import subprocess
 import math
-alphaT=5e-5
-probes=np.arange(300,16000,400)
+from pathlib import Path
 
-f=open('./50/ampholyte.TARTRAZINE','r')
-for dummy_lines in range(21):
-    line=f.readline()
-line=f.readline()
-ndata=int(line)
-line=f.readline()
-field=np.fromfile(f,count=ndata,dtype='float',sep=' ')
-f.close()
-f=open('./0/Cx','r')
-for dummy_lines in range(21):
-    line=f.readline()
-line=f.readline()
-ndata=int(line)
-line=f.readline()
-xnod=np.fromfile(f,count=ndata,dtype='float',sep=' ')
-f.close()
-f=open('./0/Cy','r')
-for dummy_lines in range(21):
-    line=f.readline()
-line=f.readline()
-ndata=int(line)
-line=f.readline()
-ynod=np.fromfile(f,count=ndata,dtype='float',sep=' ')
-f.close()
+import numpy as np
 
-start=int(0.6*ndata)
-stop=int(0.8*ndata)
-ndata=stop-start
-e=np.zeros(ndata)
-for i in range(start,stop):
-    e[i-start]=abs(field[i]-0.5*math.erfc(ynod[i]/(2*(alphaT*xnod[i])**0.5)))
+DIR = Path(__file__).parent
 
-test_pass=np.linalg.norm(e)<1e-3*ndata
+@pytest.fixture(scope="module")
+def rect_case():
+    subprocess.run(["./clean"],cwd=DIR)
+    subprocess.run(["./run"], check=True, cwd=DIR)
+    return DIR
 
-if test_pass:
-    print('Rect test passed')
-else:
-    print('Rect test not passed')
+def test_rect(rect_case):
+    alphaT=5e-5
 
+    with open(rect_case / '50/ampholyte.TARTRAZINE','r') as f:
+        for _ in range(21):
+            line=f.readline()
+        line=f.readline()
+        ndata=int(line)
+        line=f.readline()
+        field=np.fromfile(f,count=ndata,dtype='float',sep=' ')
+
+    with open(rect_case / '0/Cx','r') as f:
+        for _ in range(21):
+            line=f.readline()
+        line=f.readline()
+        ndata=int(line)
+        line=f.readline()
+        xnod=np.fromfile(f,count=ndata,dtype='float',sep=' ')
+
+    with open(rect_case / '0/Cy','r') as f:
+        for _ in range(21):
+            line=f.readline()
+        line=f.readline()
+        ndata=int(line)
+        line=f.readline()
+        ynod=np.fromfile(f,count=ndata,dtype='float',sep=' ')
+
+    start=int(0.6*ndata)
+    stop=int(0.8*ndata)
+    ndata=stop-start
+    e=np.zeros(ndata)
+    for i in range(start,stop):
+        e[i-start]=abs(field[i]-0.5*math.erfc(ynod[i]/(2*(alphaT*xnod[i])**0.5)))
+
+    assert(np.linalg.norm(e)<1e-3*ndata)
