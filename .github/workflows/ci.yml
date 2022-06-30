@@ -19,6 +19,7 @@ jobs:
       fail-fast: false
     steps:
     - uses: actions/checkout@v3
+    - uses: ammaraskar/gcc-problem-matcher@master
     - name: Build
       run: |
         openfoam${{ matrix.openfoam-version }} ./Allwmake -j
