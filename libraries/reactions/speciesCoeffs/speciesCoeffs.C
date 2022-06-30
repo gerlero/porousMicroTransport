@@ -1,6 +1,7 @@
 #include "speciesCoeffs.H"
 
 #include <word.H>
+#include <IStringStream.H>
 #include <DynamicList.H>
 #include <error.H>
 
@@ -52,6 +53,18 @@ Foam::Pmt::speciesCoeffs::readReactionEqn
     auto rhs = readReactionSide(species, is);
 
     return {lhs, rhs};
+}
+
+Foam::Pair<Foam::List<Foam::Pmt::speciesCoeffs>> 
+Foam::Pmt::speciesCoeffs::readReactionEqn
+(
+    const speciesTable& species,
+    const string& str
+)
+{
+    IStringStream is{str};
+
+    return readReactionEqn(species, is);
 }
 
 

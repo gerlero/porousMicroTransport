@@ -25,7 +25,7 @@ struct speciesCoeffs
     static Pair<List<speciesCoeffs>> readReactionEqn
     (
         const speciesTable& species,
-        Istream& is
+        const string& str
     );
 
     static void writeReactionEqn
@@ -40,6 +40,12 @@ private:
     speciesCoeffs(const speciesTable& species, Istream& is);
 
     void write(Ostream& os, const speciesTable& species) const;
+
+    static Pair<List<speciesCoeffs>> readReactionEqn
+    (
+        const speciesTable& species,
+        Istream& is
+    );
 
     static List<speciesCoeffs> readReactionSide
     (

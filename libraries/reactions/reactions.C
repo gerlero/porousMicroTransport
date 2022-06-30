@@ -57,14 +57,13 @@ Foam::Pmt::reactions::reactions
                 const auto& dict = entry.dict();
 
                 Info<< "Reaction " << dict.dictName() << nl
-                    << "{" << nl
-                    << endl;
+                    << "{" << endl;
 
                 auto lrhs =
                     speciesCoeffs::readReactionEqn
                     (
                         composition.species(),
-                        dict.lookup("reaction")
+                        dict.get<string>("reaction")
                     );
 
                 Info<< "    ";
