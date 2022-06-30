@@ -1,4 +1,4 @@
-//reactions.correct();
+reactions.correct();
 
 forAll(composition.Y(), speciesi)
 {
