@@ -39,7 +39,7 @@ autoPtr<Model> unsaturatedFlowModelNew
         Info<< "Selecting capillarity model => " << capillarityType << endl;
 
         const auto& capillarityCoeffs =
-            dictionaries::subOrNullDict
+            dictionaries::subOrNullDictRef
             (
                 transportProperties,
                 capillarityType + "Coeffs"
@@ -73,7 +73,7 @@ autoPtr<Model> unsaturatedFlowModelNew
         }
 
         const auto& relativePermeabilityCoeffs =
-            dictionaries::subOrNullDict
+            dictionaries::subOrNullDictRef
             (
                 transportProperties,
                 relativePermeabilityType + "Coeffs"
@@ -101,7 +101,7 @@ autoPtr<Model> unsaturatedFlowModelNew
     Info<< "Selecting unsaturated flow model => " << modelType << endl;
 
     const auto& coeffs = 
-        dictionaries::subOrNullDict(transportProperties, modelType + "Coeffs");
+        dictionaries::subOrNullDictRef(transportProperties, modelType + "Coeffs");
 
     return NewOfSelectedType<Model>(modelType, medium, phase, coeffs);
 }

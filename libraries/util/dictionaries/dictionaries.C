@@ -1,7 +1,7 @@
 #include "dictionaries.H"
 
 const Foam::dictionary&
-Foam::Pmt::dictionaries::subOrNullDict(const dictionary& dict, const word& keyword)
+Foam::Pmt::dictionaries::subOrNullDictRef(const dictionary& dict, const word& keyword)
 {
    if (const auto* sub = dict.findDict(keyword))
    {

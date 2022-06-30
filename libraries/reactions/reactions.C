@@ -47,7 +47,7 @@ Foam::Pmt::reactions::reactions
             DynamicList<reaction> list{};
             
             const auto& reactionsDict =
-                dictionaries::subOrNullDict(transportProperties, "reactions");
+                dictionaries::subOrNullDictRef(transportProperties, "reactions");
             
             Info<< reactionsDict.size() << " reactions found" << nl
                 << endl;

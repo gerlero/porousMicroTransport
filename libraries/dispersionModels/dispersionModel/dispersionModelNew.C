@@ -27,6 +27,6 @@ Foam::autoPtr<Foam::Pmt::dispersionModel> Foam::Pmt::dispersionModel::New
             phase,
             speciesName,
             std::move(Dm),
-            dictionaries::subOrNullDict(speciesTransport, modelType + "Coeffs")
+            dictionaries::subOrNullDictRef(speciesTransport, modelType + "Coeffs")
         );
 }

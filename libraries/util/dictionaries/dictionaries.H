@@ -11,7 +11,7 @@ namespace Pmt
 namespace dictionaries
 {
 
-const dictionary& subOrNullDict(const dictionary& dict, const word& keyword);
+const dictionary& subOrNullDictRef(const dictionary& dict, const word& keyword);
 
 }
 }
