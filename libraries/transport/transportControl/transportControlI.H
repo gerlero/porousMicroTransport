@@ -37,7 +37,7 @@ bool Foam::Pmt::transportControl<Base>::retry()
         auto maxDeltaY = maxDeltaY_[speciesi];
         auto maxDYdT = maxDYdT_[speciesi];
 
-        if (maxDYdT*this->deltaTValue() > 1.5*maxDeltaY)
+        if (maxDYdT*this->deltaTValue() > 1.05*maxDeltaY)
         {
             Info<< "Excessive concentration change of species " << composition_.species()[speciesi] << endl;
             newDeltaT = min(newDeltaT, maxDeltaY/maxDYdT/2);
