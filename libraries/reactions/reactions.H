@@ -54,6 +54,22 @@ private:
         scalar k
     );
 
+    static scalar reactionOrder(const List<speciesCoeffs>& lhs);
+
+    static void checkYDimensions
+    (
+        const List<speciesCoeffs>& s,
+        const basicMultiComponentMixture& composition,
+        const dimensionSet& expected
+    );
+
+    static const dimensionSet& YDimensions
+    (
+        const List<speciesCoeffs>& lhs,
+        const List<speciesCoeffs>& rhs,
+        const basicMultiComponentMixture& composition
+    );
+
     static dimensionSet kDimensions
     (
         const List<speciesCoeffs>& lhs,

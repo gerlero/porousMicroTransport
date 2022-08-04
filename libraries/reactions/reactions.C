@@ -184,6 +184,65 @@ void Foam::Pmt::reactions::setReactionRate
     }
 }
 
+
+Foam::scalar Foam::Pmt::reactions::reactionOrder(const List<speciesCoeffs>& lhs)
+{
+    scalar order = 0;
+
+    for (const auto& sc : lhs)
+    {
+        order += sc.exponent;
+    }
+
+    return order;
+}
+
+void Foam::Pmt::reactions::checkYDimensions
+(
+    const List<speciesCoeffs>& s,
+    const basicMultiComponentMixture& composition,
+    const dimensionSet& expected
+)
+{
+    for (const auto& sc : s)
+    {
+        if (composition.Y(sc.index).dimensions() != expected)
+        {
+            FatalErrorInFunction
+                << "Concentration fields with different dimensions appear in same reaction" << nl
+                << "Expected dimensions: " << expected << nl
+                << "Species " << composition.Y(sc.index).name() << ": " << composition.Y(sc.index).dimensions() << nl
+                << endl
+                << exit(FatalError);
+        }
+    }
+}
+
+
+const Foam::dimensionSet& Foam::Pmt::reactions::YDimensions
+(
+    const List<speciesCoeffs>& lhs,
+    const List<speciesCoeffs>& rhs,
+    const basicMultiComponentMixture& composition
+)
+{
+    if (lhs.empty())
+    {
+        FatalErrorInFunction
+            << "Empty reaction equation side" << nl
+            << endl
+            << exit(FatalError);
+    }
+
+    const auto& expectedDims = composition.Y(lhs.first().index).dimensions();
+
+    checkYDimensions(lhs, composition, expectedDims);
+    checkYDimensions(rhs, composition, expectedDims);
+
+    return expectedDims;
+}
+
+
 Foam::dimensionSet Foam::Pmt::reactions::kDimensions
 (
     const List<speciesCoeffs>& lhs,
@@ -191,31 +250,7 @@ Foam::dimensionSet Foam::Pmt::reactions::kDimensions
     const basicMultiComponentMixture& composition
 )
 {
-    assert(!lhs.empty());
+    const auto& Ydims = YDimensions(lhs, rhs, composition);
 
-    auto dims = dimless;
-
-    for (const auto& sc : lhs)
-    {
-        dims *= pow(composition.Y(sc.index).dimensions(), sc.exponent);
-    }
-
-    const auto& Ydims = composition.Y(lhs.first().index).dimensions();
-    for (const auto& sc : lhs)
-    {
-        if (composition.Y(sc.index).dimensions() != Ydims)
-        {
-            FatalErrorInFunction
-                << "Concentration fields involved in reaction have different dimensions" << nl
-                << "Expected: " << Ydims
-                << ". Actual (species " << composition.Y(sc.index).name()
-                << ": " << composition.Y(sc.index).dimensions() << ")"
-                << endl
-                << exit(FatalError);
-        }
-    }
-
-    dims /= Ydims*dimTime;
-
-    return dims;
+    return (dimless/dimTime)/pow(Ydims, reactionOrder(lhs));
 }
