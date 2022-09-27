@@ -52,8 +52,8 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::VanGenuchten
         << typeName << " model" << nl
         << "{" << nl;
     Info<< "    "; pc0_.writeMinMax(Info);
-    Info<< "    "; m_.writeMinMax(Info);
-    Info<< "     n = 1/(1 - m)";
+    Info<< "    "; m_.writeMinMax(Info); 
+    Info<< "    n = 1/(1 - m)" << nl;
     Info<< "    "; l_.writeMinMax(Info);
     Info<< "}" << nl
         << endl;
@@ -64,7 +64,7 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C(const phaseFractionField& frac
 {
     volScalarField Se{frac.eff()};
 
-    return 1/pc0_*m_/(1 - m_)*(frac.max() - frac.min())*pow(Se, (1/m_))*pow((1 - pow(Se, (1/m_))), m_);
+    return 1/pc0_*m_/(1 - m_)*(frac.max() - frac.min())*pow(Se, 1/m_)*pow((1 - pow(Se, 1/m_)), m_);
 }
 
 Foam::tmp<Foam::volScalarField>
@@ -72,7 +72,7 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::M(const phaseFractionField& frac
 {
     volScalarField Se{frac.eff()};
 
-    return 
-        medium_.K()/phase_.mu()*pos(1 - Se)*pow(Se, l_)*pow(1 - pow(1 - pow(Se, 1/m_), m_), 2)
-      + neg0(1 - Se);
+    return
+        pos(1 - Se)*medium_.K()/phase_.mu()*pow(Se, l_)*pow(1 - pow(1 - pow(Se, 1/m_), m_), 2)
+      + neg0(1 - Se)*dimensionedScalar{dimArea/dimDynamicViscosity, One};
 }
