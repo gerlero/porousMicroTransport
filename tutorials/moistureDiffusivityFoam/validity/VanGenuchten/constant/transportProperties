@@ -10,12 +10,18 @@ FoamFile
 thetamin	thetamin [0 0 0 0 0 0 0]	0.004943;
 thetamax  thetamax [0 0 0 0 0 0 0]	0.7;
 
-Ks Ks [0 1 -1 0 0 0 0] 2.079e-6;
+phase.theta
+{
+  mu mu [1 -1 -1 0 0 0 0] 1e-3;
+}
+
+K K [0 2 0 0 0 0 0] 1e-13;
 
 unsaturatedFlowModel VanGenuchten;
 
 VanGenuchtenCoeffs
 {	
-	n n [0 0 0 0 0 0 0] 8.093;
-	l	l [0 0 0 0 0 0 0] 2.344;
+  pc0 pc0 [1 -1 -2 0 0 0 0] 2.079e4; // = mu*2.079e-6/K
+  n n [0 0 0 0 0 0 0] 8.093;
+  l l [0 0 0 0 0 0 0] 2.344;
 }
