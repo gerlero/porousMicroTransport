@@ -51,7 +51,7 @@ Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::BrooksAndCorey
 Foam::tmp<Foam::volScalarField>
 Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::C(const phaseFractionField& frac)
 {
-    volScalarField p{pc0_*pow(frac.eff(), -alpha_)};
+    volScalarField p{-pc0_*pow(frac.eff(), -alpha_)};
 
     return -neg(p + pc0_)*(frac.max() - frac.min())/(alpha_*p*pow(-p/pc0_, 1/alpha_));
 }
@@ -61,6 +61,6 @@ Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::M(const phaseFractionField& fr
 {
     volScalarField eff{frac.eff()};
 
-    return medium_.K()/phase_.mu()*pos(1 - eff)*pow(eff, (n_ + l_ - 1))
-         + neg0(1 - eff);
+    return medium_.K()/phase_.mu()*pow(eff, n_ + l_ - 1)
+         + neg0(1 - eff)*dimensionedScalar{dimArea/dimDynamicViscosity, One};
 }
