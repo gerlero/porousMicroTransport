@@ -92,7 +92,7 @@ void Foam::Pmt::speciesCoeffs::writeReactionSide
     const speciesTable& species
 )
 {
-    forAll(species, i)
+    forAll(s, i)
     {
         if (i > 0)
         {
