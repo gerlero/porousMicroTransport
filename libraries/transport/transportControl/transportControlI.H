@@ -3,6 +3,7 @@
 
 #include <utility>
 #include <type_traits>
+#include <limits>
 
 template<class Base>
 template<typename... Args_>
@@ -30,7 +31,7 @@ bool Foam::Pmt::transportControl<Base>::retry()
 {
     update();
 
-    auto newDeltaT = GREAT;
+    auto newDeltaT = std::numeric_limits<scalar>::infinity();
 
     forAll(composition_.Y(), speciesi)
     {
@@ -44,7 +45,7 @@ bool Foam::Pmt::transportControl<Base>::retry()
         }
     }
 
-    if (newDeltaT < GREAT)
+    if (newDeltaT < std::numeric_limits<scalar>::infinity())
     {
         if (this->restartTimeStepIfAdjustable(newDeltaT))
         {
@@ -107,17 +108,45 @@ void Foam::Pmt::transportControl<Base>::update()
 {
     if (!upToDate_)
     {
-        auto maxDeltaC =
-            this->controlDict().getCheckOrDefault("maxDeltaC", GREAT, [](scalar v){ return v>=0; });
-        auto relMaxDeltaC =
-            this->controlDict().getCheckOrDefault("relMaxDeltaC", GREAT, [](scalar v){ return v>=0; });
+        scalar maxDeltaC;
+        bool maxDeltaCSet = this->controlDict().readCheckIfPresent
+            (
+                "maxDeltaC", 
+                maxDeltaC,
+                [](scalar v){ return v>=0; }
+            );
+
+        scalar relMaxDeltaC;
+        bool relMaxDeltaCSet = this->controlDict().readCheckIfPresent
+            (
+                "relMaxDeltaC", 
+                relMaxDeltaC,
+                [](scalar v){ return v>=0; }
+            );
+
 
         forAll(composition_.Y(), speciesi)
         {
             const auto& Y = composition_.Y(speciesi);
 
-            maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC);
-            maxDYdT_[speciesi] = max(mag(fvc::ddt(Y))).value();
+            if (maxDeltaCSet && relMaxDeltaCSet)
+            {
+                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC);
+            }
+            else if (maxDeltaCSet)
+            {
+                maxDeltaY_[speciesi] = maxDeltaC;
+            }
+            else if (relMaxDeltaCSet)
+            {
+                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), SMALL);
+            }
+            else
+            {
+                maxDeltaY_[speciesi] = std::numeric_limits<scalar>::infinity();
+            }
+
+            maxDYdT_[speciesi] = gMax(mag(fvc::ddt(Y))());
         }
 
         upToDate_ = true;
