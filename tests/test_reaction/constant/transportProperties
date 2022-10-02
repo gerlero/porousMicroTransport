@@ -1,0 +1,63 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  location    "constant";
+  object      transportProperties;
+}
+
+eps 0.7;
+
+species
+(
+    A
+    B
+    C
+);
+
+A
+{
+    Dm 0;
+    dispersionModel alphaDispersion;
+    alphaDispersionCoeffs
+    {
+        tau 1;
+        alphaT 0;
+        alphaL 0;
+    }
+}
+
+B
+{
+    Dm 0;
+    dispersionModel alphaDispersion;
+    alphaDispersionCoeffs
+    {
+        tau 1;
+        alphaT 0;
+        alphaL 0;
+    }
+}
+
+C
+{
+    Dm 0;
+    dispersionModel alphaDispersion;
+    alphaDispersionCoeffs
+    {
+        tau 1;
+        alphaT 0;
+        alphaL 0;
+    }
+}
+
+reactions
+{
+    ABC
+    {
+        reaction "A + B = 2C";
+        kf 100;
+        kr 2;
+    }
+}
