@@ -1,6 +1,8 @@
 #!/bin/sh
+cd "${0%/*}" || exit 1
+
 rm -f log.* 
-foamListTimes -rm
+rm -rf 0.* 1* 2* 3* 4* 5* 6* 7* 8* 9*
 rm -rf processor*
 rm 0/C*
 rm -rf constant/polyMesh
