@@ -250,7 +250,7 @@ Foam::dimensionSet Foam::Pmt::reactions::kDimensions
     const basicMultiComponentMixture& composition
 )
 {
-    const auto& Ydims = YDimensions(lhs, rhs, composition);
+    const auto& dimY = YDimensions(lhs, rhs, composition);
 
-    return (dimless/dimTime)/pow(Ydims, reactionOrder(lhs));
+    return dimless/(dimTime*pow(dimY, reactionOrder(lhs) - 1));
 }
