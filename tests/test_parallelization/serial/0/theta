@@ -1,0 +1,41 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      theta;
+}
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 0.025;
+
+boundaryField
+{
+    left
+    {
+        type            fixedValue;
+        value           uniform 0.6999999; //= 0.7 - 1e-7
+    }
+    right 
+    {
+        type            zeroGradient;
+    }
+    top
+    {
+        type            empty;
+    }
+    bottom
+    {
+       type             empty;
+    }
+    front
+    {
+        type            empty;
+    }
+    back
+    {
+        type            empty;
+    }
+}
