@@ -44,18 +44,49 @@ Pmt::phaseFractionField theta
     mesh
 };
 
-Info<< "Reading velocity field Utheta\n" << endl;
+Info<< "Reading velocity field (U | U" << theta.name() << ")\n" << endl;
 
 volVectorField U
 {
-    IOobject
+    [&]
     {
-        "Utheta",
-        runTime.timeName(),
-        mesh,
-        IOobject::READ_IF_PRESENT,
-        IOobject::AUTO_WRITE
-    },
+        IOobject IOU
+        {
+            "U",
+            runTime.timeName(),
+            mesh,
+            IOobject::READ_IF_PRESENT,
+            IOobject::AUTO_WRITE
+        };
+
+        IOobject IOUtheta
+        {
+            "U" + theta.name(),
+            runTime.timeName(),
+            mesh,
+            IOobject::READ_IF_PRESENT,
+            IOobject::AUTO_WRITE
+        };
+
+        if
+        (
+            IOU.typeHeaderOk<volVectorField>() 
+         && IOUtheta.typeHeaderOk<volVectorField>()
+        )
+        {
+            FatalErrorInFunction
+                << "Found both " << IOU.name() << " and " << IOUtheta.name() << " fields" << nl
+                << "Please remove one of them" << endl
+                << exit(FatalError);
+        }
+
+        if (IOUtheta.typeHeaderOk<volVectorField>())
+        {
+            return IOUtheta;
+        }
+
+        return IOU;
+    }(),
     mesh,
     dimensionedVector{dimVelocity, Zero}
 };
