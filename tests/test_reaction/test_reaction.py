@@ -22,12 +22,12 @@ def test_rect(reaction_case):
     kf = 100
     kr = 2
 
-    a = np.array(ParsedParameterFile(DIR / "100" / "A")["internalField"].value())
-    b = np.array(ParsedParameterFile(DIR / "100" / "B")["internalField"].value())
-    c = np.array(ParsedParameterFile(DIR / "100" / "C")["internalField"].value())
+    a = np.array(ParsedParameterFile(DIR / "30" / "A")["internalField"].value())
+    b = np.array(ParsedParameterFile(DIR / "30" / "B")["internalField"].value())
+    c = np.array(ParsedParameterFile(DIR / "30" / "C")["internalField"].value())
 
     # Test mass conservation
     assert a + b + c == pytest.approx(a0 + b0 + c0)
 
     # Test equilibrium
-    assert c**2/(a*b)== pytest.approx(kf/kr, rel=1e-4)
+    assert c**2/(a*b)== pytest.approx(kf/kr)

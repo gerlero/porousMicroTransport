@@ -13,13 +13,13 @@ startFrom       latestTime;
 
 stopAt          endTime;
 
-endTime         100;
+endTime         30;
 
 deltaT          1e-05;
 
 writeControl    adjustableRunTime;
 
-writeInterval   100;
+writeInterval   30;
 
 purgeWrite      0;
 
@@ -37,4 +37,4 @@ adjustTimeStep  yes;
 
 runTimeModifiable no;
 
-maxDeltaC       10;
+maxDeltaC       1e-2;
