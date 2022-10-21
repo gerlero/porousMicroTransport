@@ -13,7 +13,7 @@ volVectorField U
     mesh
 };
 
-#include "createPhi.H"
+#include <createPhi.H>
 
 Info<< "Reading transportProperties\n" << endl;
 
@@ -61,7 +61,7 @@ Pmt::phaseFractionField theta
     medium.eps()
 };
 
-#include "createFvOptions.H"
+#include <createFvOptions.H>
 
 Info<< "\nReading species\n" << endl;
 
