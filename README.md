@@ -1,6 +1,6 @@
 # porousMicroTransport
 
-[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml)
+[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml) [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2012%20%7C%20v2106%20%7C%20v2112%20%7C%20v2206-informational)](https://www.openfoam.com)
 
 **porousMicroTransport** is a set of additional solvers and related libraries for OpenFOAM developed for the purposes of simulating flow and transport in porous media, with an emphasis on paper-based microfluidics
 
@@ -9,15 +9,15 @@
 
 ### Requirements
 
-**porousMicroTransport** requires [OpenFOAM](openfoam.com), as distributed by OpenCFD ([openfoam.com](openfoam.com)). Compatible OpenFOAM versions are v2012, v2106, v2112 and v2206.
+**porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2012, v2106, v2112 and v2206.
 
-_Versions produced by the OpenFOAM Foundation ([openfoam.org](openfoam.org)) (e.g. OpenFOAM 9, OpenFOAM 10) are not compatible._
+_Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 9, OpenFOAM 10) are not compatible._
 
 **porousMicroTransport** is provided as source code and must be compiled before use.
 
 ### Download
 
-Download the source code of **porousMicroTransport** manually, or clone the repository with Git:
+[Download the source code](https://github.com/gerlero/porousMicroTransport/archive/refs/heads/main.zip) of **porousMicroTransport**, or clone this repository with Git:
 
 ```sh
 git clone https://github.com/gerlero/porousMicroTransport.git
@@ -69,17 +69,25 @@ where $D_{eff}$ is an effective diffusivity tensor—which models the effects of
 
 The layout of **porousMicroTransport** cases follows many conventions of [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam), especially in field names and entries in the `transportProperties` dictionary. This allows for easy conversion of cases from **porousMultiphaseFoam** to **porousMicroTransport** (and to some extent, vice versa).
 
+### Common fields
+
+These variable fields are defined in the time directories:
+
+* `theta`: moisture content (scalar). _Optional for `porousMicroTransportFoam`_
+
+* `U`: velocity (vector). _Optional for flow solvers_
+
 ### Common porous medium properties
 
 Defined as scalar fields in `constant` or as dictionary entries in `transportProperties`:
 
 * `eps` or `thetamax`: porosity
 
-* `K`: intrinsic permeability
-
-These definitions are not always required: an error will be raised at the point of use if a value is needed but is not defined.
+* `K`: intrinsic permeability. _Flow solvers only_
 
 ### Phase properties
+
+_Flow solvers only._
 
 Set these in a `phase.theta` subdictionary in `transportProperties`:
 
@@ -87,38 +95,73 @@ Set these in a `phase.theta` subdictionary in `transportProperties`:
 
 * `mu`: dynamic viscosity
 
+### Moisture content options
+
+_Flow solvers only._
+
+Defined as scalar fields in `constant` or as dictionary entries in `transportProperties`:
+
+* `thetamin`: minimum (a.k.a. residual) moisture content
+
+* `thetamax`: maximum moisture content (usually equal to the porosity)
+
 ### Unsaturated flow models
+
+_Flow solvers only._
 
 Supported models of unsaturated flow are:
 
 * `BrooksAndCorey`: Brooks and Corey[^BrooksAndCorey] model
 
+    * In coefficient dictionary `BrooksAndCoreyCoeffs`: `pc0`, `alpha`, `n`, `l` (optional)
+
 * `VanGenuchten`: Van Genuchten[^VanGenuchten] model
+
+    * In coefficient dictionary `VanGenuchtenCoeffs`: `pc0`, `m` or `n`, `l` (optional)
 
 * `LETxs`: LETx + LETs model[^LETxs]
 
+    * In coefficient dictionary `LETxsCoeffs`: `pc0`, `Lw`, `Ew`, `Tw`, `Ls`, `Es`, `Ts`
+
 * `LETd`: LETd[^LETd] model
+
+    * In coefficient dictionary `LETdCoeffs`: `pc0`, `L`, `E`, `T`
 
 To choose a model for your simulation, set the `unsaturatedFlowModel` entry in `transportProperties`. Then set the model-specific parameters in the corresponding coefficient subdictionary.
 
-### Transport
+### Transported species
 
-A `species` list in `transportProperties` contains the names of all transported species. 
+_Transport solvers only._
+
+A `species` list in `transportProperties` contains the names of all transported species.
+
 Each species must also define its own scalar concentration field (named the same as the species).
 
 For each species, the following entries are required in `transportProperties`:
 
 * `Dm`: molecular diffusivity
 
-* `dispersionModel`: dispersion model (see below)
+* `dispersionModel`: selection of a dispersion model (see below)
 
 * Coefficient dictionary for the selected dispersion model
 
-Supported dispersion models are:
+### Dispersion models
 
-* `alphaDispersion`: anisotropic mechanical dispersion with transverse and longitudinal coefficients
+_Transport solvers only._
+
+Supported dispersion models for the species are:
+
+* `alphaDispersion`: anisotropic mechanical dispersion with transverse and longitudinal coefficients.
+
+    * In coefficient dictionary `alphaDispersionCoeffs`:
+
+        * `alphaT`: transverse dispersion coefficient
+        * `alphaL`: longitudinal dispersion coefficient
+        * `tau`: tortuosity
 
 ### Reactions
+
+_Transport solvers only._
 
 Reactions are defined in a `reactions` subdictionary in `transportProperties`. The `reactions` dictionary contains a list of subdictionaries, each of which defines a single reaction. A reaction can have an arbitrary name and should contain the following entries:
 
@@ -141,13 +184,13 @@ Sample cases are available in the [`tutorials` directory](tutorials).
 * [**electroMicroTransport**](https://gitlab.com/santiagomarquezd/electroMicroTransport)[^electroMicroTransport]: toolbox for OpenFOAM dedicated to electromigrative separations. It includes support for modeling separations in paper-based media, and can also be installed alongside **porousMicrotransport**.
 
 
-[^Bear]: Bear, J., Cheng A.H.D.: Modeling Groundwater Flow and Contaminant Transport. Springer Dordrecht (2010)
+[^Bear]: Bear, J., Cheng, A.H.D.: Modeling Groundwater Flow and Contaminant Transport. Springer Dordrecht (2010)
 
 [^porousMultiphaseFoam]: Horgue, P., Renard, F., Gerlero, G.S., Guibert, R., Debenest, G.: porousMultiphaseFoam v2107: An open-source tool for modeling saturated/unsaturated water flows and solute transfers at watershed scale. Comput. Phys. Comm., **273**, 108278 (2022)
 
 [^electroMicroTransport]: Gerlero, G.S., Marquez Damián, S., Kler, P.A.: electroMicroTransport v2107: Open-source toolbox for paper-based electromigrative separations. Comput. Phys. Comm., **269**, 108143 (2021)
 
-[^BrooksAndCorey]: Brooks, R., Corey, T. (1964): Hydraulic properties of porous media. Hydrol. Pap. Colo. State Univ., **24**, 37 (1964)
+[^BrooksAndCorey]: Brooks, R., Corey, T.: Hydraulic properties of porous media. Hydrol. Pap. Colo. State Univ., **24**, 37 (1964)
 
 [^VanGenuchten]: Van Genuchten, M. T.: A closed-form equation for predicting the hydraulic conductivity of unsaturated soils. Soil Sci. Soc. Am. J., **44**, 892–898 (1980)
 
