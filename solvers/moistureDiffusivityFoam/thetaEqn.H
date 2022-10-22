@@ -1,5 +1,5 @@
 {
-    auto D = volScalarField::New("D", flowModel->D(theta));
+    D = flowModel->D(theta);
 
     fvScalarMatrix thetaEqn
     {

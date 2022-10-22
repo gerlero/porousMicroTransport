@@ -98,3 +98,15 @@ mesh.setFluxRequired(theta.name());
 auto flowModel = Pmt::moistureDiffusivityModel::New(medium, phase, transportProperties);
 
 #include <createFvOptions.H>
+
+volScalarField D
+{
+    {
+        "D",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    },
+    flowModel->D(theta)
+};

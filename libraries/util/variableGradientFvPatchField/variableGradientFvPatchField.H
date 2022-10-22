@@ -31,7 +31,7 @@ public:
     void updateCoeffs() final;
 
 private:
-    virtual tmp<Field<Type>> computeGradient() = 0;
+    virtual tmp<Field<Type>> computeGradient();
 };
 
 }
