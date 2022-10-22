@@ -14,7 +14,7 @@ def parallelization_cases():
     subprocess.run(["./Allclean"],cwd=DIR)
     subprocess.run(["./Allrun"], check=True, cwd=DIR)
 
-@pytest.mark.parametrize("field", ["theta", "U"])
+@pytest.mark.parametrize("field", ["theta", "U", "C"])
 def test_parallelization(parallelization_cases, field):
     for d in (DIR / "serial").iterdir():
         try:

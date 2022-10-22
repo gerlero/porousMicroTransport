@@ -25,3 +25,22 @@ VanGenuchtenCoeffs
   n n [0 0 0 0 0 0 0] 8.093;
   l l [0 0 0 0 0 0 0] 2.344;
 }
+
+species
+(
+  C
+);
+
+C
+{
+    Dm Dm [0 2 -1 0 0 0 0] 1e-9;
+
+    dispersionModel alphaDispersion;
+
+    alphaDispersionCoeffs
+    {
+        tau [0 0 0 0 0 0 0] 1.96;
+        alphaT [0 1 0 0 0 0 0] 30e-6;
+        alphaL $alphaT;
+    }
+}
