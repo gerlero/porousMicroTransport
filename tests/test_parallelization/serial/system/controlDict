@@ -7,7 +7,7 @@ FoamFile
     object      controlDict;
 }
 
-application     moistureDiffusivityFoam;
+application     moistureDiffusivityTransportFoam;
 
 startFrom       latestTime;
 

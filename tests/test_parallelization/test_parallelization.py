@@ -14,14 +14,18 @@ def parallelization_cases():
     subprocess.run(["./Allclean"],cwd=DIR)
     subprocess.run(["./Allrun"], check=True, cwd=DIR)
 
-def test_parallelization(parallelization_cases):
+@pytest.mark.parametrize("field", ["theta", "U", "C"])
+def test_parallelization(parallelization_cases, field):
     for d in (DIR / "serial").iterdir():
         try:
             float(d.name)
         except ValueError:
             continue
+        
+        if d.name == "0":
+            continue
 
-        serial = np.array(ParsedParameterFile(DIR / "serial" / d.name / "theta")["internalField"].value())
-        parallel = np.array(ParsedParameterFile(DIR / "parallel" / d.name / "theta")["internalField"].value())
+        serial = np.array(ParsedParameterFile(DIR / "serial" / d.name / field)["internalField"].value())
+        parallel = np.array(ParsedParameterFile(DIR / "parallel" / d.name / field)["internalField"].value())
 
         assert parallel == pytest.approx(serial, abs=5e-3)
