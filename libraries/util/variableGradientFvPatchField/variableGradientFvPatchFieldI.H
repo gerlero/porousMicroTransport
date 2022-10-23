@@ -10,13 +10,7 @@ Foam::Pmt::variableGradientFvPatchField<Type>::variableGradientFvPatchField
 :
     fixedGradientFvPatchField<Type>{p, iF}
 {
-    static_assert
-    (
-        !std::is_abstract<fixedGradientFvPatchField<Type>>::value,
-        "The base class probably shouldn't be abstract (this constructor makes a virtual call)"
-    );
-
-    this->evaluate();
+   this->evaluate();
 }
 
 template<typename Type>
