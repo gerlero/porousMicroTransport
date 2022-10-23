@@ -1,10 +1,10 @@
 {
-    D = flowModel->D(theta);
+    Dtheta = flowModel->D(theta);
 
     fvScalarMatrix thetaEqn
     {
             fvm::ddt(theta)
-            - fvm::laplacian(D, theta)
+            - fvm::laplacian(Dtheta, theta)
         ==
             fvOptions(theta)
     };

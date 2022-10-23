@@ -27,7 +27,7 @@ divSchemes
 laplacianSchemes
 {
     default                 none;
-    laplacian(D,theta)      Gauss upwind phi uncorrected;
+    laplacian(Dtheta,theta) Gauss upwind phi uncorrected;
     laplacian(Deff,C)       Gauss linear corrected;
 }
 
@@ -38,5 +38,5 @@ interpolationSchemes
 
 snGradSchemes
 {
-    default         corrected;
+    default     corrected;
 }
