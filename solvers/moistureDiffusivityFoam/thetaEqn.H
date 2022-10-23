@@ -4,7 +4,7 @@
     fvScalarMatrix thetaEqn
     {
             fvm::ddt(theta)
-            - fvm::laplacian(D, theta)
+            - fvm::laplacian(D, theta, "laplacian(D,theta)")
         ==
             fvOptions(theta)
     };

@@ -102,7 +102,7 @@ auto flowModel = Pmt::moistureDiffusivityModel::New(medium, phase, transportProp
 volScalarField D
 {
     {
-        "D",
+        "D_",
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
