@@ -22,6 +22,7 @@ EXE_LIBS = \
     -L$(FOAM_USER_LIBBIN) \
     -lPMTutil \
     -lPMTcommon \
+    -lPMTboundaryConditions \
     -lPMTunsaturatedFlowModels \
     -lPMTPicardControl \
     -lPMTdispersionModels \
