@@ -108,5 +108,6 @@ volScalarField D
         IOobject::NO_READ,
         IOobject::NO_WRITE
     },
-    flowModel->D(theta)
+    mesh,
+    dimViscosity
 };
