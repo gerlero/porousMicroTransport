@@ -1,6 +1,7 @@
 #include "alphaDispersion.H"
 #include "constantFields.H"
 #include "porousMedium.H"
+#include "phaseFractionField.H"
 
 #include <className.H>
 #include <addToRunTimeSelectionTable.H>
@@ -48,10 +49,12 @@ Foam::Pmt::dispersionModels::alphaDispersion::alphaDispersion
 Foam::tmp<Foam::volTensorField> Foam::Pmt::dispersionModels::alphaDispersion::Deff
 (
     const volVectorField& U,
-    const phaseFractionField&
+    const phaseFractionField& frac
 )
 {
-    volVectorField V{U/medium_.eps()};
+    auto theta = medium_.eps()*frac/frac.max();
+
+    volVectorField V{U/theta};
     volScalarField magV{mag(V)};
 
     return
