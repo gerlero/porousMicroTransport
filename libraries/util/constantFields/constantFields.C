@@ -54,6 +54,14 @@ Foam::tmp<Foam::volScalarField> Foam::Pmt::constantFields::readIfPresent
         dims
     );
 
+    if (field->dimensions() != dims)
+    {
+        FatalErrorInFunction
+            << "Dimensions " << field->dimensions() << " of field " << name
+            << " do not match the expected dimensions " << dims << endl
+            << exit(FatalError);
+    }
+
     dimensionedScalar val{name, dims, Zero};
 
     if (val.readIfPresent(dict))
