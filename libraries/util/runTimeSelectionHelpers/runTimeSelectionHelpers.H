@@ -13,8 +13,11 @@ auto NewOfSelectedType(const word& modelType, Args_&&... args)
 -> decltype(Model::dictionaryConstructorTablePtr_->find(modelType)()(std::forward<Args_>(args)...));
 
 
-template<class TargetPtr, class SourcePtr_>
-TargetPtr dynamicPtrCast(SourcePtr_&& uniquePtr);
+template<class To, class From_, template<class> class UniquePtr_>
+UniquePtr_<To> dynamicPtrCast(UniquePtr_<From_>& p);
+
+template<class To, class From_, template<class> class UniquePtr_>
+UniquePtr_<To> dynamicPtrCast(UniquePtr_<From_>&& p);
 
 }
 }

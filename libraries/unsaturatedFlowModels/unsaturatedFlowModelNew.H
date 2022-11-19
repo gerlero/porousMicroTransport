@@ -65,11 +65,13 @@ autoPtr<Model> unsaturatedFlowModelNew
          && isA<relativePermeabilityModel>(*capillarityInstance)
         )
         {
-            if (auto instance = dynamicPtrCast<autoPtr<Model>>(capillarityInstance))
+            if (auto instance = dynamicPtrCast<Model>(capillarityInstance))
             {
                 assert(!capillarityInstance);
                 return instance;
             }
+
+            assert(capillarityInstance);
         }
 
         const auto& relativePermeabilityCoeffs =

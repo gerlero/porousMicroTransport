@@ -28,25 +28,31 @@ auto Foam::Pmt::NewOfSelectedType(const word& modelType, Args_&&... args)
 }
 
 
-template<class TargetPtr, class SourcePtr_>
-TargetPtr Foam::Pmt::dynamicPtrCast(SourcePtr_&& uniquePtr)
+template<class To, class From_, template<class> class UniquePtr_>
+UniquePtr_<To> Foam::Pmt::dynamicPtrCast(UniquePtr_<From_>& p)
 {
     static_assert
     (
-        std::has_virtual_destructor<typename TargetPtr::element_type>::value,
+        std::has_virtual_destructor<To>::value,
         "Cast target type must have a virtual destructor"
     );
     static_assert
     (
-        noexcept(std::forward<SourcePtr_>(uniquePtr).release()),
-        "uniquePtr.release() must be noexcept"
+        noexcept(p.release()),
+        "p.release() must be noexcept"
     );
 
-    if (auto* ptr = dynamic_cast<typename TargetPtr::pointer>(uniquePtr.get()))
+    if (auto* target = dynamic_cast<To*>(p.get()))
     {
-        std::forward<SourcePtr_>(uniquePtr).release();
-        return TargetPtr{ptr};
+        p.release();
+        return UniquePtr_<To>{target};
     }
 
-    return TargetPtr{nullptr};
+    return UniquePtr_<To>{nullptr};
+}
+
+template<class To, class From_, template<class> class UniquePtr_>
+UniquePtr_<To> Foam::Pmt::dynamicPtrCast(UniquePtr_<From_>&& p)
+{
+    return dynamicPtrCast<To>(p);
 }
