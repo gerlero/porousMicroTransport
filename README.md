@@ -184,16 +184,16 @@ Sample cases are available in the [`tutorials` directory](tutorials).
 * [**electroMicroTransport**](https://gitlab.com/santiagomarquezd/electroMicroTransport)[^electroMicroTransport]: toolbox for OpenFOAM dedicated to electromigrative separations. It includes support for modeling separations in paper-based media, and can also be installed alongside **porousMicrotransport**.
 
 
-[^Bear]: Bear, J., Cheng, A.H.D.: Modeling Groundwater Flow and Contaminant Transport. Springer Dordrecht (2010)
+[^Bear]: [Bear, J., Cheng, A.H.-D.: Modeling Groundwater Flow and Contaminant Transport. Springer Dordrecht (2010)](https://doi.org/10.1007/978-1-4020-6682-5)
 
-[^porousMultiphaseFoam]: Horgue, P., Renard, F., Gerlero, G.S., Guibert, R., Debenest, G.: porousMultiphaseFoam v2107: An open-source tool for modeling saturated/unsaturated water flows and solute transfers at watershed scale. Comput. Phys. Comm., **273**, 108278 (2022)
+[^porousMultiphaseFoam]: [Horgue, P., Renard, F., Gerlero, G.S., Guibert, R., Debenest, G.: porousMultiphaseFoam v2107: An open-source tool for modeling saturated/unsaturated water flows and solute transfers at watershed scale. Comput. Phys. Comm., **273**, 108278 (2022)](https://doi.org/10.1016/j.cpc.2021.108278)
 
-[^electroMicroTransport]: Gerlero, G.S., Marquez Damián, S., Kler, P.A.: electroMicroTransport v2107: Open-source toolbox for paper-based electromigrative separations. Comput. Phys. Comm., **269**, 108143 (2021)
+[^electroMicroTransport]: [Gerlero, G.S., Marquez Damián, S., Kler, P.A.: electroMicroTransport v2107: Open-source toolbox for paper-based electromigrative separations. Comput. Phys. Comm., **269**, 108143 (2021)](https://doi.org/10.1016/j.cpc.2021.108143)
 
-[^BrooksAndCorey]: Brooks, R., Corey, T.: Hydraulic properties of porous media. Hydrol. Pap. Colo. State Univ., **24**, 37 (1964)
+[^BrooksAndCorey]: [Brooks, R., Corey, T.: Hydraulic properties of porous media. Hydrol. Pap. Colo. State Univ., **24**, 37 (1964)](https://mountainscholar.org/bitstream/handle/10217/61288/HydrologyPapers_n3.pdf)
 
-[^VanGenuchten]: Van Genuchten, M. T.: A closed-form equation for predicting the hydraulic conductivity of unsaturated soils. Soil Sci. Soc. Am. J., **44**, 892–898 (1980)
+[^VanGenuchten]: [Van Genuchten, M.Th.: A closed-form equation for predicting the hydraulic conductivity of unsaturated soils. Soil Sci. Soc. Am. J., **44**, 892–898 (1980)](https://doi.org/10.2136/sssaj1980.03615995004400050002x)
 
-[^LETxs]: Lomeland, F.: Overview of the LET family of versatile correlations for flow functions. In: Proceedings of the International Symposium of Core Analysts, pp. SCA2018-056 (2018)
+[^LETxs]: [Lomeland, F.: Overview of the LET family of versatile correlations for flow functions. In: Proceedings of the International Symposium of Core Analysts, pp. SCA2018-056 (2018)](http://www.jgmaas.com/SCA/2018/SCA2018-056.pdf)
 
-[^LETd]: Gerlero, G.S., Valdez, A.R., Urteaga, R., Kler, P. A.: Validity of Capillary Imbibition Models in Paper-Based Microfluidic Applications. Transp. Porous Media, **141**, 359-378 (2022)
+[^LETd]: [Gerlero, G.S., Valdez, A.R., Urteaga, R., Kler, P.A.: Validity of Capillary Imbibition Models in Paper-Based Microfluidic Applications. Transp. Porous Media, **141**, 359-378 (2022)](https://doi.org/10.1007/s11242-021-01724-w)
