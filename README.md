@@ -181,7 +181,7 @@ Sample cases are available in the [`tutorials` directory](tutorials).
 
 * [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam)[^porousMultiphaseFoam]: toolbox for OpenFOAM for modeling multiphase flow and transport. As previously stated, **porousMicrotransport** is mostly compatible with **porousMultiphaseFoam** in terms of case definitions, and can be installed alongside it.
 
-* [**electroMicroTransport**](https://gitlab.com/santiagomarquezd/electroMicroTransport)[^electroMicroTransport]: toolbox for OpenFOAM dedicated to electromigrative separations. It includes support for modeling separations in paper-based media, and can also be installed alongside **porousMicrotransport**.
+* [**electroMicroTransport**](https://gitlab.com/santiagomarquezd/electroMicroTransport)[^electroMicroTransport]: toolbox for OpenFOAM dedicated to electromigrative separations. It includes support for modeling separations in paper-based media, and can also be installed alongside **porousMicroTransport**.
 
 
 [^Bear]: [Bear, J., Cheng, A.H.-D.: Modeling Groundwater Flow and Contaminant Transport. Springer Dordrecht (2010)](https://doi.org/10.1007/978-1-4020-6682-5)
