@@ -36,7 +36,7 @@ _If necessary, activate/source the correct OpenFOAM environment before running `
 
 ### Test
 
-Optionally, you can verify the installation of **porousMicrotransport** by running the included test suite (requires Python 3).
+Optionally, you can verify the installation of **porousMicroTransport** by running the included test suite (requires Python 3).
 
 ```sh
 tests/runtests.sh
@@ -179,7 +179,7 @@ Sample cases are available in the [`tutorials` directory](tutorials).
 
 ## Related projects
 
-* [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam)[^porousMultiphaseFoam]: toolbox for OpenFOAM for modeling multiphase flow and transport. As previously stated, **porousMicrotransport** is mostly compatible with **porousMultiphaseFoam** in terms of case definitions, and can be installed alongside it.
+* [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam)[^porousMultiphaseFoam]: toolbox for OpenFOAM for modeling multiphase flow and transport. As previously stated, **porousMicroTransport** is mostly compatible with **porousMultiphaseFoam** in terms of case definitions, and can be installed alongside it.
 
 * [**electroMicroTransport**](https://gitlab.com/santiagomarquezd/electroMicroTransport)[^electroMicroTransport]: toolbox for OpenFOAM dedicated to electromigrative separations. It includes support for modeling separations in paper-based media, and can also be installed alongside **porousMicroTransport**.
 
