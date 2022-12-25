@@ -1,6 +1,6 @@
 # porousMicroTransport
 
-[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml) [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2012%20%7C%20v2106%20%7C%20v2112%20%7C%20v2206-informational)](https://www.openfoam.com)
+[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml) [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2012%20%7C%20v2106%20%7C%20v2112%20%7C%20v2206%20%7C%20v2212-informational)](https://www.openfoam.com)
 
 **porousMicroTransport** is a set of additional solvers and related libraries for OpenFOAM developed for the purposes of simulating flow and transport in porous media, with an emphasis on paper-based microfluidics
 
@@ -9,7 +9,7 @@
 
 ### Requirements
 
-**porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2012, v2106, v2112 and v2206.
+**porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2012, v2106, v2112, v2206 and v2212.
 
 _Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 9, OpenFOAM 10) are not compatible._
 
