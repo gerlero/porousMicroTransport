@@ -15,7 +15,7 @@ jobs:
     container: opencfd/openfoam-dev:${{ matrix.openfoam-version }}
     strategy:
       matrix:
-        openfoam-version: ['2012', '2106', '2112', '2206']
+        openfoam-version: ['2012', '2106', '2112', '2206', '2212']
       fail-fast: false
     steps:
     - uses: actions/checkout@v3
