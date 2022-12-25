@@ -11,7 +11,7 @@ on:
 jobs:
   ci:
     name: OpenFOAM v${{ matrix.openfoam-version }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     container: opencfd/openfoam-dev:${{ matrix.openfoam-version }}
     strategy:
       matrix:
@@ -23,7 +23,10 @@ jobs:
     - name: Build
       run: |
         openfoam${{ matrix.openfoam-version }} ./Allwmake -j
-    - uses: actions/setup-python@v3
+    - name: Set up Python
+      run: |
+        apt-get update
+        apt-get -y install python3-venv
     - name: Test
       run: |
         openfoam${{ matrix.openfoam-version }} tests/runtests.sh
