@@ -1,0 +1,49 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+FoamFile
+{
+    version         2;
+    format          ascii;
+    class           dictionary;
+    location        "system";
+    object          controlDict;
+}
+
+application     moistureDiffusivityFoam;
+
+startFrom       latestTime;
+
+stopAt          endTime;
+
+endTime         90;
+
+deltaT          1e-05;
+
+writeControl    adjustableRunTime;
+
+writeInterval   5;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  8;
+
+writeCompression no;
+
+timeFormat      general;
+
+timePrecision   6;
+
+adjustTimeStep  yes;
+
+runTimeModifiable no;
+
+
+// ************************************************************************* //
