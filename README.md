@@ -75,7 +75,7 @@ These variable fields are defined in the time directories:
 
 * `theta`: moisture content (scalar). _Optional for `porousMicroTransportFoam`_
 
-* `U`: velocity (vector). _Optional for flow solvers_
+* `U`: Darcy velocity (vector). _Optional for flow solvers_
 
 ### Common porous medium properties
 
@@ -139,7 +139,7 @@ Each species must also define its own scalar concentration field (named the same
 
 For each species, the following entries are required in `transportProperties`:
 
-* `Dm`: molecular diffusivity
+* `Dm`: molecular diffusivity ($D_M$)
 
 * `dispersionModel`: selection of a dispersion model (see below)
 
@@ -151,13 +151,17 @@ _Transport solvers only._
 
 Supported dispersion models for the species are:
 
-* `alphaDispersion`: anisotropic mechanical dispersion with transverse and longitudinal coefficients.
+* `alphaDispersion`: (an)isotropic mechanical dispersion with transverse and longitudinal coefficients. Defines the effective diffusivity of the species as:
 
-    * In coefficient dictionary `alphaDispersionCoeffs`:
+   $$D_{eff} = \left(\frac{D_M}{\tau} + \alpha_T|V|\right)I + \left(\alpha_L - \alpha_T\right)\frac{VV}{|V|}$$
 
-        * `alphaT`: transverse dispersion coefficient
-        * `alphaL`: longitudinal dispersion coefficient
-        * `tau`: tortuosity
+   where $I$ is the identity tensor and $V$ is the true velocity of the fluid ($=U/\theta$)
+
+   * In coefficient dictionary `alphaDispersionCoeffs`:
+
+        * `alphaT`: transverse dispersion coefficient ($\alpha_T$)
+        * `alphaL`: longitudinal dispersion coefficient ($\alpha_L$)
+        * `tau`: tortuosity ($\tau$)
 
 ### Reactions
 
