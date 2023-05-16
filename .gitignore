@@ -83,7 +83,8 @@ doc/Doxygen/DTAGS
 /tutorialsTest
 
 # Ignore .vscode directories
-.vscode/
+.vscode/*
+!/.vscode/c_cpp_properties.json
 
 # Ignore macOS .DS_Store files
 .DS_Store

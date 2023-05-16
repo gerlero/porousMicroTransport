@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "OpenFOAM",
+            "includePath": [
+                "${env:FOAM_SRC}/**",
+                "${workspaceFolder}/libraries/**"
+            ],
+            "defines": [
+                "OPENFOAM=${env:FOAM_API}",
+                "WM_DP",
+                "WM_LABEL_SIZE=32",
+                "NoRepository"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cppStandard": "c++11",
+            "compilerArgs": [
+                "-m64",
+                "-pthread"
+            ]
+        }
+    ],
+    "version": 4
+}
