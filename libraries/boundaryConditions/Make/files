@@ -1,3 +1,4 @@
 darcyGradPressure/darcyGradPressureFvPatchScalarField.C
+exhaustible/exhaustibleFvPatchScalarField.C
 
 LIB = $(FOAM_USER_LIBBIN)/libPMTboundaryConditions

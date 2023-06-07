@@ -1,0 +1,12 @@
+#!/bin/sh
+cd "${0%/*}" || exit
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions
+
+runApplication blockMesh
+
+foamDictionary -entry "endTime" -set 45 system/controlDict
+runApplication $(getApplication)
+mv log.$(getApplication) log.$(getApplication).1
+
+foamDictionary -entry "endTime" -set 90 system/controlDict
+runApplication $(getApplication)
