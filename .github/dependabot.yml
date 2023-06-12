@@ -5,7 +5,6 @@ updates:
     schedule:
       interval: "weekly"
 
-updates:
   - package-ecosystem: "pip"
     directory: "/tests"
     schedule:
