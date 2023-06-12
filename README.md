@@ -1,6 +1,6 @@
 # porousMicroTransport
 
-[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml) [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2012%20%7C%20v2106%20%7C%20v2112%20%7C%20v2206%20%7C%20v2212-informational)](https://www.openfoam.com)
+[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml) [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2012%20%7C%20v2106%20%7C%20v2112%20%7C%20v2206%20%7C%20v2212-informational)](https://www.openfoam.com) [![Docker](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml) [![Docker image](https://img.shields.io/badge/docker%20image-microfluidica%2Fporousmicrotransport-0085a0)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
 
 **porousMicroTransport** is a set of additional solvers and related libraries for OpenFOAM developed for the purposes of simulating flow and transport in porous media, with an emphasis on paper-based microfluidics
 
@@ -40,6 +40,14 @@ Optionally, you can verify the installation of **porousMicroTransport** by runni
 
 ```sh
 tests/runtests.sh
+```
+
+### Docker image
+
+Alternatively, you can use the [Docker image](https://hub.docker.com/r/microfluidica/porousmicrotransport/) of **porousMicroTransport**. This image is based on the official OpenFOAM Docker image and includes **porousMicroTransport** precompiled and ready to use. If you have [Docker](https://www.docker.com) installed, you can run the image in a new container with:
+
+```sh
+docker run -it microfluidica/porousmicrotransport:main
 ```
 
 ## Solvers
