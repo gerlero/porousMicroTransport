@@ -1,3 +1,3 @@
 porousMicroTransportFoam.C  
 
-EXE = $(FOAM_USER_APPBIN)/porousMicroTransportFoam
+EXE = $(FOAM_MODULE_APPBIN)/porousMicroTransportFoam

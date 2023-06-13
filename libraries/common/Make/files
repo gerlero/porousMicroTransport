@@ -2,4 +2,4 @@ porousMedium/porousMedium.C
 
 fluidPhase/fluidPhase.C
 
-LIB = $(FOAM_USER_LIBBIN)/libPMTcommon
+LIB = $(FOAM_MODULE_LIBBIN)/libPMTcommon

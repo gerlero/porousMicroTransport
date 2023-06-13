@@ -1,3 +1,3 @@
 porousMixture/porousMixture.C
 
-LIB = $(FOAM_USER_LIBBIN)/libPMTtransport
+LIB = $(FOAM_MODULE_LIBBIN)/libPMTtransport

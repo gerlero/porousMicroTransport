@@ -2,4 +2,4 @@ speciesCoeffs/speciesCoeffs.C
 
 reactions.C
 
-LIB = $(FOAM_USER_LIBBIN)/libPMTreactions
+LIB = $(FOAM_MODULE_LIBBIN)/libPMTreactions

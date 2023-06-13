@@ -1,3 +1,3 @@
 moistureDiffusivityTransportFoam.C  
 
-EXE = $(FOAM_USER_APPBIN)/moistureDiffusivityTransportFoam
+EXE = $(FOAM_MODULE_APPBIN)/moistureDiffusivityTransportFoam
