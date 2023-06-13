@@ -1,7 +1,12 @@
 ARG OPENFOAM_IMAGE=opencfd/openfoam-dev
 ARG OPENFOAM_VERSION=latest
 
-FROM ${OPENFOAM_IMAGE}:${OPENFOAM_VERSION}
+ARG OPENFOAM_ARM_IMAGE=gerlero/openfoam-dev
+
+FROM ${OPENFOAM_IMAGE}:${OPENFOAM_VERSION} as openfoam-amd64
+FROM ${OPENFOAM_ARM_IMAGE}:${OPENFOAM_VERSION} as openfoam-arm64
+
+FROM openfoam-${TARGETARCH}
 
 ARG PMT_DIR=/usr/local/porousMicroTransport
 
