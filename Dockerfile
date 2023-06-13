@@ -20,7 +20,7 @@ RUN . /openfoam/profile.rc \
 # build
  && ${PMT_DIR}/Allwmake -j \
 # clean up
- && wclean all \
+ && wclean all ${PMT_DIR} \
 # smoke test
  && moistureDiffusivityTransportFoam -help
 
