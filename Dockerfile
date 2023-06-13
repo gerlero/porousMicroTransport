@@ -19,11 +19,8 @@ COPY solvers ${PMT_SOLVERS}
 COPY Allwmake ${PMT_DIR}/
 
 RUN . /openfoam/profile.rc \
-# install for all users
- && export FOAM_MODULE_APPBIN=$FOAM_SITE_APPBIN \
- && export FOAM_MODULE_LIBBIN=$FOAM_SITE_LIBBIN \
-# build
- && ${PMT_DIR}/Allwmake -j \
+# build and install for all users
+ && ${PMT_DIR}/Allwmake -j -prefix=group \
 # clean up
  && wclean all ${PMT_DIR} \
 # smoke test
