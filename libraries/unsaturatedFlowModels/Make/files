@@ -18,4 +18,4 @@ LETxs/LETxs.C
 
 LETd/LETd.C
 
-LIB = $(FOAM_USER_LIBBIN)/libPMTunsaturatedFlowModels
+LIB = $(FOAM_MODULE_LIBBIN)/libPMTunsaturatedFlowModels
