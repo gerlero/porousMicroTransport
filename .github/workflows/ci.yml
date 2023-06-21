@@ -32,7 +32,7 @@ jobs:
         apt-get -y install python3-venv
     - name: Test
       run: |
-        openfoam${{ matrix.openfoam-version }} tests/runtests.sh
+        openfoam${{ matrix.openfoam-version }} tests/Alltest
       env:
         OMPI_ALLOW_RUN_AS_ROOT: 1
         OMPI_ALLOW_RUN_AS_ROOT_CONFIRM: 1

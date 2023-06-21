@@ -39,7 +39,7 @@ _If necessary, activate/source the correct OpenFOAM environment before running `
 Optionally, you can verify the installation of **porousMicroTransport** by running the included test suite (requires Python 3).
 
 ```sh
-tests/runtests.sh
+tests/Alltest
 ```
 
 ### Docker image
