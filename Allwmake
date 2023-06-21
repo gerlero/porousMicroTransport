@@ -1,10 +1,12 @@
 #!/bin/sh
 cd "${0%/*}" || exit 1
+targetType=libso
+. "${WM_PROJECT_DIR:?}"/wmake/scripts/AllwmakeParseArguments
 
-if [ -f $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments ]
-then
-    . $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments
-fi
+echo "Starting compile of porousMicroTransport with ${WM_PROJECT_DIR##*/}"
+echo "  $WM_COMPILER $WM_COMPILER_TYPE compiler"
+echo "  ${WM_OPTIONS}, with ${WM_MPLIB} ${FOAM_MPI}"
+echo "  prefix = ${FOAM_MODULE_PREFIX:-default (user)}"
 
-wmake -all $targetType libraries
-wmake -all $targetType solvers
+wmake -all $targetType libraries $*
+wmake -all $targetType solvers $*
