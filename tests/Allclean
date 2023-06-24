@@ -1,6 +1,12 @@
 #!/bin/sh
 cd "${0%/*}" || exit 1
 
+rm -rf .pytest_cache
+
 for clean in */*clean; do
     "$clean"
 done
+
+rm -rf **/__pycache__
+
+rm -rf venv
