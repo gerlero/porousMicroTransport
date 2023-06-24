@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.H": "cpp",
+        "*.C": "cpp"
+    },
+    "python.defaultInterpreterPath": "${workspaceFolder}/tests/venv/bin/python3",
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "--rootdir=tests"
+    ],
+}
