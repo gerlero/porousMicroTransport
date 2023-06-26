@@ -1,7 +1,6 @@
 name: Docker
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -10,6 +9,32 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      amd64:
+        description: Build amd64 image
+        type: boolean
+        required: false
+        default: true
+      arm64:
+        description: Build arm64 image
+        type: boolean
+        required: false
+        default: false
+      push:
+        description: Push built images to Docker Hub
+        type: boolean
+        required: false
+        default: false
+
+env:
+  DOCKERHUB_IMAGE: microfluidica/porousmicrotransport
+
+  PLATFORMS: |
+    ${{ (inputs.amd64 || github.event_name != 'workflow_dispatch') && 'linux/amd64' || '' }}
+    ${{ (inputs.arm64 || github.event_name != 'workflow_dispatch' && github.event_name != 'pull_request') && 'linux/arm64' || '' }}
+
+  PUSH: ${{ inputs.push || github.event_name != 'workflow_dispatch' && github.event_name != 'pull_request' }}
 
 jobs:
   docker:
@@ -25,9 +50,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: microfluidica/porousmicrotransport
+          images: ${{ env.DOCKERHUB_IMAGE }}
       - name: Login to DockerHub
-        if: github.event_name != 'pull_request'
+        if: env.PUSH == 'true'
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -36,16 +61,14 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/amd64${{ github.event_name != 'pull_request' && ',linux/arm64' || '' }}
-          build-args: |
-            OPENFOAM_VERSION=2212
-          push: ${{ github.event_name != 'pull_request' }}
+          platforms: ${{ env.PLATFORMS }}
+          push: ${{ env.PUSH == 'true' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Update Docker Hub description
-        if: github.event_name != 'pull_request'
+        if: env.PUSH == 'true'
         uses: peter-evans/dockerhub-description@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: microfluidica/porousmicrotransport
+          repository: ${{ env.DOCKERHUB_IMAGE }}
