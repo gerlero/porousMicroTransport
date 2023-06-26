@@ -17,12 +17,13 @@ ENV PMT_TUTORIALS=${PMT_DIR}/tutorials
 COPY libraries ${PMT_SRC}
 COPY solvers ${PMT_SOLVERS}
 COPY Allwmake ${PMT_DIR}/
+COPY Allwclean ${PMT_DIR}/
 
 RUN . /openfoam/profile.rc \
 # build and install for all users
  && ${PMT_DIR}/Allwmake -j -prefix=group \
 # clean up
- && wclean all ${PMT_DIR} \
+ && ${PMT_DIR}/Allwclean \
 # smoke test
  && moistureDiffusivityTransportFoam -help
 
