@@ -47,7 +47,7 @@ tests/Alltest
 Alternatively, you can use the [Docker image](https://hub.docker.com/r/microfluidica/porousmicrotransport/) of **porousMicroTransport**. This image is based on the official OpenFOAM Docker image and includes **porousMicroTransport** precompiled and ready to use. If you have [Docker](https://www.docker.com) installed, you can run the image in a new container with:
 
 ```sh
-docker run -it microfluidica/porousmicrotransport:main
+docker run -it microfluidica/porousmicrotransport
 ```
 
 ## Solvers
