@@ -7,8 +7,7 @@ EXE_INC = \
     -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
     -I$(LIB_SRC)/thermophysicalModels/reactionThermo/lnInclude \
     -I../../libraries/util/lnInclude \
-    -I../../libraries/common/lnInclude \
-    -I../../libraries/dispersionModels/lnInclude
+    -I../../libraries/common/lnInclude
 
 LIB_LIBS = \
     -lfiniteVolume \
@@ -18,5 +17,4 @@ LIB_LIBS = \
     -lreactionThermophysicalModels \
     -L$(FOAM_MODULE_LIBBIN) \
     -lPMTutil \
-    -lPMTcommon \
-    -lPMTdispersionModels 
+    -lPMTcommon

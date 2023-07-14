@@ -15,6 +15,10 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 eps 1;
+tau tau [0 0 0 0 0 0 0] 1.96;
+alphaT alphaT [0 1 0 0 0 0 0] 5e-5;
+alphaL 0;
+
 species
 (
     "ampholyte.TARTRAZINE"
@@ -23,13 +27,6 @@ species
 ampholyte.TARTRAZINE
 {
     Dm diffusivity [0 2 -1 0 0 0 0 ] 1.4476e-9;
-    dispersionModel alphaDispersion;
-    alphaDispersionCoeffs
-    {
-        tau tau [0 0 0 0 0 0 0] 1.96;
-        alphaT alphaT [0 1 0 0 0 0 0] 5e-5;
-        alphaL 0;
-    }
 }
 
 

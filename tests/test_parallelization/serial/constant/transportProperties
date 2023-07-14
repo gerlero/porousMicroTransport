@@ -17,6 +17,10 @@ phase.theta
 
 K K [0 2 0 0 0 0 0] 1e-13;
 
+tau [0 0 0 0 0 0 0] 1.96;
+alphaT [0 1 0 0 0 0 0] 30e-6;
+alphaL $alphaT;
+
 unsaturatedFlowModel VanGenuchten;
 
 VanGenuchtenCoeffs
@@ -34,13 +38,4 @@ species
 C
 {
     Dm Dm [0 2 -1 0 0 0 0] 1e-9;
-
-    dispersionModel alphaDispersion;
-
-    alphaDispersionCoeffs
-    {
-        tau [0 0 0 0 0 0 0] 1.96;
-        alphaT [0 1 0 0 0 0 0] 30e-6;
-        alphaL $alphaT;
-    }
 }

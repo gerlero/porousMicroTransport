@@ -10,7 +10,6 @@ EXE_INC = \
     -I../../libraries/common/lnInclude \
     -I../../libraries/unsaturatedFlowModels/lnInclude \
     -I../../libraries/PicardControl/lnInclude \
-    -I../../libraries/dispersionModels/lnInclude \
     -I../../libraries/transport/lnInclude \
     -I../../libraries/reactions/lnInclude 
 
@@ -27,6 +26,5 @@ EXE_LIBS = \
     -lPMTboundaryConditions \
     -lPMTunsaturatedFlowModels \
     -lPMTPicardControl \
-    -lPMTdispersionModels \
     -lPMTtransport \
     -lPMTreactions

@@ -8,6 +8,9 @@ FoamFile
 }
 
 eps 0.7;
+tau 1;
+alphaT 0;
+alphaL 0;
 
 species
 (
@@ -19,37 +22,16 @@ species
 A
 {
     Dm 0;
-    dispersionModel alphaDispersion;
-    alphaDispersionCoeffs
-    {
-        tau 1;
-        alphaT 0;
-        alphaL 0;
-    }
 }
 
 B
 {
     Dm 0;
-    dispersionModel alphaDispersion;
-    alphaDispersionCoeffs
-    {
-        tau 1;
-        alphaT 0;
-        alphaL 0;
-    }
 }
 
 C
 {
     Dm 0;
-    dispersionModel alphaDispersion;
-    alphaDispersionCoeffs
-    {
-        tau 1;
-        alphaT 0;
-        alphaL 0;
-    }
 }
 
 reactions
