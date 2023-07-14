@@ -10,7 +10,6 @@ wmake $targetType util
 wmake $targetType common
 wmake $targetType unsaturatedFlowModels
 wmake $targetType PicardControl
-wmake $targetType dispersionModels
 wmake $targetType transport
 wmake $targetType reactions
 wmake $targetType boundaryConditions

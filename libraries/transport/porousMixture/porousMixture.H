@@ -3,7 +3,6 @@
 
 #include "porousMediumFwd.H"
 #include "fluidPhaseFwd.H"
-#include "dispersionModel.H"
 #include "phaseFractionFieldFwd.H"
 
 #include <basicMultiComponentMixture.H>
@@ -43,7 +42,8 @@ public:
     );
 
 private:
-    PtrList<dispersionModel> dispersionModels_;
+    const porousMedium& medium_;
+    List<dimensionedScalar> Dm_;
 };
 
 }

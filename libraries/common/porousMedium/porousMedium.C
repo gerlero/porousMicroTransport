@@ -35,6 +35,42 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
 
             return autoPtr<volScalarField>{nullptr};
         }()
+    },
+    tau_
+    {
+        [&]
+        {
+            if (auto tau = constantFields::readIfPresent("tau", mesh, dimless, transportProperties.optionalSubDict("alphaDispersionCoeffs")))
+            {
+                return autoPtr<volScalarField>{tau.ptr()};
+            }
+
+            return autoPtr<volScalarField>{nullptr};
+        }()
+    },
+    alphaT_
+    {
+        [&]
+        {
+            if (auto alphaT = constantFields::readIfPresent("alphaT", mesh, dimLength, transportProperties.optionalSubDict("alphaDispersionCoeffs")))
+            {
+                return autoPtr<volScalarField>{alphaT.ptr()};
+            }
+
+            return autoPtr<volScalarField>{nullptr};
+        }()
+    },
+    alphaL_
+    {
+        [&]
+        {
+            if (auto alphaL = constantFields::readIfPresent("alphaL", mesh, dimLength, transportProperties.optionalSubDict("alphaDispersionCoeffs")))
+            {
+                return autoPtr<volScalarField>{alphaL.ptr()};
+            }
+
+            return autoPtr<volScalarField>{nullptr};
+        }()
     }
 {
     Info<< nl
@@ -58,6 +94,42 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     {
         Info<< "not set" << nl;
     }
+    Info<< "    Tortuosity (tau): ";
+    if (tau_)
+    {
+        tau_->writeMinMax(Info);
+    }
+    else
+    {
+        Info<< "not set" << nl;
+    }
+    Info<< "    Transverse dispersion coefficient (alphaT): ";
+    if (alphaT_)
+    {
+        alphaT_->writeMinMax(Info);
+    }
+    else
+    {
+        Info<< "not set" << nl;
+    }
+    Info<< "    Longitudinal dispersion coefficient (alphaL): ";
+    if (alphaL_)
+    {
+        alphaL_->writeMinMax(Info);
+    }
+    else
+    {
+        Info<< "not set" << nl;
+    }
     Info<< "}" << nl
         << endl;
+
+
+    auto dispersionModel = transportProperties.getOrDefault<word>("dispersionModel", {});
+    if (!dispersionModel.empty() && dispersionModel != "alphaDispersion")
+    {
+        FatalErrorInFunction
+            << "Dispersion models (other than the default alphaDispersion) are not supported by porousMicroTransport" << endl
+            << exit(FatalError);
+    }
 }

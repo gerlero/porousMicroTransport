@@ -28,7 +28,8 @@ Foam::Pmt::porousMixture::porousMixture
         medium.mesh(),
         word::null
     },
-    dispersionModels_(Y().size())
+    medium_(medium),
+    Dm_(Y().size())
 {
     forAll(species(), speciesi)
     {
@@ -36,25 +37,23 @@ Foam::Pmt::porousMixture::porousMixture
 
         Info<< "Species " << speciesName << endl;
 
-        const auto& speciesTransport =
-            transportProperties.optionalSubDict(speciesName);
-
-        dimensionedScalar Dm{"Dm", dimViscosity, speciesTransport};
+        dimensionedScalar Dm{"Dm", dimViscosity, transportProperties.optionalSubDict(speciesName)};
 
         Info<< "Dm = " << Dm.value() << nl
             << endl;
 
-        dispersionModels_.set
-        (
-            speciesi,
-            dispersionModel::New
-            (
-                medium,
-                phase,
-                speciesName,
-                std::move(Dm),
-                speciesTransport
-            )
-        );
+        Dm_[speciesi].dimensions().reset(dimViscosity);
+        Dm_[speciesi] = Dm;
+
+        if (auto* speciesDict = transportProperties.findDict(speciesName))
+        {
+            if (speciesDict->found("dispersionModel") || speciesDict->found("alphaDispersionCoeffs"))
+            {
+                FatalErrorInFunction
+                    << "Per-species dispersion parameters are no longer supported by porousMicroTransport" << nl
+                    << "Define these only in the top-level transportProperties dictionary" << nl
+                    << exit(FatalError);
+            }
+        }
     }
 }

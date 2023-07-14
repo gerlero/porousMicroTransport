@@ -27,3 +27,39 @@ inline const Foam::volScalarField& Foam::Pmt::porousMedium::K() const
 
     return *K_;
 }
+
+inline const Foam::volScalarField& Foam::Pmt::porousMedium::tau() const
+{
+    if (!tau_)
+    {
+        FatalErrorInFunction
+            << "Tortuosity tau required but not set" << endl
+            << exit(FatalError);
+    }
+
+    return *tau_;
+}
+
+inline const Foam::volScalarField& Foam::Pmt::porousMedium::alphaT() const
+{
+    if (!alphaT_)
+    {
+        FatalErrorInFunction
+            << "Transverse dispersion coefficient alphaT required but not set" << endl
+            << exit(FatalError);
+    }
+
+    return *alphaT_;
+}
+
+inline const Foam::volScalarField& Foam::Pmt::porousMedium::alphaL() const
+{
+    if (!alphaL_)
+    {
+        FatalErrorInFunction
+            << "Longitudinal dispersion coefficient alphaL required but not set" << endl
+            << exit(FatalError);
+    }
+
+    return *alphaL_;
+}

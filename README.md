@@ -66,7 +66,11 @@ where $\theta$ is the moisture content and $D$ is a saturation-dependent diffusi
 
 $$\frac{\partial\theta C}{\partial t} + \nabla\cdot\left[UC\right] - \nabla\cdot\left[\theta D_{eff}\nabla C\right] = \theta R$$
 
-where $D_{eff}$ is an effective diffusivity tensor—which models the effects of molecular diffusion and mechanical dispersion—and $R$ is a reaction term (see below).
+where $R$ is a reaction term (see below) and $D_{eff}$ is defined as: 
+
+   $$D_{eff} = \left(\frac{D_M}{\tau} + \alpha_T|V|\right)I + \left(\alpha_L - \alpha_T\right)\frac{VV}{|V|}$$
+
+with $I$ the identity tensor and $V$ the true velocity of the fluid ($=U/\theta$).
 
 ### `moistureDiffusivityTransportFoam`
 
@@ -92,6 +96,12 @@ Defined as scalar fields in `constant` or as dictionary entries in `transportPro
 * `eps` or `thetamax`: porosity
 
 * `K`: intrinsic permeability. _Flow solvers only_
+
+* `tau`: tortuosity ($\tau$). _Transport solvers only_
+
+* `alphaT`: transverse dispersion coefficient ($\alpha_T$). _Transport solvers only_
+
+* `alphaL`: longitudinal dispersion coefficient ($\alpha_L$). _Transport solvers only_
 
 ### Phase properties
 
@@ -148,28 +158,6 @@ Each species must also define its own scalar concentration field (named the same
 For each species, the following entries are required in `transportProperties`:
 
 * `Dm`: molecular diffusivity ($D_M$)
-
-* `dispersionModel`: selection of a dispersion model (see below)
-
-* Coefficient dictionary for the selected dispersion model
-
-### Dispersion models
-
-_Transport solvers only._
-
-Supported dispersion models for the species are:
-
-* `alphaDispersion`: (an)isotropic mechanical dispersion with transverse and longitudinal coefficients. Defines the effective diffusivity of the species as:
-
-   $$D_{eff} = \left(\frac{D_M}{\tau} + \alpha_T|V|\right)I + \left(\alpha_L - \alpha_T\right)\frac{VV}{|V|}$$
-
-   where $I$ is the identity tensor and $V$ is the true velocity of the fluid ($=U/\theta$)
-
-   * In coefficient dictionary `alphaDispersionCoeffs`:
-
-        * `alphaT`: transverse dispersion coefficient ($\alpha_T$)
-        * `alphaL`: longitudinal dispersion coefficient ($\alpha_L$)
-        * `tau`: tortuosity ($\tau$)
 
 ### Reactions
 

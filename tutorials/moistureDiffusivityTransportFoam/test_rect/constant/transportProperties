@@ -25,6 +25,10 @@ phase.theta
 thetamin thetamin [0 0 0 0 0 0 0] 0.019852; // = 0.7*0.02836
 thetamax thetamax [0 0 0 0 0 0 0] 0.7;
 
+tau tau [0 0 0 0 0 0 0] 1.96;
+alphaT alphaT [0 1 0 0 0 0 0] 5e-5;
+alphaL $alphaT;
+
 unsaturatedFlowModel LETd;
 
 LETdCoeffs
@@ -43,13 +47,6 @@ species
 ampholyte.TARTRAZINE
 {
     Dm diffusivity [0 2 -1 0 0 0 0 ] 1.4476e-9;
-    dispersionModel alphaDispersion;
-    alphaDispersionCoeffs
-    {
-        tau tau [0 0 0 0 0 0 0] 1.96;
-        alphaT alphaT [0 1 0 0 0 0 0] 5e-5;
-        alphaL $alphaT;
-    }
 }
 
 

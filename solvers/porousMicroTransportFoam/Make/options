@@ -9,7 +9,6 @@ EXE_INC = \
     -I../../libraries/util/lnInclude \
     -I../../libraries/common/lnInclude \
     -I../../libraries/unsaturatedFlowModels/lnInclude \
-    -I../../libraries/dispersionModels/lnInclude \
     -I../../libraries/transport/lnInclude \
     -I../../libraries/reactions/lnInclude 
 
@@ -24,6 +23,5 @@ EXE_LIBS = \
     -lPMTutil \
     -lPMTcommon \
     -lPMTunsaturatedFlowModels \
-    -lPMTdispersionModels \
     -lPMTtransport \
     -lPMTreactions
