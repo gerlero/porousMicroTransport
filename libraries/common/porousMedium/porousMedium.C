@@ -36,6 +36,20 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
             return autoPtr<volScalarField>{nullptr};
         }()
     },
+    rs_
+    {
+        [&]
+        {
+            const auto& porousTransport = transportProperties.optionalSubDict("porousTransport");
+
+            if (auto rs = constantFields::readIfPresent("rs", mesh, dimDensity, porousTransport))
+            {
+                return autoPtr<volScalarField>{rs.ptr()};
+            }
+
+            return autoPtr<volScalarField>{nullptr};
+        }()
+    },
     tau_
     {
         [&]
@@ -85,10 +99,21 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     {
         Info<< "not set" << nl;
     }
+    Info<< "}" << nl
+        << endl;
     Info<< "    Intrinsic permeability (K): ";
     if (K_)
     {
         K_->writeMinMax(Info);
+    }
+    else
+    {
+        Info<< "not set" << nl;
+    }
+    Info<< "    Bulk density (rs): ";
+    if (rs_)
+    {
+       rs_->writeMinMax(Info);
     }
     else
     {

@@ -61,6 +61,20 @@ Pmt::phaseFractionField theta
     medium.eps()
 };
 
+volScalarField Rd
+{
+    IOobject
+    {
+        "Rd",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    },
+    mesh,
+    dimensionedScalar{dimless, One}
+};
+
 #include <createFvOptions.H>
 
 Info<< "\nReading species\n" << endl;

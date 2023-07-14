@@ -34,16 +34,18 @@ public:
         const dictionary& transportProperties
     );
 
-    tmp<volTensorField> Deff
-    (
-        label speciesi,
-        const volVectorField& U,
-        const phaseFractionField& frac
-    );
+    void correct(const volVectorField& U, const phaseFractionField& frac);
+
+    tmp<volTensorField> Deff(label speciesi) const;
+
+    const volScalarField& retardation(label speciesi) const;
 
 private:
     const porousMedium& medium_;
+    volTensorField Disp_;
     List<dimensionedScalar> Dm_;
+    List<dimensionedScalar> Kd_;
+    PtrList<volScalarField> Rd_;
 };
 
 }

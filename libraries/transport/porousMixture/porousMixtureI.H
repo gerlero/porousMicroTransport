@@ -1,9 +1,8 @@
 #include "porousMedium.H"
 #include "phaseFractionField.H"
 
-inline Foam::tmp<Foam::volTensorField> Foam::Pmt::porousMixture::Deff
+inline void Foam::Pmt::porousMixture::correct
 (
-    label speciesi,
     const volVectorField& U,
     const phaseFractionField& frac
 )
@@ -13,7 +12,31 @@ inline Foam::tmp<Foam::volTensorField> Foam::Pmt::porousMixture::Deff
     volVectorField V{U/theta};
     volScalarField magV{mag(V)};
 
-    return
-        (Dm_[speciesi]/medium_.tau() + medium_.alphaT()*magV)*tensor::I
-      + (medium_.alphaL() - medium_.alphaT())*(V*V)/(magV + dimensionedScalar{dimVelocity, VSMALL});
+    Disp_ = medium_.alphaT()*magV*tensor::I 
+        + (medium_.alphaL() - medium_.alphaT())*(V*V)/(magV + dimensionedScalar{dimVelocity, VSMALL});
+
+
+    forAll(species(), speciesi)
+    {
+        if (Kd_[speciesi].value() != 0)
+        {
+            Rd_[speciesi] = One + medium_.rs()*Kd_[speciesi]/frac;
+        }
+    }
+}
+
+inline Foam::tmp<Foam::volTensorField> Foam::Pmt::porousMixture::Deff
+(
+    label speciesi
+) const
+{
+    return Disp_ + Dm_[speciesi]/medium_.tau()*tensor::I;
+}
+
+inline const Foam::volScalarField& Foam::Pmt::porousMixture::retardation
+(
+    label speciesi
+) const
+{
+    return Rd_[speciesi];
 }
