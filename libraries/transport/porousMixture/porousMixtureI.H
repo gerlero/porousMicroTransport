@@ -40,3 +40,13 @@ inline const Foam::volScalarField& Foam::Pmt::porousMixture::retardation
 {
     return Rd_[speciesi];
 }
+
+inline Foam::tmp<Foam::fv::ddtScheme<Foam::scalar>> Foam::Pmt::porousMixture::ddtScheme
+(
+    label speciesi
+) const
+{
+    const auto& mesh = Y(speciesi).mesh();
+
+    return fv::ddtScheme<scalar>::New(mesh, mesh.ddtScheme("ddt(C)"));
+}

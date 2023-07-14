@@ -8,9 +8,11 @@ forAll(composition.Y(), speciesi)
     const auto& Rd = composition.retardation(speciesi);
     const auto& R = reactions.reactionTerm(speciesi);
 
+    auto ddtScheme = composition.ddtScheme(speciesi);
+
     fvScalarMatrix CEqn
     {
-            fvm::ddt(Rd, theta, C)
+          ddtScheme->fvmDdt(Rd, theta, C)
           + fvm::div(phi, C, "div(phi,C)")
           - fvm::laplacian(theta*Deff, C, "laplacian(Deff,C)")
         ==
