@@ -18,7 +18,7 @@ class transportControl
 {
 public:
     template<typename... Args_>
-    transportControl(basicMultiComponentMixture& composition, Args_&&... args);
+    transportControl(porousMixture& composition, Args_&&... args);
 
     bool retry();
 
@@ -28,7 +28,7 @@ protected:
     void operator--() override;
 
 private:
-    basicMultiComponentMixture& composition_;
+    porousMixture& composition_;
     scalarList maxDeltaY_;
     scalarList maxDYdT_;
     bool upToDate_;

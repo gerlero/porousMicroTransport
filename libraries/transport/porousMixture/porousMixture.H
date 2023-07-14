@@ -11,6 +11,7 @@
 #include <volFields.H>
 #include <labelFwd.H>
 #include <PtrList.H>
+#include <ddtScheme.H>
 
 namespace Foam
 {
@@ -39,6 +40,8 @@ public:
     tmp<volTensorField> Deff(label speciesi) const;
 
     const volScalarField& retardation(label speciesi) const;
+
+    tmp<fv::ddtScheme<scalar>> ddtScheme(label speciesi) const;
 
 private:
     const porousMedium& medium_;

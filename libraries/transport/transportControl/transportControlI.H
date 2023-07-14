@@ -9,7 +9,7 @@ template<class Base>
 template<typename... Args_>
 Foam::Pmt::transportControl<Base>::transportControl
 (
-    basicMultiComponentMixture& composition,
+    porousMixture& composition,
     Args_&&... args
 )
 :
@@ -146,7 +146,7 @@ void Foam::Pmt::transportControl<Base>::update()
                 maxDeltaY_[speciesi] = std::numeric_limits<scalar>::infinity();
             }
 
-            maxDYdT_[speciesi] = gMax(mag(fvc::ddt(Y))());
+            maxDYdT_[speciesi] = gMax(mag(composition_.ddtScheme(speciesi)->fvcDdt(Y))());
         }
 
         upToDate_ = true;
