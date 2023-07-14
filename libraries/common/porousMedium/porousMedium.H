@@ -24,6 +24,8 @@ public:
 
     const volScalarField& K() const;
 
+    const volScalarField& rs() const;
+
     const volScalarField& tau() const;
 
     const volScalarField& alphaT() const;
@@ -37,6 +39,7 @@ private:
     const fvMesh& mesh_;
     autoPtr<volScalarField> eps_;
     autoPtr<volScalarField> K_;
+    autoPtr<volScalarField> rs_;
     autoPtr<volScalarField> tau_;
     autoPtr<volScalarField> alphaT_;
     autoPtr<volScalarField> alphaL_;

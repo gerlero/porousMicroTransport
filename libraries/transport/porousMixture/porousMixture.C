@@ -28,8 +28,19 @@ Foam::Pmt::porousMixture::porousMixture
         medium.mesh(),
         word::null
     },
-    medium_(medium),
-    Dm_(Y().size())
+    medium_{medium},
+    Disp_
+    {
+        volTensorField::New
+        (
+            "Disp_",
+            medium.mesh(),
+            dimensionedTensor{dimViscosity, Zero}
+        )
+    },
+    Dm_(Y().size()),
+    Kd_(Y().size()),
+    Rd_(Y().size())
 {
     forAll(species(), speciesi)
     {
@@ -39,11 +50,36 @@ Foam::Pmt::porousMixture::porousMixture
 
         dimensionedScalar Dm{"Dm", dimViscosity, transportProperties.optionalSubDict(speciesName)};
 
-        Info<< "Dm = " << Dm.value() << nl
+        Info<< "Dm = " << Dm.value() << endl;
+
+        Dm_[speciesi].dimensions().reset(Dm.dimensions());
+        Dm_[speciesi] = Dm;
+
+
+        auto Kd = dimensionedScalar::getOrDefault
+            (
+                "Kd", 
+                transportProperties.optionalSubDict(speciesName).optionalSubDict("porousTransport"),
+                dimless/dimDensity
+            );
+
+        Info<< "Kd = " << Kd.value() << nl
             << endl;
 
-        Dm_[speciesi].dimensions().reset(dimViscosity);
-        Dm_[speciesi] = Dm;
+        Kd_[speciesi].dimensions().reset(Kd.dimensions());
+        Kd_[speciesi] = Kd;
+
+        Rd_.set
+            (
+                speciesi,
+                volScalarField::New
+                (
+                    "Rd_",
+                    medium.mesh(),
+                    dimensionedScalar{dimless, One}
+                )
+            );
+
 
         if (auto* speciesDict = transportProperties.findDict(speciesName))
         {
@@ -56,4 +92,6 @@ Foam::Pmt::porousMixture::porousMixture
             }
         }
     }
+
+
 }
