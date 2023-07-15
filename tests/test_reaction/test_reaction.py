@@ -11,20 +11,21 @@ DIR = Path(__file__).parent
 @pytest.fixture(scope="module")
 def reaction_case():
     subprocess.run(["./clean"], cwd=DIR)
-    subprocess.run(["./run"], check=True, cwd=DIR)
+    subprocess.run(["./run"], cwd=DIR, check=True)
     return DIR
 
-def test_rect(reaction_case):
-    a0 = np.array(ParsedParameterFile(DIR / "0" / "A")["internalField"].value())
-    b0 = np.array(ParsedParameterFile(DIR / "0" / "B")["internalField"].value())
-    c0 = np.array(ParsedParameterFile(DIR / "0" / "C")["internalField"].value())
+
+def test_reaction(reaction_case):
+    a0 = np.array(ParsedParameterFile(reaction_case / "0" / "A")["internalField"].value())
+    b0 = np.array(ParsedParameterFile(reaction_case / "0" / "B")["internalField"].value())
+    c0 = np.array(ParsedParameterFile(reaction_case / "0" / "C")["internalField"].value())
 
     kf = 100
     kr = 2
 
-    a = np.array(ParsedParameterFile(DIR / "30" / "A")["internalField"].value())
-    b = np.array(ParsedParameterFile(DIR / "30" / "B")["internalField"].value())
-    c = np.array(ParsedParameterFile(DIR / "30" / "C")["internalField"].value())
+    a = np.array(ParsedParameterFile(reaction_case / "30" / "A")["internalField"].value())
+    b = np.array(ParsedParameterFile(reaction_case / "30" / "B")["internalField"].value())
+    c = np.array(ParsedParameterFile(reaction_case / "30" / "C")["internalField"].value())
 
     # Test mass conservation
     assert a + b + c == pytest.approx(a0 + b0 + c0)

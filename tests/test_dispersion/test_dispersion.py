@@ -9,15 +9,16 @@ import numpy as np
 DIR = Path(__file__).parent
 
 @pytest.fixture(scope="module")
-def rect_case():
-    subprocess.run(["./clean"],cwd=DIR)
-    subprocess.run(["./run"], check=True, cwd=DIR)
+def dispersion_case():
+    subprocess.run(["./clean"], cwd=DIR)
+    subprocess.run(["./run"], cwd=DIR, check=True)
     return DIR
 
-def test_rect(rect_case):
+
+def test_dispersion(dispersion_case):
     alphaT=5e-5
 
-    with open(rect_case / '50/ampholyte.TARTRAZINE','r') as f:
+    with open(dispersion_case / '50/ampholyte.TARTRAZINE','r') as f:
         for _ in range(21):
             line=f.readline()
         line=f.readline()
@@ -25,7 +26,7 @@ def test_rect(rect_case):
         line=f.readline()
         field=np.fromfile(f,count=ndata,dtype='float',sep=' ')
 
-    with open(rect_case / '0/Cx','r') as f:
+    with open(dispersion_case / '0/Cx','r') as f:
         for _ in range(21):
             line=f.readline()
         line=f.readline()
@@ -33,7 +34,7 @@ def test_rect(rect_case):
         line=f.readline()
         xnod=np.fromfile(f,count=ndata,dtype='float',sep=' ')
 
-    with open(rect_case / '0/Cy','r') as f:
+    with open(dispersion_case / '0/Cy','r') as f:
         for _ in range(21):
             line=f.readline()
         line=f.readline()
