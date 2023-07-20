@@ -11,30 +11,11 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      amd64:
-        description: Build amd64 image
-        type: boolean
-        required: false
-        default: true
       arm64:
-        description: Build arm64 image
+        description: Build multi-platform image including arm64
         type: boolean
         required: false
         default: false
-      push:
-        description: Push built images to Docker Hub
-        type: boolean
-        required: false
-        default: false
-
-env:
-  DOCKERHUB_IMAGE: microfluidica/porousmicrotransport
-
-  PLATFORMS: |
-    ${{ (inputs.amd64 || github.event_name != 'workflow_dispatch') && 'linux/amd64' || '' }}
-    ${{ (inputs.arm64 || github.event_name != 'workflow_dispatch' && github.event_name != 'pull_request') && 'linux/arm64' || '' }}
-
-  PUSH: ${{ inputs.push || github.event_name != 'workflow_dispatch' && github.event_name != 'pull_request' }}
 
 jobs:
   docker:
@@ -50,11 +31,11 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.DOCKERHUB_IMAGE }}
+          images: ${{ vars.DOCKERHUB_REPOSITORY }}
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Login to DockerHub
-        if: env.PUSH == 'true'
+        if: github.event_name == 'push'
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -63,14 +44,9 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: ${{ env.PLATFORMS }}
-          push: ${{ env.PUSH == 'true' }}
+          platforms: | 
+            linux/amd64
+            ${{ (inputs.arm64 || github.event_name == 'push') && 'linux/arm64' || '' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      - name: Update Docker Hub description
-        if: env.PUSH == 'true'
-        uses: peter-evans/dockerhub-description@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ env.DOCKERHUB_IMAGE }}
+          push: ${{ github.event_name == 'push' }}
