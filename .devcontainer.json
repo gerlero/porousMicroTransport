@@ -2,20 +2,16 @@
     "image": "opencfd/openfoam-dev",
     "features": {
         "ghcr.io/devcontainers/features/git": {},
-        "ghcr.io/devcontainers/features/python": {}
-    },
-    "containerEnv": { 
-        "OMPI_ALLOW_RUN_AS_ROOT": "1",
-        "OMPI_ALLOW_RUN_AS_ROOT_CONFIRM": "1"
+        "ghcr.io/devcontainers/features/python": {},
+        "ghcr.io/devcontainers/features/docker-in-docker": {}
     },
     "customizations": {
         "vscode": {
             "extensions": [
                 "ms-vscode.cpptools",
-                "ms-python.python",
-                "ms-azuretools.vscode-docker",
                 "github.vscode-github-actions"
             ]
         }
-    }
+    },
+    "remoteUser": "sudofoam"
 }
