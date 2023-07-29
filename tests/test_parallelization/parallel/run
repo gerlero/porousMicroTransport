@@ -2,6 +2,8 @@
 cd "${0%/*}" || exit
 . ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions
 
+export OMPI_MCA_rmaps_base_oversubscribe=1
+
 runApplication blockMesh
 runApplication decomposePar
 runParallel $(getApplication)
