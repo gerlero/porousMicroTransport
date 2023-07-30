@@ -1,6 +1,5 @@
 import pytest
 
-import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -9,13 +8,12 @@ from PyFoam.RunDictionary.ParsedParameterFile import ParsedParameterFile
 DIR = Path(__file__).parent
 
 @pytest.fixture(scope="module")
-def reaction_case():
-    subprocess.run(["./clean"], cwd=DIR)
-    subprocess.run(["./run"], cwd=DIR, check=True)
-    return DIR
+async def reaction_case(run_case):
+    return await run_case(DIR)
 
 
-def test_reaction(reaction_case):
+@pytest.mark.asyncio_cooperative
+async def test_reaction(reaction_case):
     a0 = np.array(ParsedParameterFile(reaction_case / "0" / "A")["internalField"].value())
     b0 = np.array(ParsedParameterFile(reaction_case / "0" / "B")["internalField"].value())
     c0 = np.array(ParsedParameterFile(reaction_case / "0" / "C")["internalField"].value())

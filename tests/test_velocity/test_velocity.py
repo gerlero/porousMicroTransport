@@ -1,6 +1,5 @@
 import pytest
 
-import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -10,13 +9,12 @@ from PyFoam.RunDictionary.ParsedParameterFile import ParsedParameterFile
 DIR = Path(__file__).parent
 
 @pytest.fixture(scope="module")
-def velocity_case():
-    subprocess.run(["./clean"],cwd=DIR)
-    subprocess.run(["./run"], cwd=DIR, check=True)
-    return DIR
+async def velocity_case(run_case):
+    return await run_case(DIR)
 
 
-def test_infiltration(velocity_case):
+@pytest.mark.asyncio_cooperative
+async def test_infiltration(velocity_case):
     theta0 = np.array(ParsedParameterFile(velocity_case / "0" / "theta")["internalField"].value())
     U = np.array(ParsedParameterFile(velocity_case / "0" / "U")["boundaryField"]["left"]["value"].value())[0]
     h = 30e-3/5000

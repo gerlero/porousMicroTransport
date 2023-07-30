@@ -1,6 +1,5 @@
 import pytest
 
-import subprocess
 import math
 from pathlib import Path
 
@@ -9,13 +8,12 @@ import numpy as np
 DIR = Path(__file__).parent
 
 @pytest.fixture(scope="module")
-def dispersion_case():
-    subprocess.run(["./clean"], cwd=DIR)
-    subprocess.run(["./run"], cwd=DIR, check=True)
-    return DIR
+async def dispersion_case(run_case):
+    return await run_case(DIR)
 
 
-def test_dispersion(dispersion_case):
+@pytest.mark.asyncio_cooperative
+async def test_dispersion(dispersion_case):
     alphaT=5e-5
 
     with open(dispersion_case / '50/ampholyte.TARTRAZINE','r') as f:
