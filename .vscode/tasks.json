@@ -18,48 +18,7 @@
         {
             "label": "Clean build",
             "command": "./Allwclean",
-            "group": "build",
-        },
-        {
-            "label": "Create venv for tests",
-            "command": "python3",
-            "args": [
-                "-m",
-                "venv",
-                "--clear",
-                "--upgrade-deps",
-                "--prompt",
-                ".",
-                "venv"
-            ],
-            "options": {
-                "cwd": "tests"
-            },
-            "group": "test"
-        },
-        {
-            "label": "Install dependencies for tests",
-            "dependsOn": [
-                "Create venv for tests"
-            ],
-            "command": "venv/bin/pip",
-            "args": [
-                "install",
-                "-r",
-                "requirements.txt"
-            ],
-            "options": {
-                "cwd": "tests"
-            },
-            "group": "test"
-        },
-        {
-            "label": "Clean tests",
-            "command": "./Allclean",
-            "options": {
-                "cwd": "tests"
-            },
-            "group": "test",
+            "group": "build"
         }
     ]
 }
