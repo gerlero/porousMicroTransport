@@ -9,14 +9,6 @@ FoamFile
 
 solvers
 {
-    theta
-    {
-        solver          PCG;
-        preconditioner  DIC;
-        tolerance       1e-12;
-        relTol          0;
-    }
-    
     C
     {
         solver          PBiCG;
@@ -26,7 +18,3 @@ solvers
     }
 }
 
-Picard
-{
-    tolerance 1e-3;
-}

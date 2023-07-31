@@ -1,11 +1,3 @@
-/*--------------------------------*- C++ -*----------------------------------*\
-| =========                 |                                                 |
-| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2112                                  |
-|   \\  /    A nd           | Website:  www.openfoam.com                      |
-|    \\/     M anipulation  |                                                 |
-\*---------------------------------------------------------------------------*/
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 FoamFile
 {
     version         2;
@@ -23,7 +15,7 @@ stopAt          endTime;
 
 endTime         50;
 
-deltaT          1e-05;
+deltaT          1e-5;
 
 writeControl    adjustableRunTime;
 
@@ -45,7 +37,4 @@ adjustTimeStep  yes;
 
 runTimeModifiable no;
 
-maxDeltaT       .25;
-
-
-// ************************************************************************* //
+maxDeltaT       0.25;

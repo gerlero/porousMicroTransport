@@ -1,9 +1,9 @@
 import pytest
 
-import math
 from pathlib import Path
 
 import numpy as np
+from scipy.special import erfc
 
 DIR = Path(__file__).parent
 
@@ -14,37 +14,16 @@ async def dispersion_case(run_case):
 
 @pytest.mark.asyncio_cooperative
 async def test_dispersion(dispersion_case):
-    alphaT=5e-5
+    alphaT = 5e-5
 
-    with open(dispersion_case / '50/ampholyte.TARTRAZINE','r') as f:
-        for _ in range(21):
-            line=f.readline()
-        line=f.readline()
-        ndata=int(line)
-        line=f.readline()
-        field=np.fromfile(f,count=ndata,dtype='float',sep=' ')
+    field = np.asarray(dispersion_case["50"]["ampholyte.TARTRAZINE"].getContent()["internalField"].value())
 
-    with open(dispersion_case / '0/Cx','r') as f:
-        for _ in range(21):
-            line=f.readline()
-        line=f.readline()
-        ndata=int(line)
-        line=f.readline()
-        xnod=np.fromfile(f,count=ndata,dtype='float',sep=' ')
+    xnod = np.asarray(dispersion_case["0"]["Cx"].getContent()["internalField"].value())
+    ynod = np.asarray(dispersion_case["0"]["Cy"].getContent()["internalField"].value())
 
-    with open(dispersion_case / '0/Cy','r') as f:
-        for _ in range(21):
-            line=f.readline()
-        line=f.readline()
-        ndata=int(line)
-        line=f.readline()
-        ynod=np.fromfile(f,count=ndata,dtype='float',sep=' ')
+    assert len(field) == len(xnod) == len(ynod)
 
-    start=int(0.6*ndata)
-    stop=int(0.8*ndata)
-    ndata=stop-start
-    e=np.zeros(ndata)
-    for i in range(start,stop):
-        e[i-start]=abs(field[i]-0.5*math.erfc(ynod[i]/(2*(alphaT*xnod[i])**0.5)))
+    start = int(0.6*len(field))
+    stop = int(0.8*len(field))
 
-    assert(np.linalg.norm(e)<1e-3*ndata)
+    assert np.linalg.norm(field[start:stop] - 0.5*erfc(ynod[start:stop]/(2*(alphaT*xnod[start:stop])**0.5))) <= 1e-3*(stop-start)

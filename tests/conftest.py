@@ -2,9 +2,10 @@ import pytest
 
 import asyncio
 import multiprocessing
-
 from contextlib import asynccontextmanager
 from pathlib import Path
+
+from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 
 class _NSemaphore:
     def __init__(self, value=1):
@@ -57,5 +58,5 @@ def run_case(reserve_cpus, max_cpus):
 
         assert run.returncode == 0, f"Case {case.name}: run failed"
 
-        return case
+        return SolutionDirectory(case)
     return _run_case
