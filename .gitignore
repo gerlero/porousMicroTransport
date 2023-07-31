@@ -1,93 +1,96 @@
-# git-ls-files --others --exclude-from=.git/info/exclude
-# Lines that start with '#' are comments.
+# OpenFOAM
+**/lnInclude/
+**/Make/*
+!**/Make/files
+!**/Make/options
 
-# Editor and misc backup files - anywhere
-*~
-.*~
-.*.swp
-*.bak
-*.bak[0-9][0-9]
-\#*\#
+# Python
+**/.venv/
+**/venv/
+**/__pycache__/
+**/.pytest_cache/
 
-# File-browser settings - anywhere
-.directory
+# macOS
+**/.DS_Store
 
-# Backup/recovery versions - anywhere
-.#*
+# Tests
+/tests/*/**/0.0*/
+/tests/*/**/0.1*/
+/tests/*/**/0.2*/
+/tests/*/**/0.3*/
+/tests/*/**/0.4*/
+/tests/*/**/0.5*/
+/tests/*/**/0.6*/
+/tests/*/**/0.7*/
+/tests/*/**/0.8*/
+/tests/*/**/0.9*/
+/tests/*/**/1*/
+/tests/*/**/2*/
+/tests/*/**/3*/
+/tests/*/**/4*/
+/tests/*/**/5*/
+/tests/*/**/6*/
+/tests/*/**/7*/
+/tests/*/**/8*/
+/tests/*/**/9*/
+/tests/*/**/processor*/
+/tests/*/**/constant/polyMesh/
+/tests/*/**/dynamicCode/
+/tests/*/**/log.*
+/tests/*/**/*.foam
+/tests/*/**/*.OpenFOAM
 
-# Objects and archives - anywhere
-*.[oa]
-*.la
-*.so
+/tests/test_dispersion/0/C*
+!/tests/test_validity/*/100/theta.expected
 
-# Derived files
-lex.yy.c
+# Tutorials
+/tutorials/*/**/0.0*/
+/tutorials/*/**/0.1*/
+/tutorials/*/**/0.2*/
+/tutorials/*/**/0.3*/
+/tutorials/*/**/0.4*/
+/tutorials/*/**/0.5*/
+/tutorials/*/**/0.6*/
+/tutorials/*/**/0.7*/
+/tutorials/*/**/0.8*/
+/tutorials/*/**/0.9*/
+/tutorials/*/**/1*/
+/tutorials/*/**/2*/
+/tutorials/*/**/3*/
+/tutorials/*/**/4*/
+/tutorials/*/**/5*/
+/tutorials/*/**/6*/
+/tutorials/*/**/7*/
+/tutorials/*/**/8*/
+/tutorials/*/**/9*/
+/tutorials/*/**/processor*/
+/tutorials/*/**/constant/polyMesh/
+/tutorials/*/**/dynamicCode/
+/tutorials/*/**/log.*
+/tutorials/*/**/*.foam
+/tutorials/*/**/*.OpenFOAM
 
-# Core dumps
-core
-
-# Dependency files - anywhere
-*.dep
-
-# lnInclude (symlink) directories - anywhere
-lnInclude
-
-# Build directories - anywhere
-linux*Clang*/
-linux*Gcc*/
-linux*Icc*/
-darwin*Clang*/
-solaris*Gcc*/
-SunOS*Gcc*/
-platforms/
-
-# Top-level build directories
-/build/
-/platforms/
-
-# Reinstate wmake rules that might look like build directories
-!/wmake/rules/*/
-
-# Doxygen generated
-doc/Doxygen/html
-doc/Doxygen/latex
-doc/Doxygen/man
-doc/Doxygen/DTAGS
-
-# Generated files in the main and doc directories
-/*.html
-/doc/*.html
-
-# Untracked configuration/preferences files
-/etc/prefs.csh
-/etc/prefs.sh
-/etc/config.csh/prefs.*
-/etc/config.sh/prefs.*
-/wmake/rules/General/mplibUSER*
-
-# Source packages - anywhere
-*.tar.bz2
-*.tar.gz
-*.tar.xz
-*.tar
-*.tgz
-*.gtgz
-
-# Ignore tags or project files in the main directory
-/.cproject
-/.dir-locals.el
-/.project
-/.tags
-
-# Ignore the test directory
-/tutorialsTest
-
-# Ignore .vscode directories
-.vscode/*
+# VS Code
+/.vscode/*
 !/.vscode/c_cpp_properties.json
 !/.vscode/extensions.json
 !/.vscode/settings.json
 !/.vscode/tasks.json
 
-# Ignore macOS .DS_Store files
-.DS_Store
+#/.vscode/
+
+# Docker
+#/Dockerfile
+#/.dockerignore
+
+# Git
+#**/.git
+#**/.gitignore
+#**/.gitattributes
+
+# GitHub
+#/.github
+
+# Dev Container
+#/.devcontainer
+#/.devcontainer.json
