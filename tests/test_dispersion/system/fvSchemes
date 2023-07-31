@@ -10,7 +10,6 @@ FoamFile
 ddtSchemes
 {
     default         Euler;
-    ddt(theta)      Euler;
 }
 
 gradSchemes
@@ -27,7 +26,6 @@ divSchemes
 laplacianSchemes
 {
     default                 none;
-    laplacian(D,theta)      Gauss upwind phi uncorrected;
     laplacian(Deff,C)       Gauss linear corrected;
 }
 
