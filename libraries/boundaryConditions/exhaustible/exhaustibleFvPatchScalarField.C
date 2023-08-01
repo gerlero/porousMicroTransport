@@ -63,22 +63,41 @@ void Foam::Pmt::exhaustibleFvPatchScalarField::updateCoeffs()
             << abort(FatalError);
     }
 
-    const auto& phip = patch().lookupPatchField<surfaceScalarField, scalar>("phi");
+    const auto& phip = this->patch().lookupPatchField<surfaceScalarField, scalar>("phi");
 
     auto deltaT = timeIndex == curTimeIndex_ ? this->db().time().deltaTValue() : this->db().time().deltaT0Value();
 
-    inflow_ = gSum(-phip)*deltaT;
+    inflow_ = min(gSum(-phip)*deltaT, capacity_ - used_);
 
     if (timeIndex == curTimeIndex_ + 1)
     {
-        used_ += inflow_;
+        if (inflow_ != 0 && inflow_ == capacity_ - used_)
+        {
+            used_ = capacity_;
+
+            Info<< "exhaustible BC: patch " << this->patch().name() << " has been exhausted" << nl
+                << endl;
+        }
+        else
+        {
+            used_ += inflow_;
+        }
+
         inflow_ = Zero;
         curTimeIndex_ = timeIndex;
-
-        Info << "Exhaustible patch " << patch().name() << " used " << used_ << " of " << capacity_ << " (remaining  " << capacity_ - used_ << ")" << endl;
     }
 
-    this->valueFraction() = (capacity_ > used_);
+    if (inflow_ == capacity_ - used_)
+    {
+        const auto& D = this->patch().lookupPatchField<volScalarField, scalar>("D_");
+
+        this->refGrad() = -inflow_/patch().magSf()/deltaT/D;
+        this->valueFraction() = Zero;
+    }
+    else
+    {
+        this->valueFraction() = One;
+    }
 
     mixedFvPatchField<scalar>::updateCoeffs();
 }
