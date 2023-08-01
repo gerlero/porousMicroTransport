@@ -41,6 +41,7 @@
 /tests/*/**/*.OpenFOAM
 
 /tests/test_dispersion/0/C*
+/tests/test_exhaustible/system/controlDict
 !/tests/test_validity/*/100/theta.expected
 
 # Tutorials
