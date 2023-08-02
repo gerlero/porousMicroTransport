@@ -1,6 +1,5 @@
 #!/bin/sh
-
-# Source tutorial run functions
+cd "${0%/*}" || exit
 . $WM_PROJECT_DIR/bin/tools/RunFunctions
 
 runApplication blockMesh

@@ -1,6 +1,5 @@
 #!/bin/sh
-rm -f log.* 
-foamListTimes -rm
-rm -rf processor*
-rm -rf constant/polyMesh
-rm -rf dynamicCode
+cd "${0%/*}" || exit
+
+rm -f log.*
+rm -rf 0.* 1* 2* 3* 4* 5* 6* 7* 8* 9* processor* constant/polyMesh
