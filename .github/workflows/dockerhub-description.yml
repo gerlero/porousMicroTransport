@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  dockerHubDescription:
+  dockerhub-description:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -23,4 +23,5 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         repository: ${{ vars.DOCKERHUB_REPOSITORY }}
+        short-description: ${{ github.event.repository.description }}
         enable-url-completion: true
