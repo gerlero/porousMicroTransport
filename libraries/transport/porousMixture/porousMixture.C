@@ -81,6 +81,36 @@ Foam::Pmt::porousMixture::porousMixture
             );
 
 
+        if (transportProperties.subOrEmptyDict(speciesName).optionalSubDict("porousTransport").found("rs"))
+        {
+            FatalErrorInFunction
+                << "Per-species bulk density (rs) is not supported by porousMicroTransport" << nl
+                << "Define rs only in the top-level transportProperties dictionary" << nl
+                << exit(FatalError);
+        }
+
+        auto lambda = dimensionedScalar::getOrDefault
+            (
+                "lambda",
+                transportProperties.optionalSubDict(speciesName).optionalSubDict("porousTransport"),
+                dimless/dimTime
+            );
+        if (lambda.value() != 0)
+        {
+            FatalErrorInFunction
+                << "decay rate lambda is not supported by porousMicroTransport" << nl
+                << "Define a reaction instead" << nl
+                << exit(FatalError);
+        }
+
+        if (transportProperties.optionalSubDict(speciesName).optionalSubDict("porousTransport").found("epsTotal"))
+        {
+            FatalErrorInFunction
+                << "epsTotal parameter is not supported by porousMicroTransport" << nl
+                << "Try again after removing this entry" << nl
+                << exit(FatalError);
+        }
+
         if (auto* speciesDict = transportProperties.findDict(speciesName))
         {
             if (speciesDict->found("dispersionModel") || speciesDict->found("alphaDispersionCoeffs"))
