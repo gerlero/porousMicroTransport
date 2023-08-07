@@ -51,3 +51,9 @@ async def test_infiltration(exhaustible_case):
         theta = np.asarray(theta["internalField"].value())
 
         assert np.sum(theta - theta0)*dV + remaining == pytest.approx(amount)
+
+@pytest.mark.asyncio_cooperative
+async def test_exhausted_log(exhaustible_case):
+    log = (Path(exhaustible_case.name) / "log.moistureDiffusivityFoam").read_text()
+
+    assert log.count("patch left has been exhausted") == 1
