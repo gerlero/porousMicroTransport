@@ -16,7 +16,7 @@ boundaryField
     left
     {
         type            fixedValue;
-        value           uniform 0.6999999; //= 0.7 - 1e-7
+        value           uniform 0.7;
     }
     right 
     {
