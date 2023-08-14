@@ -10,6 +10,7 @@ on:
 
 jobs:
   dockerhub-description:
+    if: vars.DOCKERHUB_REPOSITORY != ''
     runs-on: ubuntu-latest
     steps:
     - name: Checkout

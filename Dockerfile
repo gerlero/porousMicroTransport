@@ -1,4 +1,6 @@
-FROM opencfd/openfoam-dev:2306
+ARG FOAM_VERSION=2306
+
+FROM opencfd/openfoam-dev:${FOAM_VERSION} as dev
 
 ARG PMT_DIR=/usr/local/porousMicroTransport
 
@@ -19,5 +21,20 @@ RUN . /openfoam/profile.rc \
 # smoke test
  && moistureDiffusivityTransportFoam -help
 
-COPY tutorials ${PMT_TUTORIALS}
 COPY LICENSE ${PMT_DIR}/
+
+
+FROM opencfd/openfoam-run:${FOAM_VERSION} as run
+
+ARG FOAM_VERSION
+
+COPY --from=dev /usr/lib/openfoam/openfoam${FOAM_VERSION}/site/ /usr/lib/openfoam/openfoam${FOAM_VERSION}/site/
+
+# smoke test
+RUN . /openfoam/profile.rc \
+  && moistureDiffusivityTransportFoam -help
+
+
+FROM dev
+
+COPY tutorials ${PMT_TUTORIALS}
