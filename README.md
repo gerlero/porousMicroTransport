@@ -7,15 +7,15 @@
 
 ## Installation
 
-### Requirements
+### Install from source
+
+#### Requirements
 
 **porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2012, v2106, v2112, v2206, v2212 and v2306.
 
-_Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 9, OpenFOAM 10) are not compatible._
+_Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 9, OpenFOAM 10) are not compatible. macOS users may want to consider [OpenFOAM.app](https://github.com/gerlero/openfoam-app)._
 
-**porousMicroTransport** is provided as source code and must be compiled before use.
-
-### Download
+#### Download
 
 [Download the source code](https://github.com/gerlero/porousMicroTransport/archive/refs/heads/main.zip) of **porousMicroTransport**, or clone this repository with Git:
 
@@ -23,7 +23,7 @@ _Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 9, O
 git clone https://github.com/gerlero/porousMicroTransport.git
 ```
 
-### Compile and install
+#### Compile and install
 
 To build and install **porousMicroTransport**, just invoke the top-level `Allwmake` script:
 
@@ -34,9 +34,9 @@ cd porousMicroTransport
 
 _If necessary, activate/source the correct OpenFOAM environment before running `Allwmake`._
 
-### Test
+#### Test
 
-Optionally, you can verify the installation of **porousMicroTransport** by running the included test suite (requires Python 3).
+Optionally, you can verify the installation of **porousMicroTransport** by running the included test suite (requires Python 3.7 or later):
 
 ```sh
 tests/Alltest
@@ -44,11 +44,22 @@ tests/Alltest
 
 ### Docker image
 
-Alternatively, you can use the [Docker image](https://hub.docker.com/r/microfluidica/porousmicrotransport/) of **porousMicroTransport**. This image is based on the official OpenFOAM Docker image and includes **porousMicroTransport** precompiled and ready to use. If you have [Docker](https://www.docker.com) installed, you can run the image in a new container with:
+Alternatively, **porousMicroTransport** is also [available in the form of Docker images](https://hub.docker.com/r/microfluidica/porousmicrotransport/). These images are based on the official OpenFOAM Docker images and include **porousMicroTransport** precompiled and ready to use. Assuming [Docker](https://www.docker.com) is installed, you can run the latest image of **porousMicroTransport** in a new container with:
 
 ```sh
 docker run -it microfluidica/porousmicrotransport
 ```
+
+Or, if you use OpenFOAM's [`openfoam-docker` script](https://develop.openfoam.com/packaging/containers) (which takes care of making the working directory available inside the container):
+
+```sh
+openfoam-docker -image=microfluidica/porousmicrotransport
+```
+
+A slimmer image variant that does not include source code or development tools is available as `microfluidica/porousmicrotransport:run`.
+
+Docker images can also be used with other compatible containerization software, such as Podman and Singularity/Apptainer.
+
 
 ## Solvers
 
