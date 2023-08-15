@@ -32,7 +32,7 @@ COPY --from=dev /usr/lib/openfoam/openfoam${FOAM_VERSION}/site/ /usr/lib/openfoa
 
 # smoke test
 RUN . /openfoam/profile.rc \
-  && moistureDiffusivityTransportFoam -help
+ && moistureDiffusivityTransportFoam -help
 
 
 FROM dev
