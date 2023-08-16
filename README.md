@@ -50,7 +50,7 @@ Alternatively, **porousMicroTransport** is also [available in the form of Docker
 docker run -it microfluidica/porousmicrotransport
 ```
 
-Or, if you use OpenFOAM's [`openfoam-docker` script](https://develop.openfoam.com/packaging/containers) (which takes care of making the working directory available inside the container):
+Or, if you use OpenFOAM's [`openfoam-docker` script](https://develop.openfoam.com/Development/openfoam/-/wikis/precompiled/docker) (which takes care of making the working directory available inside the container):
 
 ```sh
 openfoam-docker -image=microfluidica/porousmicrotransport
@@ -158,6 +158,16 @@ Supported models of unsaturated flow are:
 
 To choose a model for your simulation, set the `unsaturatedFlowModel` entry in `transportProperties`. Then set the model-specific parameters in the corresponding coefficient subdictionary.
 
+### Special boundary conditions for flow
+
+_Flow solvers only._
+
+Besides the standard OpenFOAM boundary conditions (e.g. `zeroGradient`, `fixedValue`), the solvers support these additional boundary conditions for `theta`:
+
+* `darcyGradPressure`: follow the boundary condition set for velocity (same as [`darcyGradPressure` in **porousMultiphaseFoam**](https://porousmultiphasefoam.readthedocs.io/en/latest/darcyGradPressure.html)).
+
+* `exhaustible`: models an inlet reservoir with a fixed volume of fluid that is gradually depleted as fluid flows into the domain. A `remaining` entry is required (volume remaining in the reservoir).
+
 ### Transported species
 
 _Transport solvers only._
@@ -181,6 +191,14 @@ Reactions are defined in a `reactions` subdictionary in `transportProperties`. T
 * `kf`: forward rate constant
 
 * `kr`: optional reverse rate constant (for reversible reactions)
+
+### Automatic timestep control
+
+To enable automatic timestep adjustment, set `adjustTimeStep` to `yes` in `system/controlDict`. Then, configure it as follows:
+
+* For flow, set a `tolerance` value inside a `Picard` dictionary in `system/fvSolution`
+
+* For transport, add a `maxDeltaC` and/or `relMaxDeltaC` entry in `system/controlDict`
 
 
 ## Tutorials
