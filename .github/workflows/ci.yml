@@ -25,14 +25,16 @@ jobs:
       uses: ammaraskar/gcc-problem-matcher@0.2.0
     - name: Build
       run: |
-        openfoam${{ matrix.openfoam-version }} ./Allwmake -j
+        ./Allwmake -j
+      shell: openfoam
     - name: Set up Python
       run: |
         apt-get update
         apt-get -y install python3-venv
     - name: Test
       run: |
-        openfoam${{ matrix.openfoam-version }} tests/Alltest
+        tests/Alltest
+      shell: openfoam
       env:
         OMPI_ALLOW_RUN_AS_ROOT: 1
         OMPI_ALLOW_RUN_AS_ROOT_CONFIRM: 1
