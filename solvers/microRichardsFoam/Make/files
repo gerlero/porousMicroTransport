@@ -1,0 +1,3 @@
+microRichardsFoam.C  
+
+EXE = $(FOAM_MODULE_APPBIN)/microRichardsFoam

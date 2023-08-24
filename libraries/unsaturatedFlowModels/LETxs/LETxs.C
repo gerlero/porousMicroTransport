@@ -25,7 +25,7 @@ Foam::Pmt::unsaturatedFlowModels::LETxs::LETxs
 (
     const porousMedium& medium,
     const fluidPhase& phase,
-    const phaseFractionField& frac,
+    phaseFractionField& frac,
     const dictionary& transportProperties
 )
 :

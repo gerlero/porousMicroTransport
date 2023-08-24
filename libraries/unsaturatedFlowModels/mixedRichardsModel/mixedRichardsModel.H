@@ -29,6 +29,7 @@ public:
     );
 
     tmp<volScalarField> C() override;
+    tmp<volScalarField> C(const volScalarField& p) override;
 
     tmp<volScalarField> M() override;
 

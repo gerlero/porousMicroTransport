@@ -28,7 +28,7 @@ public:
     (
         const porousMedium& medium,
         const fluidPhase& phase,
-        const phaseFractionField& frac,
+        phaseFractionField& frac,
         const dictionary& transportProperties
     );
 
@@ -37,7 +37,7 @@ public:
 private:
     const porousMedium& medium_;
     const fluidPhase& phase_;
-    const phaseFractionField& frac_;
+    phaseFractionField& frac_;
     const volScalarField pc0_;
     const dimensionedScalar Lw_;
     const dimensionedScalar Ew_;

@@ -30,7 +30,7 @@ public:
         (
             const porousMedium& medium,
             const fluidPhase& phase,
-            const phaseFractionField& frac,
+            phaseFractionField& frac,
             const dictionary& transportProperties
         ),
         (medium, phase, frac, transportProperties)
@@ -39,6 +39,7 @@ public:
     capillarityModel() = default;
 
     virtual tmp<volScalarField> C() = 0;
+    virtual tmp<volScalarField> C(const volScalarField& p) = 0;
 
     virtual ~capillarityModel() = default;
 

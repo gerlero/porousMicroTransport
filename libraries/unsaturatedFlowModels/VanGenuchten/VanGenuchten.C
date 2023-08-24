@@ -28,7 +28,7 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::VanGenuchten
 (
     const porousMedium& medium,
     const fluidPhase& phase,
-    const phaseFractionField& frac,
+    phaseFractionField& frac,
     const dictionary& transportProperties
 )
 :
@@ -62,6 +62,23 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::VanGenuchten
         << endl;
 }
 
+Foam::tmp<Foam::volScalarField> Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C(const volScalarField& p)
+{
+    volScalarField n{1/(1 - m_)};
+
+    frac_.setEff(neg(p) / pow(1 + pow(-p/pc0_, n), m_) + pos0(p));
+
+    volScalarField x{-p/pc0_};
+    volScalarField xn{pow(x, n)};
+
+    return
+        neg(p)
+       *(frac_.max() - frac_.min())
+       *m_*n/pc0_
+       *pow(x, n - 1)
+       *pow(1 + xn, -m_ - 1);
+}
+
 Foam::tmp<Foam::volScalarField>
 Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C()
 {
@@ -73,7 +90,7 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C()
 Foam::tmp<Foam::volScalarField>
 Foam::Pmt::unsaturatedFlowModels::VanGenuchten::M()
 {
-    volScalarField Se{frac_.eff()};
+    const volScalarField Se{frac_.eff()};
 
     return medium_.K()/phase_.mu()*pow(Se, l_)*sqr(1 - pow(1 - pow(Se, 1/m_), m_));
 }
