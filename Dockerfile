@@ -30,8 +30,8 @@ echo "                           porousMicroTransport"
 echo "---------------------------------------------------------------------------"
 echo "Homepage:    ${PMT_URL}"
 echo "OpenFOAM:    v${FOAM_VERSION} (www.openfoam.com)"
-[ ! -e ${PMT_DIR} ] || echo "Source code: ${PMT_DIR}"
-[ ! -e \${PMT_TUTORIALS} ] || echo "Tutorials:   \${PMT_TUTORIALS}"
+[ ! -e "${PMT_DIR}" ] || echo "Source code: ${PMT_DIR}"
+[ ! -e "\${PMT_TUTORIALS}" ] || echo "Tutorials:   \${PMT_TUTORIALS}"
 echo "---------------------------------------------------------------------------"
 EOF
 
