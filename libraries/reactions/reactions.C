@@ -164,7 +164,7 @@ void Foam::Pmt::reactions::setReactionRate
         const auto& Y = composition_.Y(sc.index);
         const auto& dimY = Y.dimensions();
 
-        reactionRate *= pow(Y/dimensionedScalar{dimY, One}, sc.exponent);
+        reactionRate *= pow(max(Y, dimensionedScalar{dimY, Zero})/dimensionedScalar{dimY, One}, sc.exponent);
     }
 
     for (const auto& sc : lhs)
