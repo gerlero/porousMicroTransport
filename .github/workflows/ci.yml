@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Set up GCC problem matcher
       uses: ammaraskar/gcc-problem-matcher@0.2.0
     - name: Build
