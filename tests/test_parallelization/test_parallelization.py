@@ -17,7 +17,7 @@ async def parallel_case(run_case):
 
 @pytest.mark.asyncio_cooperative
 @pytest.mark.parametrize("field", ["theta", "U", "C"])
-async def test_parallelization(serial_case, parallel_case, field):
+def test_parallelization(serial_case, parallel_case, field):
     assert len(serial_case.times) == len(parallel_case.times) > 1
 
     for t in serial_case.times[1:]:
