@@ -12,7 +12,7 @@ async def reaction_case(run_case):
 
 
 @pytest.mark.asyncio_cooperative
-async def test_reaction(reaction_case):
+def test_reaction(reaction_case):
     a0 = np.asarray(reaction_case["0"]["A"].getContent()["internalField"].value())
     b0 = np.asarray(reaction_case["0"]["B"].getContent()["internalField"].value())
     c0 = np.asarray(reaction_case["0"]["C"].getContent()["internalField"].value())

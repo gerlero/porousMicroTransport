@@ -10,7 +10,7 @@ async def retardation_case(run_case):
 
 
 @pytest.mark.asyncio_cooperative
-async def test_retardation(retardation_case):
+def test_retardation(retardation_case):
     a5 = retardation_case["5"]["A"].getContent()["internalField"].value()
     b10 = retardation_case["10"]["B"].getContent()["internalField"].value()
     

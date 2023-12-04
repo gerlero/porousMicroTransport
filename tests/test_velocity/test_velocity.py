@@ -12,7 +12,7 @@ async def velocity_case(run_case):
 
 
 @pytest.mark.asyncio_cooperative
-async def test_infiltration(velocity_case):
+def test_infiltration(velocity_case):
     theta0 = np.asarray(velocity_case[0]["theta"].getContent()["internalField"].value())
     U = velocity_case[0]["U"].getContent()["boundaryField"]["left"]["value"].value()[0]
     h = 30e-3/5000
