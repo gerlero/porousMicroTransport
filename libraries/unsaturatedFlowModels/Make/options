@@ -3,8 +3,8 @@ include $(GENERAL_RULES)/module-path-user
 EXE_INC = \
     -I$(LIB_SRC)/finiteVolume/lnInclude \
     -I$(LIB_SRC)/meshTools/lnInclude \
-    -I../../libraries/util/lnInclude \
-    -I../../libraries/common/lnInclude
+    -I../util/lnInclude \
+    -I../common/lnInclude
 
 LIB_LIBS = \
     -lfiniteVolume \

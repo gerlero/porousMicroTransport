@@ -6,7 +6,7 @@ EXE_INC = \
     -I$(LIB_SRC)/thermophysicalModels/specie/lnInclude \
     -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
     -I$(LIB_SRC)/thermophysicalModels/reactionThermo/lnInclude \
-    -I../../libraries/util/lnInclude
+    -I../util/lnInclude
 
 LIB_LIBS = \
     -lfiniteVolume \
