@@ -32,16 +32,18 @@ public:
     (
         const porousMedium& medium,
         const fluidPhase& phase,
-        const dictionary& coeffs
+        const phaseFractionField& frac,
+        const dictionary& transportProperties
     );
 
-    tmp<volScalarField> C(const phaseFractionField& frac) override;
+    tmp<volScalarField> C() override;
 
-    tmp<volScalarField> M(const phaseFractionField& frac) override;
+    tmp<volScalarField> M() override;
 
 private:
     const porousMedium& medium_;
     const fluidPhase& phase_;
+    const phaseFractionField& frac_;
     const volScalarField pc0_;
     const volScalarField alpha_;
     const volScalarField n_;

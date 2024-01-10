@@ -5,8 +5,9 @@ Foam::autoPtr<Foam::Pmt::moistureDiffusivityModel> Foam::Pmt::moistureDiffusivit
 (
     const porousMedium& medium,
     const fluidPhase& phase,
+    const phaseFractionField& frac,
     const dictionary& transportProperties
 )
 {
-    return Detail::unsaturatedFlowModelNew<moistureDiffusivityModel>(medium, phase, transportProperties);
+    return Detail::unsaturatedFlowModelNew<moistureDiffusivityModel>(medium, phase, frac, transportProperties);
 }

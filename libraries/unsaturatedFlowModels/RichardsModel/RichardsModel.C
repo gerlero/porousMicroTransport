@@ -14,7 +14,7 @@ defineRunTimeSelectionTable(RichardsModel, dictionary);
 }
 }
 
-Foam::tmp<Foam::volScalarField> Foam::Pmt::RichardsModel::D(const phaseFractionField& frac)
+Foam::tmp<Foam::volScalarField> Foam::Pmt::RichardsModel::D()
 {
-    return M(frac)/C(frac);
+    return M()/C();
 }

@@ -30,14 +30,15 @@ public:
         (
             const porousMedium& medium,
             const fluidPhase& phase,
-            const dictionary& coeffs
+            const phaseFractionField& frac,
+            const dictionary& transportProperties
         ),
-        (medium, phase, coeffs)
+        (medium, phase, frac, transportProperties)
     );
 
     relativePermeabilityModel() = default;
 
-    virtual tmp<volScalarField> M(const phaseFractionField& frac) = 0;
+    virtual tmp<volScalarField> M() = 0;
 
     virtual ~relativePermeabilityModel() = default;
 

@@ -30,21 +30,23 @@ public:
         (
             const porousMedium& medium,
             const fluidPhase& phase,
-            const dictionary& coeffs
+            const phaseFractionField& frac,
+            const dictionary& transportProperties
         ),
-        (medium, phase, coeffs)
+        (medium, phase, frac, transportProperties)
     );
 
     static autoPtr<moistureDiffusivityModel> New
     (
         const porousMedium& medium,
         const fluidPhase& phase,
+        const phaseFractionField& frac,
         const dictionary& transportProperties
     );
 
     moistureDiffusivityModel() = default;
 
-    virtual tmp<volScalarField> D(const phaseFractionField& frac) = 0;
+    virtual tmp<volScalarField> D() = 0;
 
     virtual ~moistureDiffusivityModel() = default;
 

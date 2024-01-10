@@ -31,7 +31,7 @@ alphaL $alphaT;
 
 unsaturatedFlowModel LETd;
 
-LETdCoeffs
+LETCoeffs
 {
   L L [0 0 0 0 0 0 0] 0.004569;
   E	E [0 0 0 0 0 0 0] 12930;

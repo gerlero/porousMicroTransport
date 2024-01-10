@@ -20,7 +20,7 @@ K K [0 2 0 0 0 0 0] 1e-13;
 
 unsaturatedFlowModel LETxs;
 
-LETxsCoeffs
+LETCoeffs
 {
   pc0 pc0 [1 -1 -2 0 0 0 0] 8.900e7; // = mu*8.900e-3/K
 	Lw Lw [0 0 0 0 0 0 0] 1.651;

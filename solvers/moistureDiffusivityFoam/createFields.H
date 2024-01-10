@@ -95,7 +95,7 @@ volVectorField U
 
 mesh.setFluxRequired(theta.name());
 
-auto flowModel = Pmt::moistureDiffusivityModel::New(medium, phase, transportProperties);
+auto flowModel = Pmt::moistureDiffusivityModel::New(medium, phase, theta, transportProperties);
 
 #include <createFvOptions.H>
 

@@ -1,5 +1,5 @@
 {
-    D = flowModel->D(theta);
+    D = flowModel->D();
 
     fvScalarMatrix thetaEqn
     {

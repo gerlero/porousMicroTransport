@@ -1,5 +1,6 @@
 #include "BrooksAndCorey.H"
 #include "constantFields.H"
+#include "dictionaries.H"
 #include "porousMedium.H"
 #include "fluidPhase.H"
 #include "phaseFractionField.H"
@@ -27,15 +28,17 @@ Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::BrooksAndCorey
 (
     const porousMedium& medium,
     const fluidPhase& phase,
-    const dictionary& coeffs
+    const phaseFractionField& frac,
+    const dictionary& transportProperties
 )
 :
     medium_{medium},
     phase_{phase},
-    pc0_{constantFields::read("pc0", medium.mesh(), dimPressure, coeffs)},
-    alpha_{constantFields::read("alpha", medium.mesh(), dimless, coeffs)},
-    n_{constantFields::read("n", medium.mesh(), dimless, coeffs)},
-    l_{constantFields::readOrDefault("l", alpha_, coeffs)}
+    frac_{frac},
+    pc0_{constantFields::read("pc0", medium.mesh(), dimPressure,dictionaries::subOrNullDictRef(transportProperties, "BrooksAndCoreyCoeffs"))},
+    alpha_{constantFields::read("alpha", medium.mesh(), dimless, dictionaries::subOrNullDictRef(transportProperties, "BrooksAndCoreyCoeffs"))},
+    n_{constantFields::read("n", medium.mesh(), dimless, dictionaries::subOrNullDictRef(transportProperties, "BrooksAndCoreyCoeffs"))},
+    l_{constantFields::readOrDefault("l", alpha_, dictionaries::subOrNullDictRef(transportProperties, "BrooksAndCoreyCoeffs"))}
 {
     Info<< nl
         << typeName << " model" << nl
@@ -49,17 +52,17 @@ Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::BrooksAndCorey
 }
 
 Foam::tmp<Foam::volScalarField>
-Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::C(const phaseFractionField& frac)
+Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::C()
 {
-    volScalarField p{-pc0_*pow(frac.eff(), -alpha_)};
+    volScalarField p{-pc0_*pow(frac_.eff(), -alpha_)};
 
-    return -neg(p + pc0_)*(frac.max() - frac.min())/(alpha_*p*pow(-p/pc0_, 1/alpha_));
+    return -neg(p + pc0_)*(frac_.max() - frac_.min())/(alpha_*p*pow(-p/pc0_, 1/alpha_));
 }
 
 Foam::tmp<Foam::volScalarField>
-Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::M(const phaseFractionField& frac)
+Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::M()
 {
-    volScalarField eff{frac.eff()};
+    volScalarField eff{frac_.eff()};
 
     return medium_.K()/phase_.mu()*pow(eff, n_ + l_ - 1)
          + neg0(1 - eff)*dimensionedScalar{dimArea/dimDynamicViscosity, One};

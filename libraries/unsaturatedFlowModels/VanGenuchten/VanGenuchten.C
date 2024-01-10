@@ -1,5 +1,6 @@
 #include "VanGenuchten.H"
 #include "constantFields.H"
+#include "dictionaries.H"
 #include "porousMedium.H"
 #include "fluidPhase.H"
 #include "phaseFractionField.H"
@@ -27,26 +28,28 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::VanGenuchten
 (
     const porousMedium& medium,
     const fluidPhase& phase,
-    const dictionary& coeffs
+    const phaseFractionField& frac,
+    const dictionary& transportProperties
 )
 :
     medium_{medium},
     phase_{phase},
-    pc0_{constantFields::read("pc0", medium.mesh(), dimPressure, coeffs)},
+    frac_{frac},
+    pc0_{constantFields::read("pc0", medium.mesh(), dimPressure, dictionaries::subOrNullDictRef(transportProperties, "VanGenuchtenCoeffs"))},
     m_{
         [&]
         {
-            if (auto m = constantFields::readIfPresent("m", medium.mesh(), dimless, coeffs))
+            if (auto m = constantFields::readIfPresent("m", medium.mesh(), dimless, dictionaries::subOrNullDictRef(transportProperties, "VanGenuchtenCoeffs")))
             {
                 return m;
             }
 
-            auto n = constantFields::read("n", medium.mesh(), dimless, coeffs);
+            auto n = constantFields::read("n", medium.mesh(), dimless, dictionaries::subOrNullDictRef(transportProperties, "VanGenuchtenCoeffs"));
 
             return volScalarField::New("m", 1 - 1/n);
         }()
     },
-    l_{constantFields::readOrDefault("l", medium.mesh(), dimless, 0.5, coeffs)}
+    l_{constantFields::readOrDefault("l", medium.mesh(), dimless, 0.5, dictionaries::subOrNullDictRef(transportProperties, "VanGenuchtenCoeffs"))}
 {
     Info<< nl
         << typeName << " model" << nl
@@ -60,17 +63,17 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::VanGenuchten
 }
 
 Foam::tmp<Foam::volScalarField>
-Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C(const phaseFractionField& frac)
+Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C()
 {
-    volScalarField Se{frac.eff()};
+    volScalarField Se{frac_.eff()};
 
-    return 1/pc0_*m_/(1 - m_)*(frac.max() - frac.min())*pow(Se, 1/m_)*pow((1 - pow(Se, 1/m_)), m_);
+    return 1/pc0_*m_/(1 - m_)*(frac_.max() - frac_.min())*pow(Se, 1/m_)*pow((1 - pow(Se, 1/m_)), m_);
 }
 
 Foam::tmp<Foam::volScalarField>
-Foam::Pmt::unsaturatedFlowModels::VanGenuchten::M(const phaseFractionField& frac)
+Foam::Pmt::unsaturatedFlowModels::VanGenuchten::M()
 {
-    volScalarField Se{frac.eff()};
+    volScalarField Se{frac_.eff()};
 
     return
         pos(1 - Se)*medium_.K()/phase_.mu()*pow(Se, l_)*pow(1 - pow(1 - pow(Se, 1/m_), m_), 2)

@@ -30,6 +30,7 @@ autoPtr<Model> unsaturatedFlowModelNew
 (
     const porousMedium& medium,
     const fluidPhase& phase,
+    const phaseFractionField& frac,
     const dictionary& transportProperties
 )
 {
@@ -38,20 +39,14 @@ autoPtr<Model> unsaturatedFlowModelNew
     {
         Info<< "Selecting capillarity model => " << capillarityType << endl;
 
-        const auto& capillarityCoeffs =
-            dictionaries::subOrNullDictRef
-            (
-                transportProperties,
-                capillarityType + "Coeffs"
-            );
-
         auto capillarityInstance =
             NewOfSelectedType<capillarityModel>
             (
                 capillarityType,
                 medium,
                 phase,
-                capillarityCoeffs
+                frac,
+                transportProperties
             );
 
         auto relativePermeabilityType =
@@ -74,20 +69,14 @@ autoPtr<Model> unsaturatedFlowModelNew
             assert(capillarityInstance);
         }
 
-        const auto& relativePermeabilityCoeffs =
-            dictionaries::subOrNullDictRef
-            (
-                transportProperties,
-                relativePermeabilityType + "Coeffs"
-            );
-
         auto relativePermeabilityInstance =
             NewOfSelectedType<relativePermeabilityModel>
             (
                 relativePermeabilityType,
                 medium,
                 phase,
-                relativePermeabilityCoeffs
+                frac,
+                transportProperties
             );
 
         return
@@ -102,10 +91,14 @@ autoPtr<Model> unsaturatedFlowModelNew
 
     Info<< "Selecting unsaturated flow model => " << modelType << endl;
 
-    const auto& coeffs = 
-        dictionaries::subOrNullDictRef(transportProperties, modelType + "Coeffs");
-
-    return NewOfSelectedType<Model>(modelType, medium, phase, coeffs);
+    return NewOfSelectedType<Model>
+        (
+            modelType,
+            medium,
+            phase,
+            frac,
+            transportProperties
+        );
 }
 
 }
