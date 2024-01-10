@@ -32,23 +32,25 @@ public:
         (
             const porousMedium& medium,
             const fluidPhase& phase,
-            const dictionary& coeffs
+            const phaseFractionField& frac,
+            const dictionary& transportProperties
         ),
-        (medium, phase, coeffs)
+        (medium, phase, frac, transportProperties)
     );
 
     static autoPtr<RichardsModel> New
     (
         const porousMedium& medium,
         const fluidPhase& phase,
+        const phaseFractionField& frac,
         const dictionary& transportProperties
     );
 
-    virtual tmp<volScalarField> C(const phaseFractionField& frac) = 0;
+    virtual tmp<volScalarField> C() = 0;
 
-    virtual tmp<volScalarField> M(const phaseFractionField& frac) = 0;
+    virtual tmp<volScalarField> M() = 0;
 
-    tmp<volScalarField> D(const phaseFractionField& frac) override;
+    tmp<volScalarField> D() override;
 };
 
 }

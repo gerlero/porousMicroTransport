@@ -1,5 +1,6 @@
 #include "LETd.H"
 #include "constantFields.H"
+#include "dictionaries.H"
 #include "porousMedium.H"
 #include "phaseFractionField.H"
 
@@ -23,13 +24,15 @@ Foam::Pmt::unsaturatedFlowModels::LETd::LETd
 (
     const porousMedium& medium,
     const fluidPhase&,
-    const dictionary& coeffs
+    const phaseFractionField& frac,
+    const dictionary& transportProperties
 )
 :
-    Dwt_{constantFields::read("Dwt", medium.mesh(), dimViscosity, coeffs)},
-    L_{"L", dimless, coeffs},
-    E_{"E", dimless, coeffs},
-    T_{"T", dimless, coeffs}
+    frac_{frac},
+    Dwt_{constantFields::read("Dwt", medium.mesh(), dimViscosity, dictionaries::subOrNullDictRef(transportProperties, "LETCoeffs"))},
+    L_{"L", dimless, dictionaries::subOrNullDictRef(transportProperties, "LETCoeffs")},
+    E_{"E", dimless, dictionaries::subOrNullDictRef(transportProperties, "LETCoeffs")},
+    T_{"T", dimless, dictionaries::subOrNullDictRef(transportProperties, "LETCoeffs")}
 {
     Info<< nl
         << typeName << " model" << nl
@@ -43,9 +46,9 @@ Foam::Pmt::unsaturatedFlowModels::LETd::LETd
 }
 
 Foam::tmp<Foam::volScalarField>
-Foam::Pmt::unsaturatedFlowModels::LETd::D(const phaseFractionField& frac)
+Foam::Pmt::unsaturatedFlowModels::LETd::D()
 {
-    volScalarField Swp{frac.eff()};
+    volScalarField Swp{frac_.eff()};
 
     return Dwt_*pow(Swp, L_)/(pow(Swp, L_) + E_*pow(1 - Swp, T_));
 }

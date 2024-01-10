@@ -28,9 +28,9 @@ public:
         autoPtr<relativePermeabilityModel> relativePermeability
     );
 
-    tmp<volScalarField> C(const phaseFractionField& frac) override;
+    tmp<volScalarField> C() override;
 
-    tmp<volScalarField> M(const phaseFractionField& frac) override;
+    tmp<volScalarField> M() override;
 
 private:
     autoPtr<capillarityModel> capillarityModel_;

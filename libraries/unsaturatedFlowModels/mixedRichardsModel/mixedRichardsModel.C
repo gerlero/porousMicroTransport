@@ -28,13 +28,13 @@ Foam::Pmt::mixedRichardsModel::mixedRichardsModel
 }
 
 Foam::tmp<Foam::volScalarField>
-Foam::Pmt::mixedRichardsModel::C(const phaseFractionField& frac)
+Foam::Pmt::mixedRichardsModel::C()
 {
-    return capillarityModel_->C(frac);
+    return capillarityModel_->C();
 }
 
 Foam::tmp<Foam::volScalarField>
-Foam::Pmt::mixedRichardsModel::M(const phaseFractionField& frac)
+Foam::Pmt::mixedRichardsModel::M()
 {
-    return relativePermeabilityModel_->M(frac);
+    return relativePermeabilityModel_->M();
 }
