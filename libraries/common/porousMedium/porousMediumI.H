@@ -10,7 +10,7 @@ inline const Foam::volScalarField& Foam::Pmt::porousMedium::eps() const
     if (!eps_)
     {
         FatalErrorInFunction
-            << "Porosity (eps | thetamax) required but not set" << endl
+            << "Effective porosity (eps | thetamax) required but not set" << endl
             << exit(FatalError);
     }
     return *eps_;
@@ -33,11 +33,21 @@ inline const Foam::volScalarField& Foam::Pmt::porousMedium::rs() const
     if (!rs_)
     {
         FatalErrorInFunction
-            << "Bulk density (rs) required but not set" << endl
+            << "Particle density rs required but not set" << endl
             << exit(FatalError);
     }
 
     return *rs_;
+}
+
+inline const Foam::volScalarField& Foam::Pmt::porousMedium::epsTotal() const
+{
+    if (!epsTotal_)
+    {
+        return eps();
+    }
+
+    return *epsTotal_;
 }
 
 inline const Foam::volScalarField& Foam::Pmt::porousMedium::tau() const

@@ -26,6 +26,8 @@ public:
 
     const volScalarField& rs() const;
 
+    const volScalarField& epsTotal() const;
+
     const volScalarField& tau() const;
 
     const volScalarField& alphaT() const;
@@ -40,6 +42,7 @@ private:
     autoPtr<volScalarField> eps_;
     autoPtr<volScalarField> K_;
     autoPtr<volScalarField> rs_;
+    autoPtr<volScalarField> epsTotal_;
     autoPtr<volScalarField> tau_;
     autoPtr<volScalarField> alphaT_;
     autoPtr<volScalarField> alphaL_;

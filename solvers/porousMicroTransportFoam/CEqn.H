@@ -6,7 +6,7 @@ forAll(composition.Y(), speciesi)
     auto& C = composition.Y(speciesi);
     auto Deff = composition.Deff(speciesi);
     const auto& Rd = composition.retardation(speciesi);
-    const auto& R = reactions.reactionTerm(speciesi);
+    const auto& F = reactions.reactionTerm(speciesi);
 
     auto ddtScheme = composition.ddtScheme(speciesi);
 
@@ -16,7 +16,7 @@ forAll(composition.Y(), speciesi)
           + fvm::div(phi, C, "div(phi,C)")
           - fvm::laplacian(theta*Deff, C, "laplacian(Deff,C)")
         ==
-            Rd*theta*R
+            Rd*theta*F
           + theta*fvOptions(C)
     };
 

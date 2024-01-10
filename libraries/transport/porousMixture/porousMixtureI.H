@@ -20,7 +20,7 @@ inline void Foam::Pmt::porousMixture::correct
     {
         if (Kd_[speciesi].value() != 0)
         {
-            Rd_[speciesi] = One + medium_.rs()*Kd_[speciesi]/frac;
+            Rd_[speciesi] = One + medium_.rs()*(One - medium_.epsTotal())*Kd_[speciesi]/frac;
         }
     }
 }

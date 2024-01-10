@@ -50,6 +50,18 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
             return autoPtr<volScalarField>{nullptr};
         }()
     },
+    epsTotal_
+    {
+        [&]
+        {
+            if (auto epsTotal = constantFields::readIfPresent("epsTotal", mesh, dimless, transportProperties))
+            {
+                return autoPtr<volScalarField>{epsTotal.ptr()};
+            }
+
+            return autoPtr<volScalarField>{nullptr};
+        }()
+    },
     tau_
     {
         [&]
@@ -90,7 +102,7 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     Info<< nl
         << "Porous medium properties" << nl
         << "{" << nl
-        << "    Porosity (eps | thetamax): ";
+        << "    Effective porosity (eps | thetamax): ";
     if (eps_)
     {
         eps_->writeMinMax(Info);
@@ -110,7 +122,7 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     {
         Info<< "not set" << nl;
     }
-    Info<< "    Bulk density (rs): ";
+    Info<< "    Particle density (rs): ";
     if (rs_)
     {
        rs_->writeMinMax(Info);
@@ -118,6 +130,15 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     else
     {
         Info<< "not set" << nl;
+    }
+    Info<< "    Total porosity (epsTotal): ";
+    if (epsTotal_)
+    {
+        epsTotal_->writeMinMax(Info);
+    }
+    else
+    {
+        Info<< "not set (defaults to effective porosity)" << nl;
     }
     Info<< "    Tortuosity (tau): ";
     if (tau_)
