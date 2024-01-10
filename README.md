@@ -75,11 +75,15 @@ where $\theta$ is the moisture content and $D$ is a saturation-dependent diffusi
 
 **Transport by steady flow of any number of species in a porous medium, with optional reactions between the species**. For each species (concentration $C$), the governing equation is:
 
-$$\frac{\partial\theta C}{\partial t} + \nabla\cdot\left[UC\right] - \nabla\cdot\left[\theta D_{eff}\nabla C\right] = \theta R$$
+$$\frac{\partial R_d \theta C}{\partial t} + \nabla\cdot\left[UC\right] - \nabla\cdot\left[\theta D_{eff}\nabla C\right] = \theta F$$
 
-where $R$ is a reaction term (see below) and $D_{eff}$ is defined as: 
+where $F$ is a reaction term (see below), $R_d$ is defined as:
 
-   $$D_{eff} = \left(\frac{D_M}{\tau} + \alpha_T|V|\right)I + \left(\alpha_L - \alpha_T\right)\frac{VV}{|V|}$$
+$$R_d = 1 + \frac{\rho_s\left(1 - \varepsilon_\textrm{tot}\right)K_d}{\theta}$$
+
+and $D_{eff}$ is defined as: 
+
+$$D_{eff} = \left(\frac{D_M}{\tau} + \alpha_T|V|\right)I + \left(\alpha_L - \alpha_T\right)\frac{VV}{|V|}$$
 
 with $I$ the identity tensor and $V$ the true velocity of the fluid ($=U/\theta$).
 
@@ -104,9 +108,13 @@ These variable fields are defined in the time directories:
 
 Defined as scalar fields in `constant` or as dictionary entries in `transportProperties`:
 
-* `eps` or `thetamax`: porosity
+* `eps` or `thetamax`: effective porosity ($\varepsilon$)
 
 * `K`: intrinsic permeability. _Flow solvers only_
+
+* `rs`: particle density ($\rho_s$). _Transport solvers only_
+
+* `epsTotal`: total porosity ($\varepsilon_\textrm{tot}$). _Transport solvers only_
 
 * `tau`: tortuosity ($\tau$). _Transport solvers only_
 
@@ -176,9 +184,11 @@ A `species` list in `transportProperties` contains the names of all transported 
 
 Each species must also define its own scalar concentration field (named the same as the species).
 
-For each species, the following entries are required in `transportProperties`:
+For each species, the following entries can be set in `transportProperties`:
 
 * `Dm`: molecular diffusivity ($D_M$)
+
+* `Kd`: partitioning coefficient ($K_d$)
 
 ### Reactions
 
