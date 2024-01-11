@@ -6,8 +6,6 @@
 #include <messageStream.H>
 #include <error.H>
 
-#include <cassert>
-
 Foam::Pmt::reactions::reactions
 (
     const basicMultiComponentMixture& composition,
