@@ -1,3 +1,5 @@
+#include "phaseFractionField.H"
+
 #include <error.H>
 
 inline const Foam::fvMesh& Foam::Pmt::porousMedium::mesh() const noexcept
@@ -86,3 +88,7 @@ inline const Foam::volScalarField& Foam::Pmt::porousMedium::alphaL() const
     return *alphaL_;
 }
 
+inline Foam::tmp<Foam::volScalarField> Foam::Pmt::porousMedium::theta(const phaseFractionField& frac) const
+{
+    return eps()*frac/frac.max();
+}
