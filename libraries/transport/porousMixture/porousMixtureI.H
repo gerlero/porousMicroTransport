@@ -7,9 +7,7 @@ inline void Foam::Pmt::porousMixture::correct
     const phaseFractionField& frac
 )
 {
-    auto theta = medium_.eps()*frac/frac.max();
-
-    volVectorField V{U/theta};
+    volVectorField V{U/medium_.theta(frac)};
     volScalarField magV{mag(V)};
 
     Disp_ = medium_.alphaT()*magV*tensor::I 

@@ -2,6 +2,7 @@
 #define PMT_porousMedium_H
 
 #include "porousMediumFwd.H"
+#include "phaseFractionFieldFwd.H"
 
 #include <fvMesh.H>
 #include <dictionary.H>
@@ -33,6 +34,8 @@ public:
     const volScalarField& alphaT() const;
 
     const volScalarField& alphaL() const;
+
+    tmp<volScalarField> theta(const phaseFractionField& frac) const;
 
     porousMedium(const porousMedium&) = delete;
     void operator=(const porousMedium&) = delete;
