@@ -1,7 +1,7 @@
 #ifndef PMT_reactions_H
 #define PMT_reactions_H
 
-#include "speciesCoeffs.H"
+#include "reaction.H"
 
 #include <basicMultiComponentMixture.H>
 #include <volFieldsFwd.H>
@@ -34,47 +34,17 @@ public:
     void operator=(const reactions&) = delete;
 
 private:
-    struct reaction
-    {
-        List<speciesCoeffs> lhs;
-        List<speciesCoeffs> rhs;
-        scalar kf;
-        scalar kr;
-    };
-
     const basicMultiComponentMixture& composition_;
     PtrList<volScalarField> reactionTerms_;
-    List<reaction> reactions_;
+    PtrList<reaction> reactions_;
 
     void clearTerms();
+
     void setReactionRate
     (
-        const List<speciesCoeffs>& lhs,
-        const List<speciesCoeffs>& rhs, 
-        scalar k
-    );
-
-    static scalar reactionOrder(const List<speciesCoeffs>& lhs);
-
-    static void checkYDimensions
-    (
-        const List<speciesCoeffs>& s,
-        const basicMultiComponentMixture& composition,
-        const dimensionSet& expected
-    );
-
-    static const dimensionSet& YDimensions
-    (
-        const List<speciesCoeffs>& lhs,
-        const List<speciesCoeffs>& rhs,
-        const basicMultiComponentMixture& composition
-    );
-
-    static dimensionSet kDimensions
-    (
-        const List<speciesCoeffs>& lhs,
-        const List<speciesCoeffs>& rhs,
-        const basicMultiComponentMixture& composition
+        const List<reaction::speciesCoeffs>& lhs,
+        const List<reaction::speciesCoeffs>& rhs, 
+        tmp<volScalarField> k
     );
 };
 

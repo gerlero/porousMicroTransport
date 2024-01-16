@@ -1,5 +1,8 @@
-speciesCoeffs/speciesCoeffs.C
-
 reactions.C
+
+reaction/reaction.C
+reaction/reactionNew.C
+
+defaultReaction/defaultReaction.C
 
 LIB = $(FOAM_MODULE_LIBBIN)/libPMTreactions
