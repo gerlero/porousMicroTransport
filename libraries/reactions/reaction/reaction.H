@@ -64,9 +64,6 @@ public:
     void operator=(const reaction&) = delete;
 
 protected:
-    List<reaction::speciesCoeffs> lhs_;
-    List<reaction::speciesCoeffs> rhs_;
-
     dimensionSet YDimensions(const basicMultiComponentMixture& composition) const;
     dimensionSet kfDimensions(const dimensionSet& dimY) const;
     dimensionSet krDimensions(const dimensionSet& dimY) const;
@@ -78,6 +75,9 @@ protected:
     );
 
 private:
+    List<reaction::speciesCoeffs> lhs_;
+    List<reaction::speciesCoeffs> rhs_;
+
     reaction(Pair<List<reaction::speciesCoeffs>> lrhs);
 
     scalar forwardOrder() const noexcept;
