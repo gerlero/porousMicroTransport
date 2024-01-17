@@ -134,7 +134,7 @@ Foam::dimensionSet Foam::Pmt::reaction::YDimensions
     {
         dimY.reset(composition.Y(lhs().first().index).dimensions());
         
-        if (composition.Y(rhs().first().index).dimensions() != dimY)
+        if (dimensionSet::checking() && composition.Y(rhs().first().index).dimensions() != dimY)
         {
             FatalErrorInFunction
                 << "Incompatible dimensions of species concentrations in reaction" << nl
@@ -148,23 +148,26 @@ Foam::dimensionSet Foam::Pmt::reaction::YDimensions
             << abort(FatalError);
     }
 
-    for (const auto& sc : lhs())
+    if (dimensionSet::checking())
     {
-        if (composition.Y(sc.index).dimensions() != dimY)
+        for (const auto& sc : lhs())
         {
-            FatalErrorInFunction
-                << "Incompatible dimensions of species concentrations in reaction" << nl
-                << abort(FatalError);
+            if (composition.Y(sc.index).dimensions() != dimY)
+            {
+                FatalErrorInFunction
+                    << "Incompatible dimensions of species concentrations in reaction" << nl
+                    << abort(FatalError);
+            }
         }
-    }
 
-    for (const auto& sc : rhs())
-    {
-        if (composition.Y(sc.index).dimensions() != dimY)
+        for (const auto& sc : rhs())
         {
-            FatalErrorInFunction
-                << "Incompatible dimensions of species concentrations in reaction" << nl
-                << abort(FatalError);
+            if (composition.Y(sc.index).dimensions() != dimY)
+            {
+                FatalErrorInFunction
+                    << "Incompatible dimensions of species concentrations in reaction" << nl
+                    << abort(FatalError);
+            }
         }
     }
 
