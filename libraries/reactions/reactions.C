@@ -92,10 +92,7 @@ void Foam::Pmt::reactions::setReactionRate
 
     for (const auto& sc : lhs)
     {
-        const auto& Y = composition_.Y(sc.index);
-        const auto& dimY = Y.dimensions();
-
-        reactionRate *= pow(max(Y, dimensionedScalar{dimY, Zero}), sc.exponent);
+        reactionRate *= pow(posPart(composition_.Y(sc.index)), sc.exponent);
     }
 
     for (const auto& sc : lhs)
