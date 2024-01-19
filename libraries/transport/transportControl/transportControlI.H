@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <limits>
 
+
 template<class Base>
 template<typename... Args_>
 Foam::Pmt::transportControl<Base>::transportControl
@@ -38,7 +39,7 @@ bool Foam::Pmt::transportControl<Base>::retry()
         auto maxDeltaY = maxDeltaY_[speciesi];
         auto maxDYdT = maxDYdT_[speciesi];
 
-        if (maxDYdT*this->deltaTValue() > 1.05*maxDeltaY)
+        if ((maxDYdT*this->deltaTValue() > 1.05*maxDeltaY))
         {
             Info<< "Excessive concentration change of species " << composition_.species()[speciesi] << endl;
             newDeltaT = min(newDeltaT, maxDeltaY/maxDYdT/2);
@@ -108,13 +109,36 @@ void Foam::Pmt::transportControl<Base>::update()
 {
     if (!upToDate_)
     {
-        scalar maxDeltaC;
+        /*scalar maxDeltaC;
         bool maxDeltaCSet = this->controlDict().readCheckIfPresent
             (
                 "maxDeltaC", 
                 maxDeltaC,
                 [](scalar v){ return v>=0; }
             );
+        */
+
+        List<scalar> maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
+        const auto& maxDeltaCDict = (this->controlDict()).subOrEmptyDict("maxDeltaCValues");
+
+        bool maxDeltaCSet = maxDeltaCDict.size() >= 1;
+
+        if (maxDeltaCSet){
+            for (const auto& maxDCSpecies : maxDeltaCDict)
+            {
+                const auto speciesName = maxDCSpecies.dict().dictName();
+                const label speciesIndex = composition_.species().find(speciesName);
+
+                if (speciesName<0)
+                {
+                    FatalErrorInFunction
+                        << "Sub-dict maxDeltaCValues in controlDict has an unknown species." << nl
+                        << abort(FatalError);
+                }
+                
+                maxDeltaC[speciesIndex] = dimensionedScalar("maxDeltaC", dimless, maxDCSpecies.dict()).value();
+            }
+        }
 
         scalar relMaxDeltaC;
         bool relMaxDeltaCSet = this->controlDict().readCheckIfPresent
@@ -131,11 +155,11 @@ void Foam::Pmt::transportControl<Base>::update()
 
             if (maxDeltaCSet && relMaxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC);
+                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC[speciesi]);
             }
             else if (maxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = maxDeltaC;
+                maxDeltaY_[speciesi] = maxDeltaC[speciesi];
             }
             else if (relMaxDeltaCSet)
             {
