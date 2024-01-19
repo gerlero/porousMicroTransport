@@ -1,3 +1,5 @@
+#include "dictionaries.H"
+
 #include <messageStream.H>
 #include <fvc.H>
 
@@ -118,18 +120,19 @@ void Foam::Pmt::transportControl<Base>::update()
             );
         */
 
+        bool maxDeltaCSet = false;
         List<scalar> maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
-        const auto& maxDeltaCDict = (this->controlDict()).subOrEmptyDict("maxDeltaCValues");
 
-        bool maxDeltaCSet = maxDeltaCDict.size() >= 1;
+        const dictionary& maxDeltaCDict = this->controlDict().subOrEmptyDict("maxDeltaCValues");
 
-        if (maxDeltaCSet){
+        if (maxDeltaCDict.size() >= 1){
+            maxDeltaCSet = true;
             for (const auto& maxDCSpecies : maxDeltaCDict)
             {
                 const auto speciesName = maxDCSpecies.dict().dictName();
                 const label speciesIndex = composition_.species().find(speciesName);
 
-                if (speciesName<0)
+                if (speciesIndex<0)
                 {
                     FatalErrorInFunction
                         << "Sub-dict maxDeltaCValues in controlDict has an unknown species." << nl
@@ -137,6 +140,21 @@ void Foam::Pmt::transportControl<Base>::update()
                 }
                 
                 maxDeltaC[speciesIndex] = dimensionedScalar("maxDeltaC", dimless, maxDCSpecies.dict()).value();
+            }
+        } else {
+            scalar temp_maxDeltaC;
+            maxDeltaCSet = this->controlDict().readCheckIfPresent
+            (
+                "maxDeltaC", 
+                temp_maxDeltaC,                 //maybe maxDeltaC list can be set here ??
+                [](scalar v){ return v>=0; }
+            );
+
+            if (maxDeltaCSet) {
+                forAll (maxDeltaC, idx)
+                {
+                    maxDeltaC[idx] = temp_maxDeltaC;
+                }
             }
         }
 
