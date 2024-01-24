@@ -21,15 +21,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Set up GCC problem matcher
-      uses: ammaraskar/gcc-problem-matcher@0.2.0
     - name: Build
       run: |
         openfoam${{ matrix.openfoam-version }} ./Allwmake -j
     - name: Set up Python
-      run: |
-        apt-get update
-        apt-get -y install python3-venv
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
     - name: Test
       run: |
         openfoam${{ matrix.openfoam-version }} tests/Alltest
