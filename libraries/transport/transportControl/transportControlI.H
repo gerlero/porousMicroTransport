@@ -108,13 +108,47 @@ void Foam::Pmt::transportControl<Base>::update()
 {
     if (!upToDate_)
     {
-        scalar maxDeltaC;
-        bool maxDeltaCSet = this->controlDict().readCheckIfPresent
+
+        bool maxDeltaCSet = false;
+        List<scalar> maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
+
+        const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC");
+
+        if (maxDeltaCDict)
+        {
+            maxDeltaCSet = true;
+            for (const auto& maxDCSpecies : *maxDeltaCDict)
+            {
+                const auto speciesName = maxDCSpecies.keyword();
+                const label speciesIndex = composition_.species().find(speciesName);
+
+                if (speciesIndex<0)
+                {
+                    FatalErrorInFunction
+                        << "Sub-dict maxDeltaC in controlDict has an unknown species." << nl
+                        << abort(FatalError);
+                }
+                
+                maxDeltaC[speciesIndex] = maxDCSpecies.getCheck<scalar>([](scalar v){ return v>=0; });
+            }
+        }
+        else
+        {
+            scalar globalMaxDeltaC;
+            maxDeltaCSet = this->controlDict().readCheckIfPresent
             (
                 "maxDeltaC", 
-                maxDeltaC,
+                globalMaxDeltaC,
                 [](scalar v){ return v>=0; }
             );
+
+            if (maxDeltaCSet) {
+                forAll (maxDeltaC, idx)
+                {
+                    maxDeltaC[idx] = globalMaxDeltaC;
+                }
+            }
+        }
 
         scalar relMaxDeltaC;
         bool relMaxDeltaCSet = this->controlDict().readCheckIfPresent
@@ -131,11 +165,11 @@ void Foam::Pmt::transportControl<Base>::update()
 
             if (maxDeltaCSet && relMaxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC);
+                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC[speciesi]);
             }
             else if (maxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = maxDeltaC;
+                maxDeltaY_[speciesi] = maxDeltaC[speciesi];
             }
             else if (relMaxDeltaCSet)
             {
