@@ -158,11 +158,11 @@ Supported models of unsaturated flow are:
 
 * `LETxs`: LETx + LETs model[^LETxs]
 
-    * In coefficient dictionary `LETxsCoeffs`: `pc0`, `Lw`, `Ew`, `Tw`, `Ls`, `Es`, `Ts`
+    * In coefficient dictionary `LETCoeffs`: `pc0`, `Lw`, `Ew`, `Tw`, `Ls`, `Es`, `Ts`
 
 * `LETd`: LETd[^LETd] model
 
-    * In coefficient dictionary `LETdCoeffs`: `pc0`, `L`, `E`, `T`
+    * In coefficient dictionary `LETCoeffs`: `pc0`, `L`, `E`, `T`
 
 To choose a model for your simulation, set the `unsaturatedFlowModel` entry in `transportProperties`. Then set the model-specific parameters in the corresponding coefficient subdictionary.
 
