@@ -5,7 +5,6 @@
 #include <type_traits>
 #include <limits>
 
-
 template<class Base>
 template<typename... Args_>
 Foam::Pmt::transportControl<Base>::transportControl
@@ -115,7 +114,8 @@ void Foam::Pmt::transportControl<Base>::update()
 
         const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC");
 
-        if (maxDeltaCDict){
+        if (maxDeltaCDict)
+        {
             maxDeltaCSet = true;
             for (const auto& maxDCSpecies : *maxDeltaCDict)
             {
@@ -130,9 +130,10 @@ void Foam::Pmt::transportControl<Base>::update()
                 }
                 
                 maxDeltaC[speciesIndex] = maxDCSpecies.getCheck<scalar>([](scalar v){ return v>=0; });
-                
             }
-        } else {
+        }
+        else
+        {
             scalar globalMaxDeltaC;
             maxDeltaCSet = this->controlDict().readCheckIfPresent
             (
