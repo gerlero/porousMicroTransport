@@ -1,5 +1,3 @@
-#include "dictionaries.H"
-
 #include <messageStream.H>
 #include <fvc.H>
 
@@ -41,7 +39,7 @@ bool Foam::Pmt::transportControl<Base>::retry()
         auto maxDeltaY = maxDeltaY_[speciesi];
         auto maxDYdT = maxDYdT_[speciesi];
 
-        if ((maxDYdT*this->deltaTValue() > 1.05*maxDeltaY))
+        if (maxDYdT*this->deltaTValue() > 1.05*maxDeltaY)
         {
             Info<< "Excessive concentration change of species " << composition_.species()[speciesi] << endl;
             newDeltaT = min(newDeltaT, maxDeltaY/maxDYdT/2);
@@ -111,49 +109,42 @@ void Foam::Pmt::transportControl<Base>::update()
 {
     if (!upToDate_)
     {
-        /*scalar maxDeltaC;
-        bool maxDeltaCSet = this->controlDict().readCheckIfPresent
-            (
-                "maxDeltaC", 
-                maxDeltaC,
-                [](scalar v){ return v>=0; }
-            );
-        */
 
         bool maxDeltaCSet = false;
         List<scalar> maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
 
-        const dictionary& maxDeltaCDict = this->controlDict().subOrEmptyDict("maxDeltaCValues");
+        const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC");
 
-        if (maxDeltaCDict.size() >= 1){
+        if (maxDeltaCDict){
             maxDeltaCSet = true;
-            for (const auto& maxDCSpecies : maxDeltaCDict)
+            for (const auto& maxDCSpecies : *maxDeltaCDict)
             {
-                const auto speciesName = maxDCSpecies.dict().dictName();
+                const auto speciesName = maxDCSpecies.keyword();
                 const label speciesIndex = composition_.species().find(speciesName);
 
                 if (speciesIndex<0)
                 {
                     FatalErrorInFunction
-                        << "Sub-dict maxDeltaCValues in controlDict has an unknown species." << nl
+                        << "Sub-dict maxDeltaC in controlDict has an unknown species." << nl
                         << abort(FatalError);
                 }
                 
-                maxDeltaC[speciesIndex] = dimensionedScalar("maxDeltaC", dimless, maxDCSpecies.dict()).value();
+                maxDeltaC[speciesIndex] = maxDCSpecies.getCheck<scalar>([](scalar v){ return v>=0; });
+                
             }
         } else {
-            scalar temp_maxDeltaC;
+            scalar globalMaxDeltaC;
             maxDeltaCSet = this->controlDict().readCheckIfPresent
             (
                 "maxDeltaC", 
-                temp_maxDeltaC,                 //maybe maxDeltaC list can be set here ??
+                globalMaxDeltaC,
                 [](scalar v){ return v>=0; }
             );
 
             if (maxDeltaCSet) {
                 forAll (maxDeltaC, idx)
                 {
-                    maxDeltaC[idx] = temp_maxDeltaC;
+                    maxDeltaC[idx] = globalMaxDeltaC;
                 }
             }
         }
