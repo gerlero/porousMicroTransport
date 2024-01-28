@@ -1,0 +1,42 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSchemes;
+}
+
+ddtSchemes
+{
+    default         none;
+    ddt(theta)      Euler;
+    ddt(C)          CrankNicolson 1.0;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+}
+
+divSchemes
+{
+    default         none;
+    div(phi,C)      Gauss Minmod;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+    laplacian(D,theta) Gauss linear limited 0.5;
+}
+
+interpolationSchemes
+{
+    default		    linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
