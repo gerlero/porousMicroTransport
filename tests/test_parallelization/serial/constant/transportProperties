@@ -17,7 +17,7 @@ phase.theta
 
 K K [0 2 0 0 0 0 0] 1e-13;
 
-tau [0 0 0 0 0 0 0] 1.96;
+tau [0 0 0 0 0 0 0] 5.29;
 alphaT [0 1 0 0 0 0 0] 30e-6;
 alphaL $alphaT;
 

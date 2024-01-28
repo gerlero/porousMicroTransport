@@ -57,7 +57,7 @@ inline const Foam::volScalarField& Foam::Pmt::porousMedium::tau() const
     if (!tau_)
     {
         FatalErrorInFunction
-            << "Tortuosity tau required but not set" << endl
+            << "Diffusive tortuosity tau required but not set" << endl
             << exit(FatalError);
     }
 

@@ -116,7 +116,7 @@ Defined as scalar fields in `constant` or as dictionary entries in `transportPro
 
 * `epsTotal`: total porosity ($\varepsilon_\textrm{tot}$). _Transport solvers only_
 
-* `tau`: tortuosity ($\tau$). _Transport solvers only_
+* `tau`: diffusive tortuosity ($\tau$). _Transport solvers only_
 
 * `alphaT`: transverse dispersion coefficient ($\alpha_T$). _Transport solvers only_
 

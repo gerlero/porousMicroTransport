@@ -17,7 +17,7 @@ phase.theta
 thetamin thetamin [0 0 0 0 0 0 0] 0.019852; // = 0.7*0.02836
 thetamax thetamax [0 0 0 0 0 0 0] 0.7;
 
-tau tau [0 0 0 0 0 0 0] 1.96;
+tau tau [0 0 0 0 0 0 0] 5.29;
 alphaT alphaT [0 1 0 0 0 0 0] 5e-5;
 alphaL $alphaT;
 
