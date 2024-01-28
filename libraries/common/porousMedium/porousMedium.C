@@ -140,7 +140,7 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     {
         Info<< "not set (defaults to effective porosity)" << nl;
     }
-    Info<< "    Tortuosity (tau): ";
+    Info<< "    Diffusive tortuosity (tau): ";
     if (tau_)
     {
         tau_->writeMinMax(Info);
