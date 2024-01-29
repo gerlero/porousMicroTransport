@@ -28,7 +28,7 @@ species
 );
 
 tau tau [0 0 0 0 0 0 0] 5.29;
-alphaT alphaT [0 1 0 0 0 0 0] 5e-5;
+alphaT alphaT [0 1 0 0 0 0 0] 30e-6;
 alphaL $alphaT;
 
 Fe
