@@ -14,7 +14,7 @@ async def dispersion_case(run_case):
 
 @pytest.mark.asyncio_cooperative
 def test_dispersion(dispersion_case):
-    alphaT = 5e-5
+    alphaT = 30e-6
 
     field = np.asarray(dispersion_case["50"]["ampholyte.TARTRAZINE"].getContent()["internalField"].value())
 
