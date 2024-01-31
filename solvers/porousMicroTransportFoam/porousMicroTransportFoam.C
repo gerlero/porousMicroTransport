@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
         do
         {
             #include "CEqn.H"
-
         } while (control.retry());
 
         mag(U)->writeMinMax(Info);

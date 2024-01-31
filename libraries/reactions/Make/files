@@ -4,5 +4,6 @@ reaction/reaction.C
 reaction/reactionNew.C
 
 defaultReaction/defaultReaction.C
+LiesegangReaction/LiesegangReaction.C
 
 LIB = $(FOAM_MODULE_LIBBIN)/libPMTreactions

@@ -43,10 +43,10 @@ Foam::Pmt::reactions::reactions
         [&]
         {
             PtrList<reaction> list{};
-            
+
             const auto& reactionsDict =
                 dictionaries::subOrNullDictRef(transportProperties, "reactions");
-            
+
             Info<< reactionsDict.size() << " reactions found" << nl
                 << endl;
 
@@ -66,7 +66,7 @@ void Foam::Pmt::reactions::correct()
 {
     clearTerms();
 
-    for (const auto& reaction : reactions_)
+    for (auto& reaction : reactions_)
     {
         setReactionRate(reaction.lhs(), reaction.rhs(), reaction.kf());
         setReactionRate(reaction.rhs(), reaction.lhs(), reaction.kr());

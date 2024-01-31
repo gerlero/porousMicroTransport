@@ -24,8 +24,8 @@ public:
         const dictionary& reactionDict
     );
 
-    virtual tmp<volScalarField> kf() const override;
-    virtual tmp<volScalarField> kr() const override;
+    virtual tmp<volScalarField> kf() override;
+    virtual tmp<volScalarField> kr() override;
 
 private:
     const fvMesh& mesh_;

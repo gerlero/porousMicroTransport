@@ -55,8 +55,8 @@ public:
     List<reaction::speciesCoeffs> lhs() const;
     List<reaction::speciesCoeffs> rhs() const;
 
-    virtual tmp<volScalarField> kf() const = 0;
-    virtual tmp<volScalarField> kr() const = 0;
+    virtual tmp<volScalarField> kf() = 0;
+    virtual tmp<volScalarField> kr() = 0;
 
     virtual ~reaction() = default;
 

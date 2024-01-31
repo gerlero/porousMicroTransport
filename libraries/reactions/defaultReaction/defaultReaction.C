@@ -33,12 +33,12 @@ Foam::Pmt::defaultReaction::defaultReaction
     }
 }
 
-Foam::tmp<Foam::volScalarField> Foam::Pmt::defaultReaction::kf() const
+Foam::tmp<Foam::volScalarField> Foam::Pmt::defaultReaction::kf()
 {
     return volScalarField::New("kf", mesh_, kf_);
 }
 
-Foam::tmp<Foam::volScalarField> Foam::Pmt::defaultReaction::kr() const
+Foam::tmp<Foam::volScalarField> Foam::Pmt::defaultReaction::kr()
 {
     return volScalarField::New("kr", mesh_, kr_);
 }

@@ -28,10 +28,17 @@ protected:
     void operator--() override;
 
 private:
+
+    enum class dtState
+    {   
+        SHOULD_DECREASE,
+        SHOULD_MAINTAIN,
+        SHOULD_INCREASE,
+        NOT_SPECIFIED
+    };
+
+    dtState dtState_;
     porousMixture& composition_;
-    scalarList maxDeltaY_;
-    scalarList maxDYdT_;
-    bool upToDate_;
 
     void update();
 };
