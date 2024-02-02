@@ -4,22 +4,19 @@
 #include <utility>
 #include <type_traits>
 #include <limits>
-
-
 #include <cassert>
-
 
 template<class Base>
 template<typename... Args_>
 Foam::Pmt::transportControl<Base>::transportControl
 (
-    porousMixture& composition,
+    basicMultiComponentMixture& composition,
     Args_&&... args
 )
 :
     Base{std::forward<Args_>(args)...},
-    composition_{composition},
-    dtState_{dtState::UNKNOWN}
+    dtState_{dtState::UNKNOWN},
+    composition_{composition}
 {
     static_assert
     (

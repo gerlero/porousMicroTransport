@@ -18,7 +18,7 @@ class transportControl
 {
 public:
     template<typename... Args_>
-    transportControl(porousMixture& composition, Args_&&... args);
+    transportControl(basicMultiComponentMixture& composition, Args_&&... args);
 
     bool retry();
 
@@ -38,7 +38,7 @@ private:
     };
 
     dtState dtState_;
-    porousMixture& composition_;
+    basicMultiComponentMixture& composition_;
 
     void setDtState();
 };
