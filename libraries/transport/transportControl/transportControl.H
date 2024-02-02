@@ -28,13 +28,13 @@ protected:
     void operator--() override;
 
 private:
-
     enum class dtState
     {   
+        NOT_SPECIFIED,
         SHOULD_DECREASE,
         SHOULD_MAINTAIN,
-        SHOULD_INCREASE,
-        NOT_SPECIFIED
+        SHOULD_INCREASE
+
     };
 
     dtState dtState_;
