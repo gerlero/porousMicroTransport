@@ -16,20 +16,18 @@ jobs:
     container: opencfd/openfoam-dev:${{ matrix.openfoam-version }}
     strategy:
       matrix:
-        openfoam-version: ['2012', '2106', '2112', '2206', '2212', '2306', '2312']
+        openfoam-version: ['2112', '2206', '2212', '2306', '2312']
       fail-fast: false
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Set up GCC problem matcher
-      uses: ammaraskar/gcc-problem-matcher@0.2.0
     - name: Build
       run: |
         openfoam${{ matrix.openfoam-version }} ./Allwmake -j
     - name: Set up Python
-      run: |
-        apt-get update
-        apt-get -y install python3-venv
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
     - name: Test
       run: |
         openfoam${{ matrix.openfoam-version }} tests/Alltest

@@ -97,15 +97,13 @@ void Foam::Pmt::transportControl<Base>::update()
 {
     if (dtState_ == dtState::NOT_SPECIFIED)
     {
-        
         bool maxDeltaCSet = false;
 
         scalarList maxDeltaY_(composition_.Y().size(), 0.0);
-        List<scalar> maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
+        scalarList maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
 
-        const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC");
-
-        if (maxDeltaCDict){
+        if (const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC"))
+        {
             maxDeltaCSet = true;
             for (const auto& maxDCSpecies : *maxDeltaCDict)
             {
@@ -120,9 +118,10 @@ void Foam::Pmt::transportControl<Base>::update()
                 }
                 
                 maxDeltaC[speciesIndex] = maxDCSpecies.getCheck<scalar>([](scalar v){ return v>=0; });
-                
             }
-        } else {
+        }
+        else
+        {
             scalar globalMaxDeltaC;
             maxDeltaCSet = this->controlDict().readCheckIfPresent
             (

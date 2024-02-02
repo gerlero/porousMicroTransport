@@ -1,6 +1,6 @@
 # porousMicroTransport
 
-[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml) [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2012%20%7C%20v2106%20%7C%20v2112%20%7C%20v2206%20%7C%20v2212%20%7C%20v2306%20%7C%20v2312-informational)](https://www.openfoam.com) [![Docker](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml) [![Docker image](https://img.shields.io/badge/docker%20image-microfluidica%2Fporousmicrotransport-0085a0)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
+[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml) [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2112%20%7C%20v2206%20%7C%20v2212%20%7C%20v2306%20%7C%20v2312-informational)](https://www.openfoam.com) [![Docker](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml) [![Docker image](https://img.shields.io/badge/docker%20image-microfluidica%2Fporousmicrotransport-0085a0)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
 
 **porousMicroTransport** is a set of additional solvers and related libraries for OpenFOAM developed for the purposes of simulating flow and transport in porous media, with an emphasis on paper-based microfluidics
 
@@ -11,7 +11,7 @@
 
 #### Requirements
 
-**porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2012, v2106, v2112, v2206, v2212, v2306 and v2312.
+**porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2112, v2206, v2212, v2306 and v2312.
 
 _Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 9, OpenFOAM 10) are not compatible. macOS users may want to consider [OpenFOAM.app](https://github.com/gerlero/openfoam-app)._
 
@@ -116,7 +116,7 @@ Defined as scalar fields in `constant` or as dictionary entries in `transportPro
 
 * `epsTotal`: total porosity ($\varepsilon_\textrm{tot}$). _Transport solvers only_
 
-* `tau`: tortuosity ($\tau$). _Transport solvers only_
+* `tau`: diffusive tortuosity ($\tau$). _Transport solvers only_
 
 * `alphaT`: transverse dispersion coefficient ($\alpha_T$). _Transport solvers only_
 
@@ -158,11 +158,11 @@ Supported models of unsaturated flow are:
 
 * `LETxs`: LETx + LETs model[^LETxs]
 
-    * In coefficient dictionary `LETxsCoeffs`: `pc0`, `Lw`, `Ew`, `Tw`, `Ls`, `Es`, `Ts`
+    * In coefficient dictionary `LETCoeffs`: `pc0`, `Lw`, `Ew`, `Tw`, `Ls`, `Es`, `Ts`
 
 * `LETd`: LETd[^LETd] model
 
-    * In coefficient dictionary `LETdCoeffs`: `pc0`, `L`, `E`, `T`
+    * In coefficient dictionary `LETCoeffs`: `pc0`, `L`, `E`, `T`
 
 To choose a model for your simulation, set the `unsaturatedFlowModel` entry in `transportProperties`. Then set the model-specific parameters in the corresponding coefficient subdictionary.
 
