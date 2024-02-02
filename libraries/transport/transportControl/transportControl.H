@@ -30,7 +30,7 @@ protected:
 private:
     enum class dtState
     {   
-        NOT_SPECIFIED,
+        UNKNOWN,
         SHOULD_DECREASE,
         SHOULD_MAINTAIN,
         SHOULD_INCREASE
@@ -40,7 +40,7 @@ private:
     dtState dtState_;
     porousMixture& composition_;
 
-    void update();
+    void setDtState();
 };
 
 }

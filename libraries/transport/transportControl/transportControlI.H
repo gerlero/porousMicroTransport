@@ -19,7 +19,7 @@ Foam::Pmt::transportControl<Base>::transportControl
 :
     Base{std::forward<Args_>(args)...},
     composition_{composition},
-    dtState_{dtState::NOT_SPECIFIED}
+    dtState_{dtState::UNKNOWN}
 {
     static_assert
     (
@@ -31,8 +31,8 @@ Foam::Pmt::transportControl<Base>::transportControl
 template<class Base>
 bool Foam::Pmt::transportControl<Base>::retry()
 {
-    update();
-    assert(dtState_ != dtState::NOT_SPECIFIED);
+    setDtState();
+    assert(dtState_ != dtState::UNKNOWN);
 
     if (dtState_ == dtState::SHOULD_DECREASE)
     {
@@ -56,8 +56,8 @@ bool Foam::Pmt::transportControl<Base>::retry()
 template<class Base>
 Foam::scalar Foam::Pmt::transportControl<Base>::maxDeltaTValue()
 {
-    update();
-    assert(dtState_ != dtState::NOT_SPECIFIED);
+    setDtState();
+    assert(dtState_ != dtState::UNKNOWN);
 
     switch (dtState_)
     {
@@ -76,7 +76,7 @@ Foam::scalar Foam::Pmt::transportControl<Base>::maxDeltaTValue()
 template<class Base>
 void Foam::Pmt::transportControl<Base>::operator++()
 {
-    dtState_ = dtState::NOT_SPECIFIED;
+    dtState_ = dtState::UNKNOWN;
 
     Base::operator++();
 }
@@ -89,15 +89,15 @@ void Foam::Pmt::transportControl<Base>::operator--()
         Y = Y.oldTime();
     }
 
-    dtState_ = dtState::NOT_SPECIFIED;
+    dtState_ = dtState::UNKNOWN;
 
     Base::operator--();
 }
 
 template<class Base>
-void Foam::Pmt::transportControl<Base>::update()
+void Foam::Pmt::transportControl<Base>::setDtState()
 {
-    if (dtState_ == dtState::NOT_SPECIFIED)
+    if (dtState_ == dtState::UNKNOWN)
     {
         bool maxDeltaCSet = false;
         scalarList maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
@@ -178,19 +178,16 @@ void Foam::Pmt::transportControl<Base>::update()
 
             Info << "Species " << composition_.species()[speciesi] << " variation: "<< residual << endl;
 
-            if (maxDeltaY[speciesi] != std::numeric_limits<scalar>::infinity()){ //because order of SPECIES's maxDeltaC could affect
-
-                if (dtState_ != dtState::SHOULD_DECREASE)   //Implementing a finite state machine
-                {
-                    if (residual >= 1.*maxDeltaY[speciesi]){
-                        dtState_ = dtState::SHOULD_DECREASE;
-                    } 
-                    else if (residual >= 0.75*maxDeltaY[speciesi]){
-                        dtState_ = dtState::SHOULD_MAINTAIN;
-                    }
-                    else if (dtState_ != dtState::SHOULD_MAINTAIN){
-                        dtState_ = dtState::SHOULD_INCREASE;
-                    }
+            if (dtState_ != dtState::SHOULD_DECREASE)   //Implementing a finite state machine
+            {
+                if (residual >= 1.*maxDeltaY[speciesi]){
+                    dtState_ = dtState::SHOULD_DECREASE;
+                } 
+                else if (residual >= 0.75*maxDeltaY[speciesi]){
+                    dtState_ = dtState::SHOULD_MAINTAIN;
+                }
+                else if (dtState_ != dtState::SHOULD_MAINTAIN){
+                    dtState_ = dtState::SHOULD_INCREASE;
                 }
             }
         }
