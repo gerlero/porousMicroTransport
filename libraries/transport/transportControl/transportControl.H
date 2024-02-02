@@ -28,19 +28,19 @@ protected:
     void operator--() override;
 
 private:
-
     enum class dtState
     {   
+        UNKNOWN,
         SHOULD_DECREASE,
         SHOULD_MAINTAIN,
-        SHOULD_INCREASE,
-        NOT_SPECIFIED
+        SHOULD_INCREASE
+
     };
 
     dtState dtState_;
     porousMixture& composition_;
 
-    void update();
+    void setDtState();
 };
 
 }

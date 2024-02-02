@@ -18,9 +18,9 @@ Foam::Pmt::transportControl<Base>::transportControl
 )
 :
     Base{std::forward<Args_>(args)...},
-    composition_{composition}
+    composition_{composition},
+    dtState_{dtState::UNKNOWN}
 {
-    dtState_ = dtState::NOT_SPECIFIED;
     static_assert
     (
         std::is_base_of<timeStepControl, Base>::value,
@@ -31,7 +31,8 @@ Foam::Pmt::transportControl<Base>::transportControl
 template<class Base>
 bool Foam::Pmt::transportControl<Base>::retry()
 {
-    update();
+    setDtState();
+    assert(dtState_ != dtState::UNKNOWN);
 
     if (dtState_ == dtState::SHOULD_DECREASE)
     {
@@ -55,7 +56,8 @@ bool Foam::Pmt::transportControl<Base>::retry()
 template<class Base>
 Foam::scalar Foam::Pmt::transportControl<Base>::maxDeltaTValue()
 {
-    update();
+    setDtState();
+    assert(dtState_ != dtState::UNKNOWN);
 
     switch (dtState_)
     {
@@ -74,7 +76,7 @@ Foam::scalar Foam::Pmt::transportControl<Base>::maxDeltaTValue()
 template<class Base>
 void Foam::Pmt::transportControl<Base>::operator++()
 {
-    dtState_ = dtState::NOT_SPECIFIED;
+    dtState_ = dtState::UNKNOWN;
 
     Base::operator++();
 }
@@ -87,25 +89,23 @@ void Foam::Pmt::transportControl<Base>::operator--()
         Y = Y.oldTime();
     }
 
-    dtState_ = dtState::NOT_SPECIFIED;
+    dtState_ = dtState::UNKNOWN;
 
     Base::operator--();
 }
 
 template<class Base>
-void Foam::Pmt::transportControl<Base>::update()
+void Foam::Pmt::transportControl<Base>::setDtState()
 {
-    if (dtState_ == dtState::NOT_SPECIFIED)
+    if (dtState_ == dtState::UNKNOWN)
     {
-        
         bool maxDeltaCSet = false;
+        scalarList maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
+        
+        scalarList maxDeltaY(composition_.Y().size(), 0.0);
 
-        scalarList maxDeltaY_(composition_.Y().size(), 0.0);
-        List<scalar> maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
-
-        const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC");
-
-        if (maxDeltaCDict){
+        if (const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC"))
+        {
             maxDeltaCSet = true;
             for (const auto& maxDCSpecies : *maxDeltaCDict)
             {
@@ -120,9 +120,10 @@ void Foam::Pmt::transportControl<Base>::update()
                 }
                 
                 maxDeltaC[speciesIndex] = maxDCSpecies.getCheck<scalar>([](scalar v){ return v>=0; });
-                
             }
-        } else {
+        }
+        else
+        {
             scalar globalMaxDeltaC;
             maxDeltaCSet = this->controlDict().readCheckIfPresent
             (
@@ -156,19 +157,19 @@ void Foam::Pmt::transportControl<Base>::update()
 
             if (maxDeltaCSet && relMaxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC[speciesi]);
+                maxDeltaY[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC[speciesi]);
             }
             else if (maxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = maxDeltaC[speciesi];
+                maxDeltaY[speciesi] = maxDeltaC[speciesi];
             }
             else if (relMaxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), SMALL);
+                maxDeltaY[speciesi] = max(relMaxDeltaC*gMax(Y), SMALL);
             }
             else
             {
-                maxDeltaY_[speciesi] = std::numeric_limits<scalar>::infinity();
+                maxDeltaY[speciesi] = std::numeric_limits<scalar>::infinity();
             }
 
             //use the iterations to calculate field variations and decide state
@@ -177,19 +178,16 @@ void Foam::Pmt::transportControl<Base>::update()
 
             Info << "Species " << composition_.species()[speciesi] << " variation: "<< residual << endl;
 
-            if (maxDeltaY_[speciesi] != std::numeric_limits<scalar>::infinity()){ //because order of SPECIES's maxDeltaC could affect
-
-                if (dtState_ != dtState::SHOULD_DECREASE)   //Implementing a finite state machine
-                {
-                    if (residual >= 1.*maxDeltaY_[speciesi]){
-                        dtState_ = dtState::SHOULD_DECREASE;
-                    } 
-                    else if (residual >= 0.75*maxDeltaY_[speciesi]){
-                        dtState_ = dtState::SHOULD_MAINTAIN;
-                    }
-                    else if (dtState_ != dtState::SHOULD_MAINTAIN){
-                        dtState_ = dtState::SHOULD_INCREASE;
-                    }
+            if (dtState_ != dtState::SHOULD_DECREASE)   //Implementing a finite state machine
+            {
+                if (residual >= 1.*maxDeltaY[speciesi]){
+                    dtState_ = dtState::SHOULD_DECREASE;
+                } 
+                else if (residual >= 0.75*maxDeltaY[speciesi]){
+                    dtState_ = dtState::SHOULD_MAINTAIN;
+                }
+                else if (dtState_ != dtState::SHOULD_MAINTAIN){
+                    dtState_ = dtState::SHOULD_INCREASE;
                 }
             }
         }
