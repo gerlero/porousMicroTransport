@@ -8,7 +8,7 @@
 
 template<class Base>
 template<typename... Args_>
-Foam::Pmt::transportControl<Base>::transportControl
+Foam::Pmt::TransportControl<Base>::TransportControl
 (
     basicMultiComponentMixture& composition,
     Args_&&... args
@@ -26,7 +26,7 @@ Foam::Pmt::transportControl<Base>::transportControl
 }
 
 template<class Base>
-bool Foam::Pmt::transportControl<Base>::retry()
+bool Foam::Pmt::TransportControl<Base>::retry()
 {
     setDtState();
     assert(dtState_ != dtState::UNKNOWN);
@@ -51,7 +51,7 @@ bool Foam::Pmt::transportControl<Base>::retry()
 }
 
 template<class Base>
-Foam::scalar Foam::Pmt::transportControl<Base>::maxDeltaTValue()
+Foam::scalar Foam::Pmt::TransportControl<Base>::maxDeltaTValue()
 {
     setDtState();
     assert(dtState_ != dtState::UNKNOWN);
@@ -71,7 +71,7 @@ Foam::scalar Foam::Pmt::transportControl<Base>::maxDeltaTValue()
 }
 
 template<class Base>
-void Foam::Pmt::transportControl<Base>::operator++()
+void Foam::Pmt::TransportControl<Base>::operator++()
 {
     dtState_ = dtState::UNKNOWN;
 
@@ -79,7 +79,7 @@ void Foam::Pmt::transportControl<Base>::operator++()
 }
 
 template<class Base>
-void Foam::Pmt::transportControl<Base>::operator--()
+void Foam::Pmt::TransportControl<Base>::operator--()
 {
     for (auto& Y : composition_.Y())
     {
@@ -92,7 +92,7 @@ void Foam::Pmt::transportControl<Base>::operator--()
 }
 
 template<class Base>
-void Foam::Pmt::transportControl<Base>::setDtState()
+void Foam::Pmt::TransportControl<Base>::setDtState()
 {
     if (dtState_ == dtState::UNKNOWN)
     {

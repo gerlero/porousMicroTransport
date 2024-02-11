@@ -5,7 +5,7 @@
 #include "porousMixture.H"
 #include "reactions.H"
 #include "PicardControl.H"
-#include "transportControl.H"
+#include "TransportControl.H"
 
 #include <fvCFD.H>
 #include <fvOptions.H>
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     #include "createFields.H"
     #include "createTransportFields.H"
 
-    Pmt::transportControl<Pmt::PicardControl> control{composition, runTime, theta};
+    Pmt::TransportControl<Pmt::PicardControl> control{composition, runTime, theta};
 
     Info<< "\nStarting time loop\n" << endl;
 
