@@ -7,7 +7,7 @@
 
 template<class Base>
 template<typename... Args_>
-Foam::Pmt::transportControl<Base>::transportControl
+Foam::Pmt::TransportControl<Base>::TransportControl
 (
     porousMixture& composition,
     Args_&&... args
@@ -27,7 +27,7 @@ Foam::Pmt::transportControl<Base>::transportControl
 }
 
 template<class Base>
-bool Foam::Pmt::transportControl<Base>::retry()
+bool Foam::Pmt::TransportControl<Base>::retry()
 {
     update();
 
@@ -65,7 +65,7 @@ bool Foam::Pmt::transportControl<Base>::retry()
 }
 
 template<class Base>
-Foam::scalar Foam::Pmt::transportControl<Base>::maxDeltaTValue()
+Foam::scalar Foam::Pmt::TransportControl<Base>::maxDeltaTValue()
 {
     auto maxDeltaT = min(Base::maxDeltaTValue(), 1.2*this->deltaTValue());
 
@@ -83,7 +83,7 @@ Foam::scalar Foam::Pmt::transportControl<Base>::maxDeltaTValue()
 }
 
 template<class Base>
-void Foam::Pmt::transportControl<Base>::operator++()
+void Foam::Pmt::TransportControl<Base>::operator++()
 {
     upToDate_ = false;
 
@@ -91,7 +91,7 @@ void Foam::Pmt::transportControl<Base>::operator++()
 }
 
 template<class Base>
-void Foam::Pmt::transportControl<Base>::operator--()
+void Foam::Pmt::TransportControl<Base>::operator--()
 {
     for (auto& Y : composition_.Y())
     {
@@ -104,7 +104,7 @@ void Foam::Pmt::transportControl<Base>::operator--()
 }
 
 template<class Base>
-void Foam::Pmt::transportControl<Base>::update()
+void Foam::Pmt::TransportControl<Base>::update()
 {
     if (!upToDate_)
     {
