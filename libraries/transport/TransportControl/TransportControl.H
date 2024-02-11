@@ -1,5 +1,5 @@
-#ifndef PMT_transportControl_H
-#define PMT_transportControl_H
+#ifndef PMT_TransportControl_H
+#define PMT_TransportControl_H
 
 #include "timeStepControl.H"
 
@@ -12,13 +12,13 @@ namespace Pmt
 {
 
 template<class Base=timeStepControl>
-class transportControl
+class TransportControl
 :
     public Base
 {
 public:
     template<typename... Args_>
-    transportControl(porousMixture& composition, Args_&&... args);
+    TransportControl(porousMixture& composition, Args_&&... args);
 
     bool retry();
 
@@ -39,6 +39,6 @@ private:
 }
 }
 
-#include "transportControlI.H"
+#include "TransportControlI.H"
 
 #endif

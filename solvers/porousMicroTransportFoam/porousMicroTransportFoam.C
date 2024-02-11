@@ -3,7 +3,7 @@
 #include "phaseFractionField.H"
 #include "porousMixture.H"
 #include "reactions.H"
-#include "transportControl.H"
+#include "TransportControl.H"
 
 #include <fvCFD.H>
 #include <fvOptions.H>
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     #include "createFields.H"
 
-    Pmt::transportControl<> control{composition, runTime};
+    Pmt::TransportControl<> control{composition, runTime};
 
     Info<< "\nStarting time loop\n" << endl;
 
