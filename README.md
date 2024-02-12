@@ -56,7 +56,7 @@ Or, if you use OpenFOAM's [`openfoam-docker` script](https://develop.openfoam.co
 openfoam-docker -image=microfluidica/porousmicrotransport
 ```
 
-A slimmer image variant that does not include source code or development tools is available as `microfluidica/porousmicrotransport:run`.
+A slimmer image variant that does not include source code, development tools or tutorial cases is available as `microfluidica/porousmicrotransport:run`.
 
 Docker images can also be used with other compatible containerization software, such as Podman and Singularity/Apptainer.
 
