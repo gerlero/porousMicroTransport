@@ -71,7 +71,7 @@
 /tutorials/*/**/*.foam
 /tutorials/*/**/*.OpenFOAM
 
-!/tutorials/moistureDiffusivityFoam/sequentialDelivery/**/constant/polyMesh/
+!/tutorials/moistureDiffusivityTransportFoam/sequentialDelivery/**/constant/polyMesh/
 
 # VS Code
 #/.vscode/*
