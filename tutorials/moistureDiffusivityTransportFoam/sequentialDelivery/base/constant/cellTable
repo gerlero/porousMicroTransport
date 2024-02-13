@@ -1,0 +1,31 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    note        "persistent data for thirdParty mesh <-> OpenFOAM translation";
+    class       IOMap<dictionary>;
+    location    "constant";
+    object      cellTable;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+1
+(
+1 
+{
+    Label           Body_1;
+    MaterialType    fluid;
+    MaterialId      2;
+    GroupId         1;
+}
+
+)
