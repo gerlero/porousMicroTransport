@@ -126,56 +126,49 @@ reactions
 {
     PadReaction
     {
-        reaction "PfHRP2 + AL = PfHRP2_AL"; //8
+        reaction "PfHRP2 + AL = PfHRP2_AL";
         kf kf [0 3 -1 0 -1 0 0] 5e7;
         kr kr [0 0 -1 0 0 0 0] 1.3e-4;
     }
     
     Test_1_Reaction
     {
-        reaction "PfHRP2_AL + ALT = PfHRP2_AL_ALT"; //10
+        reaction "PfHRP2_AL + ALT = PfHRP2_AL_ALT";
         kf kf [0 3 -1 0 -1 0 0] 3.4e3;
         kr kr [0 0 -1 0 0 0 0] 7.1e-4;
     }
     
     Test_2_Reaction
     {
-        reaction "PfHRP2_AL_ALT + GER = PfHRP2_AL_ALT_GER"; //12
+        reaction "PfHRP2_AL_ALT + GER = PfHRP2_AL_ALT_GER";
         kf kf [0 3 -1 0 -1 0 0] 3.4e5;
         kr kr [0 0 -1 0 0 0 0] 7.1e-4;
     }
     
-    Test_1_Reaction_sec
+    Test_1_Reaction_seq
     {
-        reaction "PfHRP2 + ALT = PfHRP2_ALT"; //9
+        reaction "PfHRP2 + ALT = PfHRP2_ALT";
         kf kf [0 3 -1 0 -1 0 0] 1e6;
         kr kr [0 0 -1 0 0 0 0] 7.1e-4;
     }
     
-    Test_2_Reaction_sec
+    Test_2_Reaction_seq
     {
-        reaction "PfHRP2_ALT + AL = PfHRP2_AL_ALT"; //11
+        reaction "PfHRP2_ALT + AL = PfHRP2_AL_ALT";
         kf kf [0 3 -1 0 -1 0 0] 1.6e5;
         kr kr [0 0 -1 0 0 0 0] 2.2e-3;
-    }
-    
-    Test_3_Reaction_sec
-    {
-        reaction "GER + PfHRP2_AL_ALT = PfHRP2_AL_ALT_GER"; //12
-        kf kf [0 3 -1 0 -1 0 0] 3.4e5;
-        kr kr [0 0 -1 0 0 0 0] 7.1e-4;
     }
 
     Control_1_Reaction
     {
-        reaction "AL + ALC = AL_ALC"; //13
+        reaction "AL + ALC = AL_ALC";
         kf kf [0 3 -1 0 -1 0 0] 3.4e3;
         kr kr [0 0 -1 0 0 0 0] 7.1e-4;
     }
     
     Control_2_Reaction
     {
-        reaction "AL_ALC + GER = AL_ALC_GER"; //14
+        reaction "AL_ALC + GER = AL_ALC_GER";
         kf kf [0 3 -1 0 -1 0 0] 3.4e5;
         kr kr [0 0 -1 0 0 0 0] 7.1e-4;
     }
