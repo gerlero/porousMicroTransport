@@ -2,5 +2,7 @@
 cd "${0%/*}" || exit 1
 
 for d in */; do
-    "$d"/clean
+    "$d"/run &
 done
+
+wait

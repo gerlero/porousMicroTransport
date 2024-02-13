@@ -1,0 +1,44 @@
+FoamFile
+{
+    version         2;
+    format          ascii;
+    class           dictionary;
+    location        "system";
+    object          controlDict;
+}
+
+application     moistureDiffusivityTransportFoam;
+
+startFrom       latestTime;
+
+stopAt          endTime;
+
+endTime         2000;
+
+deltaT          1e-05;
+
+writeControl    adjustableRunTime;
+
+writeInterval   5;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  10;
+
+writeCompression no;
+
+timeFormat      general;
+
+timePrecision   6;
+
+adjustTimeStep  yes;
+
+runTimeModifiable no;
+
+maxDeltaT       1000;
+
+maxDeltaC	    1e-8;
+
+relMaxDeltaC	0.001;
