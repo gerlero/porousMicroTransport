@@ -8,7 +8,7 @@ FoamFile
 
 scale 1e-3;
 
-gap 2.34;
+gap 3.33;
 gap1 0.5;
 w 6;
 wtot 17;
