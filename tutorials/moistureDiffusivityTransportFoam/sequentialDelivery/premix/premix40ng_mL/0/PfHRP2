@@ -1,11 +1,4 @@
-/*--------------------------------*- C++ -*----------------------------------*\ 
-| =========                 |                                                 |
-| \      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \    /   O peration     | Version:  v3.0+                                 |
-|   \  /    A nd           | Web:      www.OpenFOAM.com                      |
-|    \/     M anipulation  |                                                 |
-\*---------------------------------------------------------------------------*/
- FoamFile
+FoamFile
 {
     version     2.0;
     format      ascii;
@@ -13,39 +6,37 @@
     location    "0";
     object      PfHRP2;
 }
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 dimensions      [0 -3 0 0 1 0 0];
-
 
 internalField   uniform 0;
 
 boundaryField
 {
-inlet1
+    inlet1
     {
         type            fixedValue;
-        value            uniform 0.0; 
- }
-inlet2
+        value           uniform 0.0; 
+    }
+    inlet2
     {
         type            fixedValue;
-        value            uniform 0.0; 
- }
-inlet3
+        value           uniform 0.0; 
+    }
+    inlet3
     {
         type            fixedValue;
-        value            uniform 1.333e-6; 
- }
-Wall
+        value           uniform 1.333e-6; 
+    }
+    Wall
     {
         type            zeroGradient;
     }
-front
+    front
     {
-        type            empty;
+        type           empty;
     }
-back
+    back
     {
         type            empty;
     }
