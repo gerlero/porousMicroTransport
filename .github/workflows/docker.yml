@@ -61,8 +61,8 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=inline,ref=${{ steps.meta.outputs.tags }}
-          cache-to: type=inline
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           push: ${{ github.event_name == 'push' }}
       - name: Build and push (run)
         uses: docker/build-push-action@v5
@@ -71,5 +71,6 @@ jobs:
           tags: ${{ steps.meta_run.outputs.tags }}
           labels: ${{ steps.meta_run.outputs.labels }}
           target: run
-          cache-from: type=inline,ref=${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           push: ${{ github.event_name == 'push' }}
