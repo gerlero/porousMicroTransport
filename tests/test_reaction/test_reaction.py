@@ -3,12 +3,18 @@ import pytest
 from pathlib import Path
 
 import numpy as np
+import aiofoam
+from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 
-DIR = Path(__file__).parent
 
 @pytest.fixture(scope="module")
-async def reaction_case(run_case):
-    return await run_case(DIR)
+async def reaction_case():
+    case = aiofoam.Case(Path(__file__).parent)
+
+    await case.clean()
+    await case.run()
+
+    return SolutionDirectory(case.path)
 
 
 @pytest.mark.asyncio_cooperative

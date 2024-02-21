@@ -3,16 +3,28 @@ import pytest
 from pathlib import Path
 
 import numpy as np
+import aiofoam
+from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 
-DIR = Path(__file__).parent
-
-@pytest.fixture(scope="module")
-async def serial_case(run_case):
-    return await run_case(DIR / "serial")
 
 @pytest.fixture(scope="module")
-async def parallel_case(run_case):
-    return await run_case(DIR / "parallel", cpus=3)
+async def serial_case():
+    case = aiofoam.Case(Path(__file__).parent / "serial")
+
+    await case.clean()
+    await case.run()
+
+    return SolutionDirectory(case.path)
+
+
+@pytest.fixture(scope="module")
+async def parallel_case():
+    case = aiofoam.Case(Path(__file__).parent / "parallel")
+
+    await case.clean()
+    await case.run()
+
+    return SolutionDirectory(case.path)
 
 
 @pytest.mark.asyncio_cooperative

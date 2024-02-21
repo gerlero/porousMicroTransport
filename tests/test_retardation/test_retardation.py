@@ -2,11 +2,17 @@ import pytest
 
 from pathlib import Path
 
-DIR = Path(__file__).parent
+import aiofoam
+from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 
 @pytest.fixture(scope="module")
-async def retardation_case(run_case):
-    return await run_case(DIR)
+async def retardation_case():
+    case = aiofoam.Case(Path(__file__).parent)
+
+    await case.clean()
+    await case.run()
+
+    return SolutionDirectory(case.path)
 
 
 @pytest.mark.asyncio_cooperative

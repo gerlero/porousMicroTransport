@@ -2,16 +2,27 @@ import pytest
 
 from pathlib import Path
 
-DIR = Path(__file__).parent
+import aiofoam
+from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 
 # Cannot use a parametrized fixture for these: https://github.com/willemt/pytest-asyncio-cooperative/issues/46
 @pytest.fixture(scope="module")
-async def letxs_case(run_case):
-    return await run_case(DIR / "LETxs")
+async def letxs_case():
+    case = aiofoam.Case(Path(__file__).parent / "LETxs")
+
+    await case.clean()
+    await case.run()
+
+    return SolutionDirectory(case.path)
 
 @pytest.fixture(scope="module")
-async def letd_case(run_case):
-    return await run_case(DIR / "LETd")
+async def letd_case():
+    case = aiofoam.Case(Path(__file__).parent / "LETd")
+
+    await case.clean()
+    await case.run()
+
+    return SolutionDirectory(case.path)
 
 
 @pytest.mark.asyncio_cooperative
