@@ -3,4 +3,4 @@ pytest-asyncio-cooperative>=0.34,<0.36
 numpy==1.*
 scipy==1.*
 PyFoam>=2021.6,<=2023.7
-aiofoam>=0.1.4,<0.2
+aiofoam>=0.2,<0.3
