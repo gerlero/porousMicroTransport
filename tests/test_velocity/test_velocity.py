@@ -4,7 +4,6 @@ from pathlib import Path
 
 import numpy as np
 import aiofoam
-from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 
 
 @pytest.fixture(scope="module")
@@ -14,7 +13,7 @@ async def velocity_case():
     await case.clean()
     await case.run()
 
-    return SolutionDirectory(case.path)
+    return case.to_pyfoam()
 
 
 @pytest.mark.asyncio_cooperative

@@ -3,7 +3,6 @@ import pytest
 from pathlib import Path
 
 import aiofoam
-from PyFoam.RunDictionary.SolutionDirectory import SolutionDirectory
 
 # Cannot use a parametrized fixture for these: https://github.com/willemt/pytest-asyncio-cooperative/issues/46
 @pytest.fixture(scope="module")
@@ -13,7 +12,7 @@ async def letxs_case():
     await case.clean()
     await case.run()
 
-    return SolutionDirectory(case.path)
+    return case.to_pyfoam()
 
 @pytest.fixture(scope="module")
 async def letd_case():
@@ -22,7 +21,7 @@ async def letd_case():
     await case.clean()
     await case.run()
 
-    return SolutionDirectory(case.path)
+    return case.to_pyfoam()
 
 
 @pytest.mark.asyncio_cooperative
