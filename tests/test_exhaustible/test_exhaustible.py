@@ -3,29 +3,27 @@ import pytest
 from pathlib import Path
 
 import numpy as np
-import aiofoam
+from foamlib import AsyncFoamCase
 
 
 @pytest.fixture(scope="module")
 async def exhaustible_case():
-    case = aiofoam.Case(Path(__file__).parent)
+    case = AsyncFoamCase(Path(__file__).parent)
 
     await case.clean()
     await case.run()
 
-    return case.to_pyfoam()
+    return case
 
 
 @pytest.mark.asyncio_cooperative
 def test_exhaustion(exhaustible_case):
-    assert len(exhaustible_case.times) >= 4
+    assert len(exhaustible_case) >= 4
 
     remainings = []
-    for t in exhaustible_case.times:
+    for time in exhaustible_case:
 
-            theta = exhaustible_case[t]["theta"].getContent()
-
-            remaining = theta["boundaryField"]["left"]["remaining"]
+            remaining = time["theta"].boundary_field["left"]["remaining"]
 
             assert remaining >= 0
 
@@ -41,19 +39,19 @@ def test_exhaustion(exhaustible_case):
 
 @pytest.mark.asyncio_cooperative
 def test_infiltration(exhaustible_case):
-    theta0 = np.asarray(exhaustible_case[0]["theta"].getContent()["internalField"].value())
+    theta0 = np.asarray(exhaustible_case[0]["theta"].internal_field)
     dV = 30e-3*10e-3*0.18e-3/5000
     amount = 2e-8
 
-    assert len(exhaustible_case.times) > 1
+    assert len(exhaustible_case) > 1
 
-    for t in exhaustible_case.times:
+    for time in exhaustible_case:
 
-        theta = exhaustible_case[t]["theta"].getContent()
+        theta = time["theta"]
 
-        remaining = theta["boundaryField"]["left"]["remaining"]
+        remaining = theta.boundary_field["left"]["remaining"]
 
-        theta = np.asarray(theta["internalField"].value())
+        theta = np.asarray(theta.internal_field)
 
         assert np.sum(theta - theta0)*dV + remaining == pytest.approx(amount)
 

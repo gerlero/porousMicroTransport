@@ -3,36 +3,36 @@ import pytest
 from pathlib import Path
 
 import numpy as np
-import aiofoam
+from foamlib import AsyncFoamCase
 
 
 @pytest.fixture(scope="module")
 async def serial_case():
-    case = aiofoam.Case(Path(__file__).parent / "serial")
+    case = AsyncFoamCase(Path(__file__).parent / "serial")
 
     await case.clean()
     await case.run()
 
-    return case.to_pyfoam()
+    return case
 
 
 @pytest.fixture(scope="module")
 async def parallel_case():
-    case = aiofoam.Case(Path(__file__).parent / "parallel")
+    case = AsyncFoamCase(Path(__file__).parent / "parallel")
 
     await case.clean()
     await case.run()
 
-    return case.to_pyfoam()
+    return case
 
 
 @pytest.mark.asyncio_cooperative
 @pytest.mark.parametrize("field", ["theta", "U", "C"])
 def test_parallelization(serial_case, parallel_case, field):
-    assert len(serial_case.times) == len(parallel_case.times) > 1
+    assert len(serial_case) == len(parallel_case) > 1
 
-    for t in serial_case.times[1:]:
-        serial = np.asarray(serial_case[t][field].getContent()["internalField"].value())
-        parallel = np.asarray(parallel_case[t][field].getContent()["internalField"].value())
+    for s,p in zip(serial_case[1:], parallel_case[1:]):
+        serial = np.asarray(s[field].internal_field)
+        parallel = np.asarray(p[field].internal_field)
 
         assert parallel == pytest.approx(serial, abs=5e-3)

@@ -2,21 +2,21 @@ import pytest
 
 from pathlib import Path
 
-import aiofoam
+from foamlib import AsyncFoamCase
 
 @pytest.fixture(scope="module")
 async def retardation_case():
-    case = aiofoam.Case(Path(__file__).parent)
+    case = AsyncFoamCase(Path(__file__).parent)
 
     await case.clean()
     await case.run()
 
-    return case.to_pyfoam()
+    return case
 
 
 @pytest.mark.asyncio_cooperative
 def test_retardation(retardation_case):
-    a5 = retardation_case["5"]["A"].getContent()["internalField"].value()
-    b10 = retardation_case["10"]["B"].getContent()["internalField"].value()
+    a5 = retardation_case["5"]["A"].internal_field
+    b10 = retardation_case["10"]["B"].internal_field
     
     assert b10 == pytest.approx(a5, abs=1e-3)
