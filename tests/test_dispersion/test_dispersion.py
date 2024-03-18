@@ -3,28 +3,28 @@ import pytest
 from pathlib import Path
 
 import numpy as np
-import aiofoam
 from scipy.special import erfc
+from foamlib import AsyncFoamCase
 
 
 @pytest.fixture(scope="module")
 async def dispersion_case():
-    case = aiofoam.Case(Path(__file__).parent)
+    case = AsyncFoamCase(Path(__file__).parent)
 
     await case.clean()
     await case.run()
 
-    return case.to_pyfoam()
+    return case
 
 
 @pytest.mark.asyncio_cooperative
 def test_dispersion(dispersion_case):
     alphaT = 30e-6
 
-    field = np.asarray(dispersion_case["50"]["ampholyte.TARTRAZINE"].getContent()["internalField"].value())
+    field = np.asarray(dispersion_case[-1]["ampholyte.TARTRAZINE"].internal_field)
 
-    xnod = np.asarray(dispersion_case["0"]["Cx"].getContent()["internalField"].value())
-    ynod = np.asarray(dispersion_case["0"]["Cy"].getContent()["internalField"].value())
+    xnod = np.asarray(dispersion_case["0"]["Cx"].internal_field)
+    ynod = np.asarray(dispersion_case["0"]["Cy"].internal_field)
 
     assert len(field) == len(xnod) == len(ynod)
 
