@@ -1,8 +1,8 @@
-import pytest
-
 from pathlib import Path
 
+import pytest
 from foamlib import AsyncFoamCase
+
 
 # Cannot use a parametrized fixture for these: https://github.com/willemt/pytest-asyncio-cooperative/issues/46
 @pytest.fixture(scope="module")
@@ -13,6 +13,7 @@ async def letxs_case():
     await case.run()
 
     return case
+
 
 @pytest.fixture(scope="module")
 async def letd_case():
@@ -30,6 +31,7 @@ def test_letxs(letxs_case):
     expected = letxs_case["100"]["theta.expected"].internal_field
 
     assert actual == pytest.approx(expected, abs=5e-2)
+
 
 @pytest.mark.asyncio_cooperative
 def test_letd(letd_case):

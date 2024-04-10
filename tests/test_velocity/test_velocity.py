@@ -1,8 +1,7 @@
-import pytest
-
 from pathlib import Path
 
 import numpy as np
+import pytest
 from foamlib import AsyncFoamCase
 
 
@@ -20,11 +19,11 @@ async def velocity_case():
 def test_infiltration(velocity_case):
     theta0 = np.asarray(velocity_case[0]["theta"].internal_field)
     U = velocity_case[0]["U"].boundary_field["left"]["value"][0]
-    h = 30e-3/5000
+    h = 30e-3 / 5000
 
     assert len(velocity_case) > 1
 
     for time in velocity_case:
         theta = np.asarray(time["theta"].internal_field)
 
-        assert np.sum(theta - theta0)*h == pytest.approx(U*time.time)
+        assert np.sum(theta - theta0) * h == pytest.approx(U * time.time)

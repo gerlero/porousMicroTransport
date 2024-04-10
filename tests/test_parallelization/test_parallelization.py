@@ -1,8 +1,7 @@
-import pytest
-
 from pathlib import Path
 
 import numpy as np
+import pytest
 from foamlib import AsyncFoamCase
 
 
@@ -31,7 +30,7 @@ async def parallel_case():
 def test_parallelization(serial_case, parallel_case, field):
     assert len(serial_case) == len(parallel_case) > 1
 
-    for s,p in zip(serial_case[1:], parallel_case[1:]):
+    for s, p in zip(serial_case[1:], parallel_case[1:]):
         serial = np.asarray(s[field].internal_field)
         parallel = np.asarray(p[field].internal_field)
 
