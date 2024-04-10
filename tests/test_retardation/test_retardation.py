@@ -1,8 +1,8 @@
-import pytest
-
 from pathlib import Path
 
+import pytest
 from foamlib import AsyncFoamCase
+
 
 @pytest.fixture(scope="module")
 async def retardation_case():
@@ -18,5 +18,5 @@ async def retardation_case():
 def test_retardation(retardation_case):
     a5 = retardation_case["5"]["A"].internal_field
     b10 = retardation_case["10"]["B"].internal_field
-    
+
     assert b10 == pytest.approx(a5, abs=1e-3)

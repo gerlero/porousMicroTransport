@@ -1,10 +1,9 @@
-import pytest
-
 from pathlib import Path
 
 import numpy as np
-from scipy.special import erfc
+import pytest
 from foamlib import AsyncFoamCase
+from scipy.special import erfc
 
 
 @pytest.fixture(scope="module")
@@ -28,7 +27,10 @@ def test_dispersion(dispersion_case):
 
     assert len(field) == len(xnod) == len(ynod)
 
-    start = int(0.6*len(field))
-    stop = int(0.8*len(field))
+    start = int(0.6 * len(field))
+    stop = int(0.8 * len(field))
 
-    assert np.linalg.norm(field[start:stop] - 0.5*erfc(ynod[start:stop]/(2*(alphaT*xnod[start:stop])**0.5))) <= 1e-3*(stop-start)
+    assert np.linalg.norm(
+        field[start:stop]
+        - 0.5 * erfc(ynod[start:stop] / (2 * (alphaT * xnod[start:stop]) ** 0.5))
+    ) <= 1e-3 * (stop - start)
