@@ -71,6 +71,8 @@
 /tutorials/*/**/*.foam
 /tutorials/*/**/*.OpenFOAM
 
+!/tutorials/moistureDiffusivityTransportFoam/sequentialDelivery/**/constant/polyMesh/
+
 # VS Code
 /.vscode/*
 !/.vscode/c_cpp_properties.json

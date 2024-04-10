@@ -1,0 +1,71 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    note        "persistent data for thirdParty mesh <-> OpenFOAM translation";
+    class       IOMap<dictionary>;
+    location    "constant";
+    object      boundaryRegion;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+6
+(
+1 
+{
+    BoundaryType    wall;
+    Label           Wall;
+    BoundaryIndex   1;
+    size            5136;
+}
+
+2 
+{
+    BoundaryType    wall;
+    Label           inlet1;
+    BoundaryIndex   2;
+    size            102;
+}
+
+3 
+{
+    BoundaryType    wall;
+    Label           inlet2;
+    BoundaryIndex   3;
+    size            100;
+}
+
+4 
+{
+    BoundaryType    wall;
+    Label           inlet3;
+    BoundaryIndex   4;
+    size            86;
+}
+
+5 
+{
+    BoundaryType    wall;
+    Label           front;
+    BoundaryIndex   5;
+    size            87325;
+}
+
+6 
+{
+    BoundaryType    wall;
+    Label           back;
+    BoundaryIndex   6;
+    size            87325;
+}
+
+)

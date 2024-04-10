@@ -34,3 +34,16 @@ jobs:
       env:
         OMPI_ALLOW_RUN_AS_ROOT: 1
         OMPI_ALLOW_RUN_AS_ROOT_CONFIRM: 1
+
+  lint-tests:
+      name: Lint tests
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Lint with Ruff
+        uses: chartboost/ruff-action@v1
+      - name: Format with Ruff
+        uses: chartboost/ruff-action@v1
+        with:
+          args: 'format --check'

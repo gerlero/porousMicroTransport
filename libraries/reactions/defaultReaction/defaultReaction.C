@@ -24,7 +24,7 @@ Foam::Pmt::defaultReaction::defaultReaction
     kf_{"kf", kfDimensions(YDimensions(composition)), reactionDict},
     kr_{dimensionedScalar::getOrDefault("kr", reactionDict, krDimensions(YDimensions(composition)), Zero)}
 {
-    Info<< "Reaction " << reactionDict.name() << nl
+    Info<< "Reaction " << reactionDict.dictName() << nl
         << "    "; write(Info, composition.species()); Info<< nl
         << "    kf = " << kf_.value() << endl;
     if (kr_.value() != 0)

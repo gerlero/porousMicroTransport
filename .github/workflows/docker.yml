@@ -11,18 +11,15 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      arm64:
-        description: Build multi-platform image including arm64
+      multi-platform:
+        description: Build multi-platform image (amd64 and arm64)
         type: boolean
         required: false
         default: false
 
 env:
-  PLATFORMS: |
-    linux/amd64
-    ${{ (inputs.arm64 || github.event_name == 'push') && 'linux/arm64' || '' }}
-  IMAGES: |
-    ${{ vars.DOCKERHUB_REPOSITORY || github.repository }}
+  PLATFORMS: ${{ (inputs.multi-platform || github.event_name == 'push') && 'linux/amd64,linux/arm64' || '' }}
+  IMAGES: ${{ vars.DOCKERHUB_REPOSITORY || github.repository }}
 
 jobs:
   docker:
@@ -61,6 +58,8 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           push: ${{ github.event_name == 'push' }}
       - name: Build and push (run)
         uses: docker/build-push-action@v5
@@ -69,4 +68,6 @@ jobs:
           tags: ${{ steps.meta_run.outputs.tags }}
           labels: ${{ steps.meta_run.outputs.labels }}
           target: run
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           push: ${{ github.event_name == 'push' }}

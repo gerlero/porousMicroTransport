@@ -1,5 +1,5 @@
 pytest>=7,<9
-pytest-asyncio-cooperative==0.34.*
+pytest-asyncio-cooperative>=0.36,<0.37
 numpy==1.*
 scipy==1.*
-PyFoam>=2021.6,<=2023.7
+foamlib>=0.1.0,<0.3.0

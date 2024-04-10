@@ -1,0 +1,42 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+
+dimensions		[0 1 -1 0 0 0 0];
+
+internalField	uniform (1e-3 0.0 0.0);
+
+boundaryField
+{
+    frontAndBack
+    {
+        type            empty;
+    }
+    walls
+    {
+        type            zeroGradient;
+    }
+    inletU
+    {
+        type  fixedValue;
+        value uniform (1e-3 0 0);
+    }
+    inletD
+    {
+        type  fixedValue;
+        value uniform (1e-3 0 0);
+    }
+    outletD
+    {
+        type            zeroGradient;
+    }
+    outletU
+    {
+        type            zeroGradient;
+    }
+}

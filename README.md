@@ -56,7 +56,7 @@ Or, if you use OpenFOAM's [`openfoam-docker` script](https://develop.openfoam.co
 openfoam-docker -image=microfluidica/porousmicrotransport
 ```
 
-A slimmer image variant that does not include source code or development tools is available as `microfluidica/porousmicrotransport:run`.
+A slimmer image variant that does not include source code, development tools or tutorial cases is available as `microfluidica/porousmicrotransport:run`.
 
 Docker images can also be used with other compatible containerization software, such as Podman and Singularity/Apptainer.
 
@@ -218,7 +218,7 @@ Sample cases are available in the [`tutorials` directory](tutorials).
 
 ## Related projects
 
-* [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam)[^porousMultiphaseFoam]: toolbox for OpenFOAM for modeling multiphase flow and transport. As previously stated, **porousMicroTransport** is mostly compatible with **porousMultiphaseFoam** in terms of case definitions, and can be installed alongside it.
+* [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam)[^porousMultiphaseFoam]: toolbox for OpenFOAM for modeling multiphase flow and transport. **porousMicroTransport** is mostly compatible with **porousMultiphaseFoam** in terms of case definitions, and can be installed alongside it.
 
 * [**electroMicroTransport**](https://gitlab.com/santiagomarquezd/electroMicroTransport)[^electroMicroTransport]: toolbox for OpenFOAM dedicated to electromigrative separations. It includes support for modeling separations in paper-based media, and can also be installed alongside **porousMicroTransport**.
 
