@@ -1,4 +1,4 @@
-ARG FOAM_VERSION=2312
+ARG FOAM_VERSION=2406
 
 FROM opencfd/openfoam-dev:${FOAM_VERSION} as dev
 
