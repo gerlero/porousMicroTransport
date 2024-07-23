@@ -12,8 +12,7 @@ on:
 jobs:
   ci:
     name: OpenFOAM v${{ matrix.openfoam-version }}
-    runs-on: ubuntu-latest
-    container: opencfd/openfoam-dev:${{ matrix.openfoam-version }}
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         openfoam-version: ['2112', '2206', '2212', '2306', '2312', '2406']
@@ -21,16 +20,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+    - name: Set up OpenFOAM
+      uses: gerlero/setup-openfoam@v1
+      with:
+        openfoam-version: ${{ matrix.openfoam-version }}
     - name: Build
       run: |
-        openfoam${{ matrix.openfoam-version }} ./Allwmake -j
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.9'
+        ./Allwmake -j
     - name: Test
       run: |
-        openfoam${{ matrix.openfoam-version }} tests/Alltest
+        tests/Alltest
       env:
         OMPI_ALLOW_RUN_AS_ROOT: 1
         OMPI_ALLOW_RUN_AS_ROOT_CONFIRM: 1
