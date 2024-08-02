@@ -111,8 +111,6 @@ Foam::Pmt::porousMedium::porousMedium(const fvMesh& mesh, const dictionary& tran
     {
         Info<< "not set" << nl;
     }
-    Info<< "}" << nl
-        << endl;
     Info<< "    Intrinsic permeability (K): ";
     if (K_)
     {
