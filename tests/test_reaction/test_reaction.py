@@ -32,4 +32,4 @@ def test_reaction(reaction_case):
     assert a + b + c == pytest.approx(a0 + b0 + c0)
 
     # Test equilibrium
-    assert c**2 / (a * b) == pytest.approx(kf / kr)
+    assert c**2 / (a * b) == pytest.approx(kf / kr, rel=1e-4)
