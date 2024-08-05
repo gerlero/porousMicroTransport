@@ -9,7 +9,8 @@
         "vscode": {
             "extensions": [
                 "ms-vscode.cpptools",
-                "github.vscode-github-actions"
+                "github.vscode-github-actions",
+                "charliermarsh.ruff"
             ]
         }
     },
