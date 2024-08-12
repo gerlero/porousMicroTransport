@@ -16,15 +16,26 @@ on:
         type: boolean
         required: false
         default: false
+      push:
+        description: Push the image to the registry
+        type: boolean
+        required: false
+        default: false
 
 env:
   PLATFORMS: ${{ (inputs.multi-platform || github.event_name == 'push') && 'linux/amd64,linux/arm64' || '' }}
+  PUSH: ${{ inputs.push || github.event_name == 'push' }}
   IMAGES: ${{ vars.DOCKERHUB_REPOSITORY || github.repository }}
 
 jobs:
   docker:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
+      - name: Lowercase repository name
+        id: lowercase
+        run: echo "repository=${GITHUB_REPOSITORY@L}" >> "${GITHUB_OUTPUT}"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -45,6 +56,13 @@ jobs:
           tags: |
             type=raw,value=run,enable={{is_default_branch}}
           flavor: latest=false
+      - name: Login to GitHub Container Registry
+        continue-on-error: ${{ github.event_name == 'pull_request' }}
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Login to DockerHub
         if: vars.DOCKERHUB_REPOSITORY
         continue-on-error: ${{ github.event_name == 'pull_request' }}
@@ -58,9 +76,10 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          push: ${{ github.event_name == 'push' }}
+          cache-from: |
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
+          push: ${{ env.PUSH }}
       - name: Build and push (run)
         uses: docker/build-push-action@v6
         with:
@@ -68,6 +87,29 @@ jobs:
           tags: ${{ steps.meta_run.outputs.tags }}
           labels: ${{ steps.meta_run.outputs.labels }}
           target: run
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          push: ${{ github.event_name == 'push' }}
+          cache-from: |
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
+          push: ${{ env.PUSH }}
+      - name: Push build cache (amd64)
+        if: env.PUSH == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64
+          target: run
+          cache-from: |
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
+          cache-to: |
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64,mode=max
+      - name: Push build cache (arm64)
+        if: env.PUSH == 'true' && env.PLATFORMS != ''
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/arm64
+          target: run
+          cache-from: |
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
+          cache-to: |
+            type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64,mode=max
