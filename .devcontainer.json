@@ -1,5 +1,5 @@
 {
-    "image": "opencfd/openfoam-dev",
+    "image": "microfluidica/openfoam",
     "features": {
         "ghcr.io/devcontainers/features/git": {},
         "ghcr.io/devcontainers/features/python": {},
@@ -13,6 +13,5 @@
                 "charliermarsh.ruff"
             ]
         }
-    },
-    "remoteUser": "sudofoam"
+    }
 }
