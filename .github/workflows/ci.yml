@@ -24,6 +24,12 @@ jobs:
       uses: gerlero/setup-openfoam@v1
       with:
         openfoam-version: ${{ matrix.openfoam-version }}
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+        cache: pip
+        cache-dependency-path: tests/requirements.txt
     - name: Build
       run: |
         ./Allwmake -j
