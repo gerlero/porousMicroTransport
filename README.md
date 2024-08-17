@@ -1,6 +1,10 @@
 # porousMicroTransport
 
-[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml) [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2112%20%7C%20v2206%20%7C%20v2212%20%7C%20v2306%20%7C%20v2312%20%7C%20v2406-informational)](https://www.openfoam.com) [![Docker](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml) [![Docker image](https://img.shields.io/badge/docker%20image-microfluidica%2Fporousmicrotransport-0085a0)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
+[![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml)
+[![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2112%20%7C%20v2206%20%7C%20v2212%20%7C%20v2306%20%7C%20v2312%20%7C%20v2406-informational)](https://www.openfoam.com)
+[![Docker](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml)
+[![Docker image](https://img.shields.io/badge/docker%20image-microfluidica%2Fporousmicrotransport-0085a0)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/microfluidica/porousmicrotransport)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
 
 **porousMicroTransport** is a set of additional solvers and related libraries for OpenFOAM developed for the purposes of simulating flow and transport in porous media, with an emphasis on paper-based microfluidics
 
@@ -44,10 +48,10 @@ tests/Alltest
 
 ### Docker image
 
-Alternatively, **porousMicroTransport** is also [available in the form of Docker images](https://hub.docker.com/r/microfluidica/porousmicrotransport/). These images include **porousMicroTransport** precompiled and ready to use. Assuming [Docker](https://www.docker.com) is installed, you can run the latest image of **porousMicroTransport** in a new container with:
+Alternatively, **porousMicroTransport** is also [available in the form of Docker images](https://hub.docker.com/r/microfluidica/porousmicrotransport/). These images include **porousMicroTransport** precompiled and ready to use. Assuming [Docker](https://www.docker.com) is installed, the following command will run the latest image and mount the current directory so that you can access the files inside:
 
 ```sh
-docker run -it microfluidica/porousmicrotransport
+docker run --rm -it -v $PWD:/root -w /root microfluidica/porousmicrotransport
 ```
 
 Or, if you use OpenFOAM's [`openfoam-docker` script](https://develop.openfoam.com/Development/openfoam/-/wikis/precompiled/docker) (which takes care of making the working directory available inside the container):
