@@ -24,15 +24,18 @@ jobs:
       uses: gerlero/setup-openfoam@v1
       with:
         openfoam-version: ${{ matrix.openfoam-version }}
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+        cache: pip
+        cache-dependency-path: tests/requirements.txt
     - name: Build
       run: |
         ./Allwmake -j
     - name: Test
       run: |
         tests/Alltest
-      env:
-        OMPI_ALLOW_RUN_AS_ROOT: 1
-        OMPI_ALLOW_RUN_AS_ROOT_CONFIRM: 1
 
   lint-tests:
       name: Lint tests

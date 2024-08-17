@@ -40,7 +40,7 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Docker meta (default)
+      - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -48,12 +48,13 @@ jobs:
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
           flavor: latest=false
-      - name: Docker meta (run)
-        id: meta_run
+      - name: Docker meta (slim)
+        id: meta_slim
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.IMAGES }}
           tags: |
+            type=raw,value=slim,enable={{is_default_branch}}
             type=raw,value=run,enable={{is_default_branch}}
           flavor: latest=false
       - name: Login to GitHub Container Registry
@@ -70,7 +71,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push (default)
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           platforms: ${{ env.PLATFORMS }}
@@ -80,13 +81,13 @@ jobs:
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
           push: ${{ env.PUSH }}
-      - name: Build and push (run)
+      - name: Build and push (slim)
         uses: docker/build-push-action@v6
         with:
           platforms: ${{ env.PLATFORMS }}
-          tags: ${{ steps.meta_run.outputs.tags }}
-          labels: ${{ steps.meta_run.outputs.labels }}
-          target: run
+          tags: ${{ steps.meta_slim.outputs.tags }}
+          labels: ${{ steps.meta_slim.outputs.labels }}
+          target: slim
           cache-from: |
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
@@ -96,7 +97,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
-          target: run
+          target: slim
           cache-from: |
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
@@ -107,7 +108,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           platforms: linux/arm64
-          target: run
+          target: slim
           cache-from: |
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
