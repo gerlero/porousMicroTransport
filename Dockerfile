@@ -1,10 +1,8 @@
-ARG FOAM_VERSION=2406
+ARG OPENFOAM_VERSION=2406
 
-FROM opencfd/openfoam-dev:${FOAM_VERSION} as dev
+FROM microfluidica/openfoam:${OPENFOAM_VERSION} AS dev
 
-ARG FOAM_VERSION
-
-ARG PMT_DIR=/usr/local/porousMicroTransport
+ARG PMT_DIR=/usr/local/src/porousMicroTransport
 
 ENV PMT_SRC=${PMT_DIR}/libraries
 ENV PMT_SOLVERS=${PMT_DIR}/solvers
@@ -14,39 +12,22 @@ COPY libraries ${PMT_SRC}
 COPY solvers ${PMT_SOLVERS}
 COPY Allwmake Allwclean LICENSE ${PMT_DIR}/
 
-RUN . /openfoam/profile.rc \
-# build and install for all users
- && ${PMT_DIR}/Allwmake -j -prefix=group \
+# build and install for all users 
+RUN ${PMT_DIR}/Allwmake -j -prefix=group \
 # clean up
  && ${PMT_DIR}/Allwclean \
 # smoke test
  && moistureDiffusivityTransportFoam -help
 
-ARG PMT_URL=https://github.com/gerlero/porousMicroTransport
 
-COPY <<EOF /openfoam/assets/welcome.sh
-echo "---------------------------------------------------------------------------"
-echo "                           porousMicroTransport"
-echo "---------------------------------------------------------------------------"
-echo "Homepage:    ${PMT_URL}"
-echo "OpenFOAM:    v${FOAM_VERSION} (www.openfoam.com)"
-[ ! -e "${PMT_DIR}" ] || echo "Source code: ${PMT_DIR}"
-[ ! -e "\${PMT_TUTORIALS}" ] || echo "Tutorials:   \${PMT_TUTORIALS}"
-echo "---------------------------------------------------------------------------"
-EOF
+FROM microfluidica/openfoam:${OPENFOAM_VERSION}-slim AS slim
 
+ARG OPENFOAM_VERSION
 
-FROM opencfd/openfoam-run:${FOAM_VERSION} as run
-
-ARG FOAM_VERSION
-
-COPY --from=dev /usr/lib/openfoam/openfoam${FOAM_VERSION}/site/ /usr/lib/openfoam/openfoam${FOAM_VERSION}/site/
-
-COPY --from=dev /openfoam/assets/welcome.sh /openfoam/assets/welcome.sh
+COPY --from=dev /usr/lib/openfoam/openfoam${OPENFOAM_VERSION}/site/ /usr/lib/openfoam/openfoam${OPENFOAM_VERSION}/site/
 
 # smoke test
-RUN . /openfoam/profile.rc \
- && moistureDiffusivityTransportFoam -help
+RUN moistureDiffusivityTransportFoam -help
 
 
 FROM dev

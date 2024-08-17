@@ -44,7 +44,7 @@ tests/Alltest
 
 ### Docker image
 
-Alternatively, **porousMicroTransport** is also [available in the form of Docker images](https://hub.docker.com/r/microfluidica/porousmicrotransport/). These images are based on the official OpenFOAM Docker images and include **porousMicroTransport** precompiled and ready to use. Assuming [Docker](https://www.docker.com) is installed, you can run the latest image of **porousMicroTransport** in a new container with:
+Alternatively, **porousMicroTransport** is also [available in the form of Docker images](https://hub.docker.com/r/microfluidica/porousmicrotransport/). These images include **porousMicroTransport** precompiled and ready to use. Assuming [Docker](https://www.docker.com) is installed, you can run the latest image of **porousMicroTransport** in a new container with:
 
 ```sh
 docker run -it microfluidica/porousmicrotransport
@@ -56,7 +56,7 @@ Or, if you use OpenFOAM's [`openfoam-docker` script](https://develop.openfoam.co
 openfoam-docker -image=microfluidica/porousmicrotransport
 ```
 
-A slimmer image variant that does not include source code, development tools or tutorial cases is available as `microfluidica/porousmicrotransport:run`.
+A slimmer image variant that does not include source code, development tools or tutorial cases is available as `microfluidica/porousmicrotransport:slim` (`run` is a deprecated alias for `slim`).
 
 Docker images can also be used with other compatible containerization software, such as Podman and Singularity/Apptainer.
 
