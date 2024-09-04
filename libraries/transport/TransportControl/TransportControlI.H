@@ -4,20 +4,19 @@
 #include <utility>
 #include <type_traits>
 #include <limits>
+#include <cassert>
 
 template<class Base>
 template<typename... Args_>
 Foam::Pmt::TransportControl<Base>::TransportControl
 (
-    porousMixture& composition,
+    basicMultiComponentMixture& composition,
     Args_&&... args
 )
 :
     Base{std::forward<Args_>(args)...},
-    composition_{composition},
-    maxDeltaY_(composition.Y().size(), 0.0),
-    maxDYdT_(composition.Y().size(), 0.0),
-    upToDate_{false}
+    dtState_{dtState::UNKNOWN},
+    composition_{composition}
 {
     static_assert
     (
@@ -29,25 +28,12 @@ Foam::Pmt::TransportControl<Base>::TransportControl
 template<class Base>
 bool Foam::Pmt::TransportControl<Base>::retry()
 {
-    update();
+    setDtState();
+    assert(dtState_ != dtState::UNKNOWN);
 
-    auto newDeltaT = std::numeric_limits<scalar>::infinity();
-
-    forAll(composition_.Y(), speciesi)
+    if (dtState_ == dtState::SHOULD_DECREASE)
     {
-        auto maxDeltaY = maxDeltaY_[speciesi];
-        auto maxDYdT = maxDYdT_[speciesi];
-
-        if (maxDYdT*this->deltaTValue() > 1.05*maxDeltaY)
-        {
-            Info<< "Excessive concentration change of species " << composition_.species()[speciesi] << endl;
-            newDeltaT = min(newDeltaT, maxDeltaY/maxDYdT/2);
-        }
-    }
-
-    if (newDeltaT < std::numeric_limits<scalar>::infinity())
-    {
-        if (this->restartTimeStepIfAdjustable(newDeltaT))
+        if (this->restartTimeStepIfAdjustable(this->deltaTValue()/2))
         {
             return true;
         }
@@ -67,25 +53,27 @@ bool Foam::Pmt::TransportControl<Base>::retry()
 template<class Base>
 Foam::scalar Foam::Pmt::TransportControl<Base>::maxDeltaTValue()
 {
-    auto maxDeltaT = min(Base::maxDeltaTValue(), 1.2*this->deltaTValue());
+    setDtState();
+    assert(dtState_ != dtState::UNKNOWN);
 
-    update();
-
-    forAll(composition_.Y(), speciesi)
+    switch (dtState_)
     {
-        if (auto maxDYdT = maxDYdT_[speciesi])
-        {
-            maxDeltaT = min(maxDeltaT, maxDeltaY_[speciesi]/maxDYdT);
-        }
-    }
+        case dtState::SHOULD_INCREASE:
+            return min(Base::maxDeltaTValue(), 1.2*this->deltaTValue());
 
-    return maxDeltaT;
+        case dtState::SHOULD_MAINTAIN:
+            return min(Base::maxDeltaTValue(), this->deltaTValue());
+            
+        default:  //  DECREASE not possible, retry should've fixed deltaT in previous iteration.
+            assert(false);
+    }
+    
 }
 
 template<class Base>
 void Foam::Pmt::TransportControl<Base>::operator++()
 {
-    upToDate_ = false;
+    dtState_ = dtState::UNKNOWN;
 
     Base::operator++();
 }
@@ -98,23 +86,22 @@ void Foam::Pmt::TransportControl<Base>::operator--()
         Y = Y.oldTime();
     }
 
-    upToDate_ = !upToDate_;
+    dtState_ = dtState::UNKNOWN;
 
     Base::operator--();
 }
 
 template<class Base>
-void Foam::Pmt::TransportControl<Base>::update()
+void Foam::Pmt::TransportControl<Base>::setDtState()
 {
-    if (!upToDate_)
+    if (dtState_ == dtState::UNKNOWN)
     {
-
         bool maxDeltaCSet = false;
-        List<scalar> maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
+        scalarList maxDeltaC(composition_.species().size(), std::numeric_limits<scalar>::infinity());
+        
+        scalarList maxDeltaY(composition_.Y().size(), 0.0);
 
-        const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC");
-
-        if (maxDeltaCDict)
+        if (const dictionary* maxDeltaCDict = this->controlDict().findDict("maxDeltaC"))
         {
             maxDeltaCSet = true;
             for (const auto& maxDCSpecies : *maxDeltaCDict)
@@ -158,31 +145,48 @@ void Foam::Pmt::TransportControl<Base>::update()
                 [](scalar v){ return v>=0; }
             );
 
+        dtState_ = dtState::SHOULD_INCREASE;
 
         forAll(composition_.Y(), speciesi)
         {
             const auto& Y = composition_.Y(speciesi);
+            const auto& Y_old = composition_.Y(speciesi).oldTime();
 
             if (maxDeltaCSet && relMaxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC[speciesi]);
+                maxDeltaY[speciesi] = max(relMaxDeltaC*gMax(Y), maxDeltaC[speciesi]);
             }
             else if (maxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = maxDeltaC[speciesi];
+                maxDeltaY[speciesi] = maxDeltaC[speciesi];
             }
             else if (relMaxDeltaCSet)
             {
-                maxDeltaY_[speciesi] = max(relMaxDeltaC*gMax(Y), SMALL);
+                maxDeltaY[speciesi] = max(relMaxDeltaC*gMax(Y), SMALL);
             }
             else
             {
-                maxDeltaY_[speciesi] = std::numeric_limits<scalar>::infinity();
+                maxDeltaY[speciesi] = std::numeric_limits<scalar>::infinity();
             }
 
-            maxDYdT_[speciesi] = gMax(mag(composition_.ddtScheme(speciesi)->fvcDdt(Y))());
-        }
+            //use the iterations to calculate field variations and decide state
 
-        upToDate_ = true;
+            auto residual = gMax((mag(Y-Y_old))->internalField());
+
+            Info << "Species " << composition_.species()[speciesi] << " variation: "<< residual << endl;
+
+            if (dtState_ != dtState::SHOULD_DECREASE)   //Implementing a finite state machine
+            {
+                if (residual >= 1.*maxDeltaY[speciesi]){
+                    dtState_ = dtState::SHOULD_DECREASE;
+                } 
+                else if (residual >= 0.75*maxDeltaY[speciesi]){
+                    dtState_ = dtState::SHOULD_MAINTAIN;
+                }
+                else if (dtState_ != dtState::SHOULD_MAINTAIN){
+                    dtState_ = dtState::SHOULD_INCREASE;
+                }
+            }
+        }
     }
 }

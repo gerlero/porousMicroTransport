@@ -18,7 +18,7 @@ class TransportControl
 {
 public:
     template<typename... Args_>
-    TransportControl(porousMixture& composition, Args_&&... args);
+    TransportControl(basicMultiComponentMixture& composition, Args_&&... args);
 
     bool retry();
 
@@ -28,12 +28,19 @@ protected:
     void operator--() override;
 
 private:
-    porousMixture& composition_;
-    scalarList maxDeltaY_;
-    scalarList maxDYdT_;
-    bool upToDate_;
+    enum class dtState
+    {   
+        UNKNOWN,
+        SHOULD_DECREASE,
+        SHOULD_MAINTAIN,
+        SHOULD_INCREASE
 
-    void update();
+    };
+
+    dtState dtState_;
+    basicMultiComponentMixture& composition_;
+
+    void setDtState();
 };
 
 }
