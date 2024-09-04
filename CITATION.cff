@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+preferred-citation:
+  type: article
+  authors:
+  - given-names: Gabriel S.
+    family-names: Gerlero
+  - given-names: Zahar I.
+    family-names: Guerenstein
+  - given-names: Nicolás
+    family-names: Franck
+  - given-names: Claudio L. A.
+    family-names: Berli
+  - given-names: Pablo A.
+    family-names: Kler
+  title: Comprehensive numerical prototyping of paper-based microfluidic devices using open-source tools
+  journal: Talanta Open
+  year: 2024
+  volume: 10
+  start: 100350
+  end: 100350
+  doi: 10.1016/j.talo.2024.100350
