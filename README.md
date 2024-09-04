@@ -6,7 +6,7 @@
 [![Docker image](https://img.shields.io/badge/docker%20image-microfluidica%2Fporousmicrotransport-0085a0)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/microfluidica/porousmicrotransport)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
 
-**porousMicroTransport** is a set of additional solvers and related libraries for OpenFOAM developed for the purposes of simulating flow and transport in porous media, with an emphasis on paper-based microfluidics
+**porousMicroTransport**[^porousMicroTransport] is a set of additional solvers and related libraries for OpenFOAM developed for the purposes of simulating flow and transport in porous media, with an emphasis on paper-based microfluidics
 
 
 ## Installation
@@ -226,6 +226,7 @@ Sample cases are available in the [`tutorials` directory](tutorials).
 
 * [**electroMicroTransport**](https://gitlab.com/santiagomarquezd/electroMicroTransport)[^electroMicroTransport]: toolbox for OpenFOAM dedicated to electromigrative separations. It includes support for modeling separations in paper-based media, and can also be installed alongside **porousMicroTransport**.
 
+[^porousMicroTransport]: [Gerlero, G. S., Guerenstein, Z. I., Franck, N., Berli, C. L. A., Kler, P. A.: Comprehensive numerical prototyping of paper-based microfluidic devices using open-source tools. Talanta Open, **10**, 100350 (2024)](https://doi.org/10.1016/j.talo.2024.100350)
 
 [^Bear]: [Bear, J., Cheng, A.H.-D.: Modeling Groundwater Flow and Contaminant Transport. Springer Dordrecht (2010)](https://doi.org/10.1007/978-1-4020-6682-5)
 
