@@ -46,6 +46,7 @@ jobs:
         with:
           images: ${{ env.IMAGES }}
           tags: |
+            type=semver,pattern={{version}}
             type=raw,value=latest,enable={{is_default_branch}}
           flavor: latest=false
       - name: Docker meta (slim)
@@ -54,8 +55,8 @@ jobs:
         with:
           images: ${{ env.IMAGES }}
           tags: |
+            type=semver,pattern={{version}}-slim
             type=raw,value=slim,enable={{is_default_branch}}
-            type=raw,value=run,enable={{is_default_branch}}
           flavor: latest=false
       - name: Login to GitHub Container Registry
         continue-on-error: ${{ github.event_name == 'pull_request' }}
