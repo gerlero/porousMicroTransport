@@ -11,5 +11,4 @@ wmake $targetType common
 wmake $targetType unsaturatedFlowModels
 wmake $targetType PicardControl
 wmake $targetType transport
-wmake $targetType reactions
 wmake $targetType boundaryConditions
