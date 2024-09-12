@@ -2,8 +2,11 @@
 #include "fluidPhase.H"
 #include "phaseFractionField.H"
 #include "porousMixture.H"
-#include "reactions.H"
 #include "TransportControl.H"
+
+#if __has_include("reagency.H")
+#include <reagency.H>
+#endif
 
 #include <fvCFD.H>
 #include <fvOptions.H>

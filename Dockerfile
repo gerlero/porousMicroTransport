@@ -1,6 +1,6 @@
 ARG OPENFOAM_VERSION=2412
 
-FROM microfluidica/openfoam:${OPENFOAM_VERSION} AS dev
+FROM microfluidica/reagency:openfoam${OPENFOAM_VERSION} AS dev
 
 ARG PMT_DIR=/usr/local/src/porousMicroTransport
 
@@ -20,7 +20,7 @@ RUN ${PMT_DIR}/Allwmake -j -prefix=group \
  && moistureDiffusivityTransportFoam -help
 
 
-FROM microfluidica/openfoam:${OPENFOAM_VERSION}-slim AS slim
+FROM microfluidica/reagency:slim-openfoam${OPENFOAM_VERSION} AS slim
 
 ARG OPENFOAM_VERSION
 
