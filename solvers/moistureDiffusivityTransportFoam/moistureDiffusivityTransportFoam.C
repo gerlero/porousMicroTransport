@@ -3,9 +3,12 @@
 #include "phaseFractionField.H"
 #include "moistureDiffusivityModel.H"
 #include "porousMixture.H"
-#include "reactions.H"
 #include "PicardControl.H"
 #include "TransportControl.H"
+
+#if __has_include("reagency.H")
+#include <reagency.H>
+#endif
 
 #include <fvCFD.H>
 #include <fvOptions.H>
