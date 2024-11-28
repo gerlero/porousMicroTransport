@@ -23,18 +23,18 @@ boundaryField
     }
     inletU
     {
-      type            zeroGradient;
+        type            zeroGradient;
     }
     inletD
     {
-    type            zeroGradient;
+        type            zeroGradient;
     }
     outletD
     {
-      type            zeroGradient;
+        type            zeroGradient;
     }
     outletU
     {
-      type            zeroGradient;
+        type            zeroGradient;
     }
 }
