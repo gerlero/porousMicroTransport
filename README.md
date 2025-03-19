@@ -11,13 +11,28 @@
 
 ## Installation
 
-### Install from source
-
-#### Requirements
-
 **porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2112, v2206, v2212, v2306, v2312, v2406 and v2412.
 
-_Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 9, OpenFOAM 10) are not compatible. macOS users may want to consider [OpenFOAM.app](https://github.com/gerlero/openfoam-app)._
+_Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 11, OpenFOAM 12) are not compatible. macOS users may want to consider [OpenFOAM.app](https://github.com/gerlero/openfoam-app)._
+
+### With [`styro`](https://github.com/gerlero/styro)
+
+**porousMicroTransport** can be installed with the [`styro`](https://github.com/gerlero/styro) package manager:
+
+```sh
+styro install porousmicrotransport
+```
+
+### Install from source
+
+#### Optional: [`reagency`](https://github.com/gerlero/reagency)
+
+**porousMicroTransport** can be used with the optional [`reagency`](https://github.com/gerlero/reagency) library for reaction modeling. To install **porousMicroTransport** with `reagency`, clone the `reagency` repository alongside `porousMicroTransport`, and install the former first:
+
+```sh
+git clone https://github.com/gerlero/reagency.git
+reagency/Allwmake -j
+```
 
 #### Download
 

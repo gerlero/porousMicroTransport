@@ -20,6 +20,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        path: porousMicroTransport
+    - name: Check out reagency
+      uses: actions/checkout@v4
+      with:
+        repository: gerlero/reagency
+        path: reagency
     - name: Set up OpenFOAM
       uses: gerlero/setup-openfoam@v1
       with:
@@ -29,13 +36,14 @@ jobs:
       with:
         python-version: '3.x'
         cache: pip
-        cache-dependency-path: tests/requirements.txt
+        cache-dependency-path: porousMicroTransport/tests/requirements.txt
+    - name: Build reagency
+      run: |
+        reagency/Allwmake -j
     - name: Build
-      run: |
-        ./Allwmake -j
+      run: porousMicroTransport/Allwmake -j
     - name: Test
-      run: |
-        tests/Alltest
+      run: porousMicroTransport/tests/Alltest
 
   lint-tests:
       name: Lint tests
