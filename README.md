@@ -1,4 +1,4 @@
-# porousMicroTransport
+# [<img alt="porousMicroTransport logo" src="https://raw.githubusercontent.com/gerlero/porousMicroTransport/main/logo.png" width=300></img>](https://github.com/gerlero/porousMicroTransport)
 
 [![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml)
 [![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2112%20%7C%20v2206%20%7C%20v2212%20%7C%20v2306%20%7C%20v2312%20%7C%20v2406%20%7C%20v2412-informational)](https://www.openfoam.com)
