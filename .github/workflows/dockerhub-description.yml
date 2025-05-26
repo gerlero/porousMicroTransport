@@ -15,9 +15,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Modify README.md for Docker Hub
-      run: |
-        sed -i "s|^\s*#\s\+\(.\+\)|# [\1]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY)|" README.md
     - name: Update Docker Hub description
       uses: peter-evans/dockerhub-description@v4
       with:
