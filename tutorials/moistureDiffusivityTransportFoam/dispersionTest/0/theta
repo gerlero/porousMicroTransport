@@ -2,7 +2,6 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    arch        "LSB;label=32;scalar=64";
     class       volScalarField;
     location    "0";
     object      theta;
@@ -24,20 +23,20 @@ boundaryField
     }
     inletU
     {
-       type            fixedValue;
-        value           uniform 0.6999999;
+        type            fixedValue;
+        value           uniform 0.7;
     }
     inletD
     {
-      type            fixedValue;
-      value           uniform 0.6999999;
+        type            fixedValue;
+        value           uniform 0.7;
     }
     outletD
     {
-       type            zeroGradient;
+        type            zeroGradient;
     }
     outletU
     {
-      type            zeroGradient;
+        type            zeroGradient;
     }
 }
