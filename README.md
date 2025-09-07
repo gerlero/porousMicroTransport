@@ -235,6 +235,30 @@ To enable automatic timestep adjustment, set `adjustTimeStep` to `yes` in `syste
 Sample cases are available in the [`tutorials` directory](tutorials).
 
 
+## Citation
+
+If you use **porousMicroTransport** in your work, please cite our paper:
+
+> Gerlero, G. S., Guerenstein, Z. I., Franck, N., Berli, C. L. A., & Kler, P. A. (2024). Comprehensive numerical prototyping of paper-based microfluidic devices using open-source tools. _Talanta Open_, _10_, 100350. https://doi.org/10.1016/j.talo.2024.100350
+
+<details>
+<summary>📋 BibTeX</summary>
+
+```bibtex
+@article{porousMicroTransport,
+    author = {Gerlero, Gabriel S. and Guerenstein, Zahar I. and Franck, Nicolás and Berli, Claudio L. A. and Kler, Pablo A.},
+    doi = {10.1016/j.talo.2024.100350},
+    journal = {Talanta Open},
+    pages = {100350},
+    title = {Comprehensive numerical prototyping of paper-based microfluidic devices using open-source tools},
+    volume = {10},
+    year = {2024}
+}
+```
+
+</details>
+
+
 ## Related projects
 
 * [**porousMultiphaseFoam**](https://github.com/phorgue/porousMultiphaseFoam)[^porousMultiphaseFoam]: toolbox for OpenFOAM for modeling multiphase flow and transport. **porousMicroTransport** is mostly compatible with **porousMultiphaseFoam** in terms of case definitions, and can be installed alongside it.
