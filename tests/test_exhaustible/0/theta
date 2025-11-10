@@ -16,7 +16,7 @@ boundaryField
     left
     {
         type            exhaustible;
-        value           uniform 0.6999999; //= 0.7 - 1e-7
+        value           uniform 0.7;
         remaining       2e-8;
     }
     right

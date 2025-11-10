@@ -65,7 +65,7 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::VanGenuchten
 Foam::tmp<Foam::volScalarField>
 Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C()
 {
-    volScalarField Se{frac_.eff()};
+    volScalarField Se{min(frac_.eff(), 1 - 1e-7)};
 
     return 1/pc0_*m_/(1 - m_)*(frac_.max() - frac_.min())*pow(Se, 1/m_)*pow((1 - pow(Se, 1/m_)), m_);
 }
@@ -73,9 +73,7 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C()
 Foam::tmp<Foam::volScalarField>
 Foam::Pmt::unsaturatedFlowModels::VanGenuchten::M()
 {
-    volScalarField Se{frac_.eff()};
+    volScalarField Se{min(frac_.eff(), 1 - 1e-7)};
 
-    return
-        pos(1 - Se)*medium_.K()/phase_.mu()*pow(Se, l_)*pow(1 - pow(1 - pow(Se, 1/m_), m_), 2)
-      + neg0(1 - Se)*dimensionedScalar{dimArea/dimDynamicViscosity, One};
+    return medium_.K()/phase_.mu()*pow(Se, l_)*pow(1 - pow(1 - pow(Se, 1/m_), m_), 2);
 }

@@ -33,12 +33,12 @@ boundaryField
     }
     outletD
     {
-      type              inletOutlet;
-      inletValue        uniform 0.0;
+        type            inletOutlet;
+        inletValue      uniform 0.0;
     }
     outletU
     {
-      type              inletOutlet;
-      inletValue        uniform 0.0;
+        type            inletOutlet;
+        inletValue      uniform 0.0;
     }
 }
