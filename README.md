@@ -191,7 +191,7 @@ _Flow solvers only._
 
 Besides the standard OpenFOAM boundary conditions (e.g. `zeroGradient`, `fixedValue`), the solvers support these additional boundary conditions for `theta`:
 
-* `darcyGradPressure`: follow the boundary condition set for velocity (same as [`darcyGradPressure` in **porousMultiphaseFoam**](https://porousmultiphasefoam.readthedocs.io/en/latest/darcyGradPressure.html)).
+* `darcyGradPressure`: follow the boundary condition set for velocity (same as [`darcyGradPressure` in **porousMultiphaseFoam**](https://porousmultiphasefoam.readthedocs.io/en/dev/darcyGradPressure.html)).
 
 * `exhaustible`: models an inlet reservoir with a fixed volume of fluid that is gradually depleted as fluid flows into the domain. A `remaining` entry is required (volume remaining in the reservoir).
 
