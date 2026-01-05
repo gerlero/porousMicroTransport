@@ -11,7 +11,7 @@
 
 ## Installation
 
-**porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2112, v2206, v2212, v2306, v2312, v2406, v2412 and v2506.
+**porousMicroTransport** requires [OpenFOAM](https://www.openfoam.com), as distributed by OpenCFD (openfoam.com). Compatible OpenFOAM versions are v2112, v2206, v2212, v2306, v2312, v2406, v2412, v2506 and v2512.
 
 _Versions produced by the OpenFOAM Foundation (openfoam.org) (e.g. OpenFOAM 11, OpenFOAM 12) are not compatible. macOS users may want to consider [OpenFOAM.app](https://github.com/gerlero/openfoam-app)._
 
