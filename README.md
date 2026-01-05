@@ -1,7 +1,7 @@
 # [<img alt="porousMicroTransport logo" src="https://raw.githubusercontent.com/gerlero/porousMicroTransport/main/logo.png" width=300></img>](https://github.com/gerlero/porousMicroTransport)
 
 [![CI](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/ci.yml)
-[![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2112%20%7C%20v2206%20%7C%20v2212%20%7C%20v2306%20%7C%20v2312%20%7C%20v2406%20%7C%20v2412%20%7C%20v2506-informational)](https://www.openfoam.com)
+[![OpenFOAM versions](https://img.shields.io/badge/openfoam-v2112%20%7C%20v2206%20%7C%20v2212%20%7C%20v2306%20%7C%20v2312%20%7C%20v2406%20%7C%20v2412%20%7C%20v2506%20%7C%20v2512-informational)](https://www.openfoam.com)
 [![Docker](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml/badge.svg)](https://github.com/gerlero/porousMicroTransport/actions/workflows/docker.yml)
 [![Docker image](https://img.shields.io/badge/docker%20image-microfluidica%2Fporousmicrotransport-0085a0)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/microfluidica/porousmicrotransport)](https://hub.docker.com/r/microfluidica/porousmicrotransport/)
