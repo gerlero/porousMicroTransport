@@ -42,7 +42,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.IMAGES }}
           tags: |
@@ -51,7 +51,7 @@ jobs:
           flavor: latest=false
       - name: Docker meta (slim)
         id: meta_slim
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.IMAGES }}
           tags: |
