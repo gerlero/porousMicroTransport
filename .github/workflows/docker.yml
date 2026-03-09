@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -83,7 +83,7 @@ jobs:
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-arm64
           push: ${{ env.PUSH }}
       - name: Build and push (slim)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta_slim.outputs.tags }}
@@ -95,7 +95,7 @@ jobs:
           push: ${{ env.PUSH }}
       - name: Push build cache (amd64)
         if: env.PUSH == 'true'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           platforms: linux/amd64
           target: slim
@@ -106,7 +106,7 @@ jobs:
             type=registry,ref=ghcr.io/${{ steps.lowercase.outputs.repository }}:buildcache-amd64,mode=max
       - name: Push build cache (arm64)
         if: env.PUSH == 'true' && env.PLATFORMS != ''
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           platforms: linux/arm64
           target: slim
