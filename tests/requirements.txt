@@ -2,4 +2,4 @@ pytest>=7,<10
 pytest-asyncio-cooperative>=0.37.0,<0.41
 numpy>=1,<3
 scipy>=1,<2
-foamlib>=1,<2
+foamlib>=1.7.1,<2
