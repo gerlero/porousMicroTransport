@@ -48,7 +48,7 @@ Foam::Pmt::unsaturatedFlowModels::LETd::LETd
 Foam::tmp<Foam::volScalarField>
 Foam::Pmt::unsaturatedFlowModels::LETd::D()
 {
-    volScalarField Swp{frac_.eff()};
+    volScalarField Swp{min(frac_.eff(), 1 - 1e-7)};
 
     return Dwt_*pow(Swp, L_)/(pow(Swp, L_) + E_*pow(1 - Swp, T_));
 }

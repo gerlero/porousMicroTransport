@@ -57,7 +57,7 @@ Foam::Pmt::unsaturatedFlowModels::LETxs::LETxs
 Foam::tmp<Foam::volScalarField>
 Foam::Pmt::unsaturatedFlowModels::LETxs::D()
 {
-    volScalarField Swp{frac_.eff()};
+    volScalarField Swp{min(frac_.eff(), 1 - 1e-7)};
     auto Swir = frac_.min()/frac_.max();
 
     return
