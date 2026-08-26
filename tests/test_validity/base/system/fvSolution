@@ -20,5 +20,5 @@ solvers
 
 Picard
 {
-    tolerance 1e-3;
+    tolerance 1e-4;
 }
