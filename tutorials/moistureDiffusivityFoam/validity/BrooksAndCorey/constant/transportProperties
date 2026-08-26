@@ -7,7 +7,7 @@ FoamFile
   object      transportProperties;
 }
 
-thetamin thetamax [0 0 0 0 0 0 0] 2.378e-5;
+thetamin thetamin [0 0 0 0 0 0 0] 2.378e-5;
 thetamax thetamax [0 0 0 0 0 0 0] 0.7;
 
 phase.theta
