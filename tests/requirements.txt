@@ -1,4 +1,4 @@
-foamlib>=1,<2
+foamlib>=1.7.6,<2
 fronts>=1.2,<2
 scipy>=1,<2
 numpy>=1,<3
