@@ -30,7 +30,7 @@ autoPtr<Model> unsaturatedFlowModelNew
 (
     const porousMedium& medium,
     const fluidPhase& phase,
-    const phaseFractionField& frac,
+    phaseFractionField& frac,
     const dictionary& transportProperties
 )
 {

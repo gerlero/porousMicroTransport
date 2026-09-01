@@ -26,6 +26,8 @@ public:
 
     tmp<volScalarField> eff() const;
 
+    void setEff(const volScalarField& eff);
+
     using volScalarField::operator=;
 
     void clone() = delete;

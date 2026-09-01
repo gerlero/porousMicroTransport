@@ -34,6 +34,12 @@ Foam::Pmt::mixedRichardsModel::C()
 }
 
 Foam::tmp<Foam::volScalarField>
+Foam::Pmt::mixedRichardsModel::C(const volScalarField& p)
+{
+    return capillarityModel_->C(p);
+}
+
+Foam::tmp<Foam::volScalarField>
 Foam::Pmt::mixedRichardsModel::M()
 {
     return relativePermeabilityModel_->M();

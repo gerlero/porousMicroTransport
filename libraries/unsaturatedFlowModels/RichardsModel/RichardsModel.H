@@ -32,7 +32,7 @@ public:
         (
             const porousMedium& medium,
             const fluidPhase& phase,
-            const phaseFractionField& frac,
+            phaseFractionField& frac,
             const dictionary& transportProperties
         ),
         (medium, phase, frac, transportProperties)
@@ -42,11 +42,12 @@ public:
     (
         const porousMedium& medium,
         const fluidPhase& phase,
-        const phaseFractionField& frac,
+        phaseFractionField& frac,
         const dictionary& transportProperties
     );
 
     virtual tmp<volScalarField> C() = 0;
+    virtual tmp<volScalarField> C(const volScalarField& p) = 0;
 
     virtual tmp<volScalarField> M() = 0;
 

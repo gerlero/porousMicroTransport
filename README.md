@@ -90,6 +90,14 @@ $$\frac{\partial\theta}{\partial t} - \nabla\cdot\left[D\nabla\theta\right] = 0$
 
 where $\theta$ is the moisture content and $D$ is a saturation-dependent diffusivity as defined by an unsaturated flow model.
 
+### `microRichardsFoam`
+
+**Unsaturated flow in a porous medium**, governed by the Richards equation[^Bear]:
+
+$$C\frac{\partial p}{\partial t} - \nabla\cdot\left[K\nabla p\right] = 0$$
+
+where $p$ is pressure and $C$ and $K$ are pressure-dependent functions defined by an unsaturated flow model. In this formulation, $p$ is the unknown field, and moisture content $\theta$ (a solver output) is considered to be a function of pressure $p$. This formulation is more general and allows for heterogeneous porous media (since $p$, unlike $\theta$, can be assumed continuous across material interfaces) and forced flow. The sign of $p$ is such that $p<0$ corresponds to unsaturated conditions, $p=0$ corresponds to saturation, and $p>0$ corresponds to forced flow.
+
 ### `porousMicroTransportFoam`
 
 **Transport by steady flow of any number of species in a porous medium, with optional reactions between the species**. For each species (concentration $C$), the governing equation is:
@@ -119,7 +127,9 @@ The layout of **porousMicroTransport** cases follows many conventions of [**poro
 
 These variable fields are defined in the time directories:
 
-* `theta`: moisture content (scalar). _Optional for `porousMicroTransportFoam`_
+* `theta`: moisture content (scalar). _Optional for `porousMicroTransportFoam`; output only for Richards solvers_
+
+* `p`: pressure (scalar). _Richards solvers only_
 
 * `U`: Darcy velocity (vector). _Optional for flow solvers_
 
@@ -180,6 +190,8 @@ Supported models of unsaturated flow are:
     * In coefficient dictionary `LETCoeffs`: `pc0`, `Lw`, `Ew`, `Tw`, `Ls`, `Es`, `Ts`
 
 * `LETd`: LETd[^Validity] model
+
+    _Moisture-diffusivity formulations only._
 
     * In coefficient dictionary `LETCoeffs`: `pc0`, `L`, `E`, `T`
 

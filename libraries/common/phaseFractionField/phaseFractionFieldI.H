@@ -39,3 +39,8 @@ inline Foam::tmp<Foam::volScalarField> Foam::Pmt::phaseFractionField::eff() cons
 {
     return (*this - min())/(max() - min());
 }
+
+inline void Foam::Pmt::phaseFractionField::setEff(const volScalarField& eff)
+{
+    *this = min() + eff*(max() - min());
+}

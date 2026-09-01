@@ -28,7 +28,7 @@ Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::BrooksAndCorey
 (
     const porousMedium& medium,
     const fluidPhase& phase,
-    const phaseFractionField& frac,
+    phaseFractionField& frac,
     const dictionary& transportProperties
 )
 :
@@ -58,6 +58,15 @@ Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::C()
 
     return -neg(p + pc0_)*(frac_.max() - frac_.min())/(alpha_*p*pow(-p/pc0_, 1/alpha_));
 }
+
+Foam::tmp<Foam::volScalarField>
+Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::C(const volScalarField& p)
+{
+    frac_.setEff(neg(p) / pow(-(p)/pc0_, 1/alpha_) + pos0(p));
+
+    return -neg(p + pc0_)*(frac_.max() - frac_.min())/(alpha_*p*pow(-p/pc0_, 1/alpha_));
+}
+
 
 Foam::tmp<Foam::volScalarField>
 Foam::Pmt::unsaturatedFlowModels::BrooksAndCorey::M()
