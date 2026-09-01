@@ -118,6 +118,9 @@ with $I$ the identity tensor and $V$ the true velocity of the fluid ($=U/\theta$
 
 **Capillary flow + reactive transport in a porous medium**, coupling the moisture diffusivity equation for flow with the previous transport equation.
 
+### `microRichardsTransportFoam`
+
+**Unsaturated flow + reactive transport in a porous medium**, coupling the Richards equation for flow with the transport equation described above.
 
 ## Case layout
 
