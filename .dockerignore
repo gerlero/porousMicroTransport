@@ -42,6 +42,7 @@
 
 /tests/test_dispersion/0/C*
 /tests/test_exhaustible/system/controlDict
+/tests/test_richards/**/0/theta
 
 # Tutorials
 /tutorials/*/**/0.0*/
@@ -71,6 +72,8 @@
 /tutorials/*/**/*.OpenFOAM
 
 !/tutorials/moistureDiffusivityTransportFoam/sequentialDelivery/**/constant/polyMesh/
+/tutorials/microRichardsFoam/**/0/theta
+/tutorials/microRichardsTransportFoam/**/0/theta
 
 # VS Code
 #/.vscode/*
