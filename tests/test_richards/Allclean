@@ -1,0 +1,6 @@
+#!/bin/sh
+cd "${0%/*}" || exit 1
+
+for case in case forcedFlow; do
+    "$case"/clean
+done
