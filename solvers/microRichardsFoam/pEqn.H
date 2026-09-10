@@ -7,7 +7,7 @@
             C*fvm::ddt(p)
           - fvm::laplacian(M, p, "laplacian(M,p)")
         ==
-            fvOptions(p)
+            fvOptions(C, p)
     };
 
     fvOptions.constrain(pEqn);
