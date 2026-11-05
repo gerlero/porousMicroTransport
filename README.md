@@ -69,7 +69,7 @@ Alternatively, **porousMicroTransport** is also [available in the form of Docker
 docker run --rm -it -v $PWD:/root -w /root microfluidica/porousmicrotransport
 ```
 
-Or, if you use OpenFOAM's [`openfoam-docker` script](https://develop.openfoam.com/Development/openfoam/-/wikis/precompiled/docker) (which takes care of making the working directory available inside the container):
+Or, if you use OpenFOAM's [`openfoam-docker` script](https://gitlab.com/openfoam/packaging/containers/-/blob/main/openfoam-docker?ref_type=heads) (which takes care of making the working directory available inside the container):
 
 ```sh
 openfoam-docker -image=microfluidica/porousmicrotransport
