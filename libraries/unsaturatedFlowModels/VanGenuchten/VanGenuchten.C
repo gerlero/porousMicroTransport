@@ -65,11 +65,10 @@ Foam::Pmt::unsaturatedFlowModels::VanGenuchten::VanGenuchten
 Foam::tmp<Foam::volScalarField> Foam::Pmt::unsaturatedFlowModels::VanGenuchten::C(const volScalarField& p)
 {
     volScalarField n{1/(1 - m_)};
-
-    frac_.setEff(neg(p) / pow(1 + pow(-p/pc0_, n), m_) + pos0(p));
-
-    volScalarField x{-p/pc0_};
+    volScalarField x{max(-p/pc0_, dimensionedScalar{dimless, Zero})};
     volScalarField xn{pow(x, n)};
+
+    frac_.setEff(neg(p) / pow(1 + xn, m_) + pos0(p));
 
     return
         neg(p)
