@@ -1,0 +1,26 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+
+application     microRichardsTransportFoam;
+
+startFrom       latestTime;
+stopAt          endTime;
+endTime         5e-6;
+deltaT          1e-6;
+
+writeControl    adjustableRunTime;
+writeInterval   1e-6;
+writeFormat     ascii;
+writePrecision  10;
+writeCompression no;
+timeFormat      general;
+timePrecision   8;
+
+adjustTimeStep  no;
+runTimeModifiable no;

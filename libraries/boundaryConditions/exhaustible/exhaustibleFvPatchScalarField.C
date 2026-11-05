@@ -89,9 +89,14 @@ void Foam::Pmt::exhaustibleFvPatchScalarField::updateCoeffs()
 
     if (inflow_ == capacity_ - used_)
     {
-        const auto& D = this->patch().lookupPatchField<volScalarField, scalar>("D_");
+        const word fluxCoeffName
+        {
+            this->internalField().dimensions() == dimPressure ? "M_" : "D_"
+        };
+        const auto& fluxCoeff =
+            this->patch().lookupPatchField<volScalarField, scalar>(fluxCoeffName);
 
-        this->refGrad() = inflow_/gSum(patch().magSf())/deltaT/D;
+        this->refGrad() = inflow_/gSum(patch().magSf())/deltaT/fluxCoeff;
         this->valueFraction() = Zero;
     }
     else

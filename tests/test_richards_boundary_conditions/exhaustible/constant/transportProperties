@@ -1,0 +1,38 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      transportProperties;
+}
+
+thetamin thetamin [0 0 0 0 0 0 0] 0.004943;
+thetamax thetamax [0 0 0 0 0 0 0] 0.7;
+
+phase.theta
+{
+    mu mu [1 -1 -1 0 0 0 0] 1e-3;
+}
+
+K K [0 2 0 0 0 0 0] 1e-13;
+
+tau [0 0 0 0 0 0 0] 5.29;
+alphaT [0 1 0 0 0 0 0] 30e-6;
+alphaL $alphaT;
+
+unsaturatedFlowModel VanGenuchten;
+
+VanGenuchtenCoeffs
+{
+    pc0 pc0 [1 -1 -2 0 0 0 0] 2.079e4;
+    n n [0 0 0 0 0 0 0] 8.093;
+    l l [0 0 0 0 0 0 0] 2.344;
+}
+
+species (C);
+
+C
+{
+    Dm Dm [0 2 -1 0 0 0 0] 1e-9;
+}
