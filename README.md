@@ -204,7 +204,7 @@ To choose a model for your simulation, set the `unsaturatedFlowModel` entry in `
 
 _Flow solvers only._
 
-Besides the standard OpenFOAM boundary conditions (e.g. `zeroGradient`, `fixedValue`), the solvers support these additional boundary conditions for `theta`:
+Besides the standard OpenFOAM boundary conditions (e.g. `zeroGradient`, `fixedValue`), the solvers support these additional boundary conditions for `theta` or `p` (depending on the solver):
 
 * `darcyGradPressure`: follow the boundary condition set for velocity (same as [`darcyGradPressure` in **porousMultiphaseFoam**](https://porousmultiphasefoam.readthedocs.io/en/dev/darcyGradPressure.html)).
 

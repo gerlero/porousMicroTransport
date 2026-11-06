@@ -31,7 +31,13 @@ Foam::tmp<Foam::scalarField>
 Foam::Pmt::darcyGradPressureFvPatchScalarField::computeGradient()
 {
     const auto& phi = patch().lookupPatchField<surfaceScalarField, scalar>("phi");
-    const auto& D = patch().lookupPatchField<volScalarField, scalar>("D_");
 
-    return -phi/patch().magSf()/D;
+    const word fluxCoeffName
+    {
+        internalField().dimensions() == dimPressure ? "M_" : "D_"
+    };
+    const auto& fluxCoeff =
+        patch().lookupPatchField<volScalarField, scalar>(fluxCoeffName);
+
+    return -phi/patch().magSf()/fluxCoeff;
 }
