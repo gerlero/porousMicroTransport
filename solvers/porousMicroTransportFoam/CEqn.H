@@ -1,5 +1,8 @@
 composition.correct(U, theta);
+
+#ifdef PMT_WITH_REAGENCY
 reactions.correct();
+#endif
 
 forAll(composition.Y(), speciesi)
 {
@@ -17,7 +20,7 @@ forAll(composition.Y(), speciesi)
           theta*fvOptions(C)
     };
 
-#if __has_include("reagency.H")
+#ifdef PMT_WITH_REAGENCY
     CEqn -= Rd*theta*reactions.reactionTerm(speciesi);
 #endif
 
