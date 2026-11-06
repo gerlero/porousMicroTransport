@@ -1,4 +1,0 @@
-target-version = "py37"
-
-[lint]
-extend-select = ["I", "RUF", "UP"]

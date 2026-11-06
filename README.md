@@ -55,10 +55,10 @@ _If necessary, activate/source the correct OpenFOAM environment before running `
 
 #### Test
 
-Optionally, you can verify the installation of **porousMicroTransport** by running the included test suite (requires Python 3.7 or later):
+Optionally, you can verify the installation of **porousMicroTransport** by running the included test suite. The tests require [uv](https://github.com/astral-sh/uv):
 
 ```sh
-tests/Alltest
+uv run --directory tests pytest
 ```
 
 ### Docker image

@@ -8,5 +8,3 @@ for clean in */*clean; do
 done
 
 rm -rf **/__pycache__
-
-rm -rf venv

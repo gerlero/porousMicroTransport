@@ -41,29 +41,29 @@ jobs:
       uses: gerlero/setup-openfoam@v1
       with:
         openfoam-version: ${{ matrix.openfoam-version }}
-    - name: Set up Python
-      uses: actions/setup-python@v7
-      with:
-        python-version: '3.x'
-        cache: pip
-        cache-dependency-path: porousMicroTransport/tests/requirements.txt
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v10.3.3
     - name: Build reagency
       run: |
         reagency/Allwmake -j
     - name: Build
       run: porousMicroTransport/Allwmake -j
     - name: Test
-      run: porousMicroTransport/tests/Alltest
+      working-directory: porousMicroTransport
+      run: uv run --directory tests --locked --only-group test pytest
 
   lint-tests:
-      name: Lint tests
-      runs-on: ubuntu-latest
-      steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-      - name: Lint with Ruff
-        uses: chartboost/ruff-action@v1
-      - name: Format with Ruff
-        uses: chartboost/ruff-action@v1
-        with:
-          args: 'format --check'
+    name: Lint tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+    - name: Lint with Ruff
+      uses: astral-sh/ruff-action@v4.1.0
+      with:
+        src: tests
+    - name: Format with Ruff
+      uses: astral-sh/ruff-action@v4.1.0
+      with:
+        src: tests
+        args: 'format --check'
