@@ -5,8 +5,4 @@ cd "${0%/*}" || exit
 cp system/controlDict.orig system/controlDict
 
 runApplication blockMesh
-
 runApplication $(getApplication)
-
-foamDictionary -entry "endTime" -set 90 system/controlDict
-runApplication -append $(getApplication)

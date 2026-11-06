@@ -13,19 +13,19 @@ startFrom       latestTime;
 
 stopAt          endTime;
 
-endTime         45;
+endTime         5e-5;
 
 deltaT          1e-05;
 
 writeControl    adjustableRunTime;
 
-writeInterval   5;
+writeInterval   1e-5;
 
 purgeWrite      0;
 
 writeFormat     ascii;
 
-writePrecision  8;
+writePrecision  12;
 
 writeCompression no;
 
@@ -33,6 +33,6 @@ timeFormat      general;
 
 timePrecision   6;
 
-adjustTimeStep  yes;
+adjustTimeStep  no;
 
 runTimeModifiable no;

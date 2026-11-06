@@ -17,7 +17,7 @@ boundaryField
     {
         type            exhaustible;
         value           uniform 0.6999999; //= 0.7 - 1e-7
-        remaining       2e-8;
+        remaining       1e-18;
     }
     right
     {
@@ -33,10 +33,10 @@ boundaryField
     }
     front
     {
-        type            empty;
+        type            zeroGradient;
     }
     back
     {
-        type            empty;
+        type            zeroGradient;
     }
 }

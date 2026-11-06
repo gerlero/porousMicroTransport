@@ -91,7 +91,7 @@ void Foam::Pmt::exhaustibleFvPatchScalarField::updateCoeffs()
     {
         const auto& D = this->patch().lookupPatchField<volScalarField, scalar>("D_");
 
-        this->refGrad() = -inflow_/patch().magSf()/deltaT/D;
+        this->refGrad() = inflow_/gSum(patch().magSf())/deltaT/D;
         this->valueFraction() = Zero;
     }
     else
