@@ -61,7 +61,9 @@ def test_limited_flux(exhaustible_case):
     previous_time = initial.time
 
     for time in exhaustible_case[1:]:
-        flux = np.sum(time["phi"].boundary_field["left"]["value"])
+        flux = np.sum(
+            np.broadcast_to(time["phi"].boundary_field["left"]["value"], (2,))
+        )
         remaining = time["theta"].boundary_field["left"]["remaining"]
 
         inflow -= flux * (time.time - previous_time)
