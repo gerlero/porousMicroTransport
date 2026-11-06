@@ -1,3 +1,4 @@
+import itertools
 from pathlib import Path
 
 import pytest
@@ -60,7 +61,7 @@ def test_exhaustible(exhaustible_case):
     assert remaining[0] > 0
     assert remaining[-1] == 0
     assert all(
-        previous >= current >= 0 for previous, current in zip(remaining, remaining[1:])
+        previous >= current >= 0 for previous, current in itertools.pairwise(remaining)
     )
 
     log = Path(__file__).parent / "exhaustible" / "log.microRichardsTransportFoam"

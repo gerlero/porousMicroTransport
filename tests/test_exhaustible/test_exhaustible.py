@@ -1,3 +1,4 @@
+import itertools
 from pathlib import Path
 
 import numpy as np
@@ -30,7 +31,7 @@ def test_exhaustion(exhaustible_case):
     assert remainings[0] > 0
     assert remainings[-1] == 0
 
-    assert all(prev >= curr for prev, curr in zip(remainings[:-1], remainings[1:]))
+    assert all(prev >= curr for prev, curr in itertools.pairwise(remainings))
 
 
 @pytest.mark.asyncio_cooperative
