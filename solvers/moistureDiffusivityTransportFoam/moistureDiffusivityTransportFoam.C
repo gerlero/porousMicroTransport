@@ -6,7 +6,7 @@
 #include "PicardControl.H"
 #include "TransportControl.H"
 
-#if __has_include("reagency.H")
+#ifdef PMT_WITH_REAGENCY
 #include <reagency.H>
 #endif
 
