@@ -6,7 +6,7 @@ classifiers = ["Private :: Do Not Upload"]
 
 [dependency-groups]
 test = [
-    "foamlib>=1,<2",
+    "foamlib>=1.10.4,<2",
     "fronts>=1.2,<2",
     "numpy>=2.5.5,<3",
     "pytest>=7,<10",
