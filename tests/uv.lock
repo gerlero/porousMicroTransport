@@ -22,7 +22,7 @@ wheels = [
 
 [[package]]
 name = "foamlib"
-version = "1.10.2"
+version = "1.10.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aioshutil" },
@@ -31,9 +31,9 @@ dependencies = [
     { name = "rich" },
     { name = "typing-extensions", marker = "python_full_version < '3.15'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b4/50/a5fe7e2f65d61a949cbdb0a727308c2ffd195e7e5b80068fd7f59b9f33b2/foamlib-1.10.2.tar.gz", hash = "sha256:7f050a14cb699169c84e9b90f291421b395617b8a788386d1ce5f6486a792ed5", size = 94465, upload-time = "2026-11-05T11:39:43.423Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/db/53/c11032592b2f43fc844f4dbc8fda711edd3dc63c091ddcc99f3b0c2fd4f9/foamlib-1.10.4.tar.gz", hash = "sha256:3787a53fefd94a68243efc49e9cee93bc29bdd406a8240532251be46d9296fa5", size = 95801, upload-time = "2026-11-16T12:41:38.081Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ef/66/2cd21790cc3e4c67f13deb4d76892cc1d8085a099b893eb908a5c23a32b6/foamlib-1.10.2-py3-none-any.whl", hash = "sha256:11616472560715848a0c7657b2db1200c73151b6c42e36928e2581b38c045115", size = 104437, upload-time = "2026-11-05T11:39:42.024Z" },
+    { url = "https://files.pythonhosted.org/packages/63/9d/243a07db385978a26545857de58248aaf401a2028429425b752175b690bc/foamlib-1.10.4-py3-none-any.whl", hash = "sha256:05f74f68cd1ee1b27bee80e7497bc69b73057181ca2c839051243aaa557eb933", size = 105767, upload-time = "2026-11-16T12:41:36.867Z" },
 ]
 
 [[package]]
@@ -198,7 +198,7 @@ test = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "foamlib", specifier = ">=1,<2" },
+    { name = "foamlib", specifier = ">=1.10.4,<2" },
     { name = "fronts", specifier = ">=1.2,<2" },
     { name = "numpy", specifier = ">=1,<3" },
     { name = "pytest", specifier = ">=7,<10" },
@@ -208,7 +208,7 @@ dev = [
 ]
 lint = [{ name = "ruff", specifier = ">=0.17.5,<0.18" }]
 test = [
-    { name = "foamlib", specifier = ">=1,<2" },
+    { name = "foamlib", specifier = ">=1.10.4,<2" },
     { name = "fronts", specifier = ">=1.2,<2" },
     { name = "numpy", specifier = ">=1,<3" },
     { name = "pytest", specifier = ">=7,<10" },
