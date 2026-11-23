@@ -13,7 +13,7 @@ test = [
     "pytest-asyncio-cooperative>=0.37,<0.41",
     "scipy>=1,<2",
 ]
-lint = ["ruff>=0.17.5,<0.18"]
+lint = ["ruff>=0.17.6,<0.18"]
 dev = [
     { include-group = "test" },
     { include-group = "lint" },
