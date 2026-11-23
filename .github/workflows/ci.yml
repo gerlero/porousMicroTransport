@@ -42,7 +42,7 @@ jobs:
       with:
         openfoam-version: ${{ matrix.openfoam-version }}
     - name: Set up uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
     - name: Build reagency
       run: |
         reagency/Allwmake -j
